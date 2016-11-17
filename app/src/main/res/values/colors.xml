@@ -4,4 +4,13 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="gray">#808080</color>
+
+    <color name="google_red">#EA4235</color>
+    <color name="google_blue">#4286F5</color>
+    <color name="google_yellow">#F8BC04</color>
+    <color name="google_green">#34AA52</color>
+
+    <!-- MainActivity-->
+    <color name="tab_text">#757575</color>
+    <color name="tab_background">#ffffff</color>
 </resources>
