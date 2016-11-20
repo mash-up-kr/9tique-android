@@ -2,4 +2,9 @@
     <string name="app_name">9tique</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_main_fragment">MainActivityFragment</string>
+    <string name="title_activity_add_edit_product">AddEditProductActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_category_selection">CategorySelectionActivity</string>
 </resources>
