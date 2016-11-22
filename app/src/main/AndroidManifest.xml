@@ -14,15 +14,22 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme" />
+        <activity android:name=".FacebookLogin" />
+        <activity android:name=".SettingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".FacebookLogin"/>
+        <activity android:name=".InquireActivity" />
+        <activity android:name=".VersionInfoActivity" />
+        <activity android:name=".AgreementActivity" />
+        <activity android:name=".PrivacyActivity" />
+        <activity android:name=".LicenseActivity" />
+        <activity android:name=".SellerActivity" />
+        <activity android:name=".About9tiqueActivity"></activity>
     </application>
 
 </manifest>
