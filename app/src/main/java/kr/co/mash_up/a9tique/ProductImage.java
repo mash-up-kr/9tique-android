@@ -2,23 +2,20 @@ package kr.co.mash_up.a9tique;
 
 public class ProductImage {
 
-    private int imageType;
+    private String imagePath;
 
-    private String fileName;
-
-    public String getFileName() {
-        return fileName;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
-    public int getImageType() {
-        return imageType;
+    public ProductImage(String imagePath) {
+        this.imagePath = imagePath;
     }
 
-    public void setImageType(int imageType) {
-        this.imageType = imageType;
+    public ProductImage() {
     }
 }

@@ -1,6 +1,6 @@
 package kr.co.mash_up.a9tique;
 
 
-public interface OnItemClickListener {
-    void onClick(String str);
+public interface OnItemClickListener<T> {
+    void onClick(T t);
 }

@@ -82,7 +82,7 @@ public class AddEditProductActivity extends BaseActivity {
         }
 
         mTvTitle.setText("상품 판매 등록");
-        //Todo: toolbar title toggle, tvTitle.setText("상품 판매 수정");
+        //Todo: toolbar title toggle, mTvTitle.setText("상품 판매 수정");
     }
 
     /**

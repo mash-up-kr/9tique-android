@@ -92,7 +92,8 @@ public class CategorySelectionFragment extends BaseFragment {
                 mainCategory4, mainCategory5);
 
         mCategoryListAdapter = new CategoryListAdapter(getActivity(), mainCategoryList);
-        mCategoryListAdapter.setOnItemClickListener(new OnItemClickListener() {
+        mCategoryListAdapter.setOnItemClickListener(new OnItemClickListener<String>() {
+
             @Override
             public void onClick(String str) {
                 Intent intent = new Intent();

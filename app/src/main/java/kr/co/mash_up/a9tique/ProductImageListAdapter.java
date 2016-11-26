@@ -3,6 +3,7 @@ package kr.co.mash_up.a9tique;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -11,67 +12,66 @@ import java.util.List;
 public class ProductImageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int VIEW_TYPE_NORMAL = 0;
-    public static final int VIEW_TYPE_ADD = 1;
+    public static final int VIEW_TYPE_FOOTER = 1;
 
     private List<ProductImage> mProductImageList;
     private Context mContext;
 
+    OnItemClickListener mOnItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
+
     public ProductImageListAdapter(@NonNull Context context) {
         this.mContext = context;
         mProductImageList = new ArrayList<>();
-
-        initData();
-    }
-
-    private void initData() {
-        ProductImage productImage = new ProductImage();
-        productImage.setImageType(VIEW_TYPE_ADD);
-        addItem(0, productImage);
     }
 
     @Override
     public int getItemViewType(int position) {
-        return mProductImageList.get(position).getImageType();
+        return position == mProductImageList.size() ? VIEW_TYPE_FOOTER : VIEW_TYPE_NORMAL;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == VIEW_TYPE_ADD) {
-            return ProductImageAddViewHolder.newInstance(parent);
+        if (viewType == VIEW_TYPE_FOOTER) {
+            return ProductImageFooterViewHolder.newInstance(parent, mOnItemClickListener);
         }
         return ProductImageNormalViewHolder.newInstance(parent);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ProductImage productImage = mProductImageList.get(position);
 
-        switch (productImage.getImageType()) {
-            case VIEW_TYPE_ADD:
-                ((ProductImageAddViewHolder) holder).bind(productImage);
-                break;
-            case VIEW_TYPE_NORMAL:
-                ((ProductImageNormalViewHolder) holder).bind(productImage);
-                break;
+        if (holder instanceof ProductImageNormalViewHolder) {
+            ProductImage productImage = mProductImageList.get(position);
+            ((ProductImageNormalViewHolder) holder).bind(productImage);
         }
     }
 
     @Override
     public int getItemCount() {
-        return mProductImageList != null ? mProductImageList.size() : 0;
+        return mProductImageList.size() + 1;
     }
 
     public void addItem(int position, ProductImage productImage) {
-        if (position < 0) {
-            position = 0;
-        }
         mProductImageList.add(position, productImage);
         notifyItemInserted(position);
     }
 
     public void removeItem(int position) {
         mProductImageList.remove(position);
-        notifyItemRemoved(position);
+        notifyItemRemoved(position - 1);
 //        notifyItemRangeChanged(position, mProductImageList.size());
+    }
+
+    public void setData(List<String> pathList) {
+        mProductImageList.clear();
+
+        for(String path : pathList){
+            mProductImageList.add(new ProductImage(path));
+        }
+        notifyDataSetChanged();
     }
 }

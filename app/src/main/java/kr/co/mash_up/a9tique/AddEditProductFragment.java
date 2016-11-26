@@ -11,6 +11,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.sangcomz.fishbun.FishBun;
+import com.sangcomz.fishbun.define.Define;
+
+import java.util.ArrayList;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -18,7 +22,7 @@ import butterknife.OnClick;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 
 
-public class AddEditProductFragment extends BaseFragment {
+public class AddEditProductFragment extends BaseFragment implements ConfirmationDialogFragment.Callback {
 
     public static final String TAG = AddEditProductFragment.class.getSimpleName();
     public static final String PARAM_PRODUCT_ID = "productId";
@@ -83,18 +87,18 @@ public class AddEditProductFragment extends BaseFragment {
         mRvImage.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
         mProductImageListAdapter = new ProductImageListAdapter(getActivity());
+        mProductImageListAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onClick(Object o) {
+                FishBun.with(AddEditProductFragment.this)
+                        .setPickerCount(4)
+                        .startAlbum();
+            }
+        });
         mRvImage.setAdapter(mProductImageListAdapter);
 
-        // Test
-        ProductImage productImage;
-        for (int i = 0; i < 2; i++) {
-            productImage = new ProductImage();
-            productImage.setImageType(ProductImageListAdapter.VIEW_TYPE_NORMAL);
-            mProductImageListAdapter.addItem(0, productImage);
-        }
+        setProductImageCount();
 
-        //Todo: 이미지 갯수 표시
-        mTvImageCount.setText(String.format(Locale.KOREA, "%d/4", mProductImageListAdapter.getItemCount() - 1));
     }
 
     @OnClick(R.id.iv_category_select)
@@ -106,16 +110,16 @@ public class AddEditProductFragment extends BaseFragment {
 
     @OnClick(R.id.btn_complete)
     public void productRegister() {
+        ConfirmationDialogFragment dialog = ConfirmationDialogFragment.newInstance("상품 등록하기", "해당 상품을 등록하시겠습니까?");
+        dialog.setTargetFragment(this, 0);
+        dialog.show(getChildFragmentManager(), ConfirmationDialogFragment.TAG);
+    }
 
-        //Todo: 모델객체에 저장
-        mEtBrandDescription.getText().toString();
-        mEtNameDescription.getText().toString();
-        mEtSizeDescription.getText().toString();
-        mEtPriceDescription.getText().toString();
-        mTvCategoryDescription.getText().toString();
-        mEtDetailDescription.getText().toString();
-
-
+    /**
+     * 이미지 갯수 표시
+     */
+    private void setProductImageCount() {
+        mTvImageCount.setText(String.format(Locale.KOREA, "%d/4", mProductImageListAdapter.getItemCount() - 1));
     }
 
     @Override
@@ -132,7 +136,30 @@ public class AddEditProductFragment extends BaseFragment {
                         mTvCategoryDescription.setText(mainCategory);
                     }
                     break;
+                case Define.ALBUM_REQUEST_CODE:
+                    ArrayList<String> path = data.getStringArrayListExtra(Define.INTENT_PATH);
+                    mProductImageListAdapter.setData(path);
+                    setProductImageCount();
+                    break;
             }
         }
+    }
+
+    @Override
+    public void onClickOk() {
+        //Todo: 모델객체에 저장
+        mEtBrandDescription.getText().toString();
+        mEtNameDescription.getText().toString();
+        mEtSizeDescription.getText().toString();
+        mEtPriceDescription.getText().toString();
+        mTvCategoryDescription.getText().toString();
+        mEtDetailDescription.getText().toString();
+
+        //Todo: network call
+    }
+
+    @Override
+    public void onClickCancel() {
+        // do noting
     }
 }
