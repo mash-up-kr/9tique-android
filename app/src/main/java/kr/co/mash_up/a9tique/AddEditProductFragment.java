@@ -3,10 +3,14 @@ package kr.co.mash_up.a9tique;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,11 +26,13 @@ import butterknife.OnClick;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 
 
-public class AddEditProductFragment extends BaseFragment implements ConfirmationDialogFragment.Callback {
+public class AddEditProductFragment extends BaseFragment implements ConfirmationDialogFragment.Callback,
+        PictureSelectionDialogFragment.Callback {
 
     public static final String TAG = AddEditProductFragment.class.getSimpleName();
     public static final String PARAM_PRODUCT_ID = "productId";
     public static final int REQUEST_CODE_CATEGORY_SELECTION = 1000;
+    public static final int REQUEST_CODE_CAMERA_CAPTURE = 1001;
 
     private Integer mParamProductId;
 
@@ -87,13 +93,11 @@ public class AddEditProductFragment extends BaseFragment implements Confirmation
         mRvImage.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
         mProductImageListAdapter = new ProductImageListAdapter(getActivity());
-        mProductImageListAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onClick(Object o) {
-                FishBun.with(AddEditProductFragment.this)
-                        .setPickerCount(4)
-                        .startAlbum();
-            }
+        mProductImageListAdapter.setOnItemClickListener(object -> {
+            // show dialog select camera or gallery
+            PictureSelectionDialogFragment dialog = PictureSelectionDialogFragment.newInstance("사진 업로드", "");
+            dialog.setTargetFragment(AddEditProductFragment.this, 0);
+            dialog.show(getChildFragmentManager(), PictureSelectionDialogFragment.TAG);
         });
         mRvImage.setAdapter(mProductImageListAdapter);
 
@@ -111,7 +115,7 @@ public class AddEditProductFragment extends BaseFragment implements Confirmation
     @OnClick(R.id.btn_complete)
     public void productRegister() {
         ConfirmationDialogFragment dialog = ConfirmationDialogFragment.newInstance("상품 등록하기", "해당 상품을 등록하시겠습니까?");
-        dialog.setTargetFragment(this, 0);
+        dialog.setTargetFragment(AddEditProductFragment.this, 0);
         dialog.show(getChildFragmentManager(), ConfirmationDialogFragment.TAG);
     }
 
@@ -136,13 +140,30 @@ public class AddEditProductFragment extends BaseFragment implements Confirmation
                         mTvCategoryDescription.setText(mainCategory);
                     }
                     break;
-                case Define.ALBUM_REQUEST_CODE:
+                case Define.ALBUM_REQUEST_CODE:  // gallery result receive
                     ArrayList<String> path = data.getStringArrayListExtra(Define.INTENT_PATH);
                     mProductImageListAdapter.setData(path);
                     setProductImageCount();
                     break;
+                case REQUEST_CODE_CAMERA_CAPTURE:
+                    ProductImage productImage = new ProductImage();
+                    productImage.setImagePath(getPathFromUri(data.getData()));
+                    mProductImageListAdapter.addItem(mProductImageListAdapter.getItemCount(), productImage);
+                    setProductImageCount();
+                    break;
             }
         }
+    }
+
+    private String getPathFromUri(Uri uri) {
+        Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+        String path = "";
+        if (cursor != null) {
+            cursor.moveToNext();
+            path = cursor.getString(cursor.getColumnIndex("_data"));
+            cursor.close();
+        }
+        return path;
     }
 
     @Override
@@ -154,6 +175,7 @@ public class AddEditProductFragment extends BaseFragment implements Confirmation
         mEtPriceDescription.getText().toString();
         mTvCategoryDescription.getText().toString();
         mEtDetailDescription.getText().toString();
+        mProductImageListAdapter.getProductImageList();
 
         //Todo: network call
     }
@@ -161,5 +183,19 @@ public class AddEditProductFragment extends BaseFragment implements Confirmation
     @Override
     public void onClickCancel() {
         // do noting
+    }
+
+    @Override
+    public void onClickGalleryStart() {
+        FishBun.with(AddEditProductFragment.this)
+                .setPickerCount(4)
+                .startAlbum();
+    }
+
+    @Override
+    public void onClickCameraStart() {
+        //Todo: 사진 4장이면 호출 X
+        Intent intentCameraCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intentCameraCapture, REQUEST_CODE_CAMERA_CAPTURE);
     }
 }

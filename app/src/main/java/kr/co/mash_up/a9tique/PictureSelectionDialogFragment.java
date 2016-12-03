@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -20,9 +19,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ConfirmationDialogFragment extends DialogFragment {
+public class PictureSelectionDialogFragment extends DialogFragment {
 
-    public static final String TAG = ConfirmationDialogFragment.class.getSimpleName();
+    public static final String TAG = PictureSelectionDialogFragment.class.getSimpleName();
     public static final String PARAM_TITLE = "title";
     public static final String PARAM_MESSAGE = "message";
 
@@ -38,15 +37,15 @@ public class ConfirmationDialogFragment extends DialogFragment {
     Unbinder mUnbinder;
 
     public interface Callback {
-        void onClickOk();
+        void onClickGalleryStart();
 
-        void onClickCancel();
+        void onClickCameraStart();
     }
 
     private Callback callback;
 
-    public static ConfirmationDialogFragment newInstance(String title, String message) {
-        ConfirmationDialogFragment fragment = new ConfirmationDialogFragment();
+    public static PictureSelectionDialogFragment newInstance(String title, String message) {
+        PictureSelectionDialogFragment fragment = new PictureSelectionDialogFragment();
         Bundle args = new Bundle();
         args.putString(PARAM_TITLE, title);
         args.putString(PARAM_MESSAGE, message);
@@ -91,7 +90,7 @@ public class ConfirmationDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_fragment_confirmation, container);
+        View view = inflater.inflate(R.layout.dialog_fragment_picture, container);
         mUnbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -117,16 +116,19 @@ public class ConfirmationDialogFragment extends DialogFragment {
         window.setGravity(Gravity.CENTER);
     }
 
-    @OnClick(R.id.btn_ok)
+    @OnClick(R.id.btn_take_picture)
     void onClickOk(View view) {
         if (callback != null) {
-            callback.onClickOk();
+            callback.onClickCameraStart();
         }
         dismiss();
     }
 
-    @OnClick(R.id.btn_cancel)
+    @OnClick(R.id.btn_pick_pirture)
     void onClickCancel(View view) {
+        if (callback != null) {
+            callback.onClickGalleryStart();
+        }
         dismiss();
     }
 }

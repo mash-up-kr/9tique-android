@@ -33,8 +33,7 @@ public class ProductImageNormalViewHolder extends BaseViewHolder<ProductImage> {
     @Override
     public void bind(ProductImage productImage) {
         Glide.with(itemView.getContext())
-//                .load(new File(productImage.getImagePath()))
-                .load(productImage.getImagePath())
+                .load(new File(productImage.getImagePath()))
                 .fitCenter()
                 .centerCrop()
                 .into(ivProductImage);

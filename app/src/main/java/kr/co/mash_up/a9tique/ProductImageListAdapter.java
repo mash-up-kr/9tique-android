@@ -1,6 +1,7 @@
 package kr.co.mash_up.a9tique;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,6 +19,10 @@ public class ProductImageListAdapter extends RecyclerView.Adapter<RecyclerView.V
     private Context mContext;
 
     OnItemClickListener mOnItemClickListener;
+
+    public List<ProductImage> getProductImageList() {
+        return mProductImageList;
+    }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
@@ -56,7 +61,7 @@ public class ProductImageListAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public void addItem(int position, ProductImage productImage) {
-        mProductImageList.add(position, productImage);
+        mProductImageList.add(position - 1, productImage);
         notifyItemInserted(position);
     }
 
@@ -69,7 +74,7 @@ public class ProductImageListAdapter extends RecyclerView.Adapter<RecyclerView.V
     public void setData(List<String> pathList) {
         mProductImageList.clear();
 
-        for(String path : pathList){
+        for (String path : pathList) {
             mProductImageList.add(new ProductImage(path));
         }
         notifyDataSetChanged();
