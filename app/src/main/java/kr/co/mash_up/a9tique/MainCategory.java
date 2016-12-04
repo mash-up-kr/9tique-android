@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * Created by Dong on 2016-11-20.
  */
-
 public class MainCategory implements Parent<SubCategory> {
 
     private String mName;
@@ -34,5 +33,14 @@ public class MainCategory implements Parent<SubCategory> {
 
     public SubCategory getSubCategory(int position) {
         return mSubCategories.get(position);
+    }
+
+    enum MainCategoryList {
+        NEW,  // 신상품
+        OUTER,  // 아우터
+        TOP,  // 상의
+        BOTTOM,  // 하의
+        CAP,  //모자
+        SHOSE  //신발
     }
 }
