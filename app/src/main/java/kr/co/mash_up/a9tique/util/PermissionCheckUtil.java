@@ -45,16 +45,11 @@ public class PermissionCheckUtil {
                     new AlertDialog.Builder(context)
                             .setMessage("이 프로그램이 원활하게 동작하기 위해서는 퍼미션을 허가가 꼭 필요합니다.")
                             .setTitle("권한 부여")
-                            .setPositiveButton("예", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    ActivityCompat.requestPermissions((Activity) context, new String[]{strPermission}, requestCode);
-                                }
+                            .setPositiveButton("예", (dialog, which) -> {
+                                ActivityCompat.requestPermissions((Activity) context, new String[]{strPermission}, requestCode);
                             })
-                            .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
+                            .setNegativeButton("아니오", (dialog, which) -> {
+                                // Do nothing
                             })
                             .show();
                 } else {  // permission not granted

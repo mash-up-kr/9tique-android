@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="kr.co.mash_up.a9tique.SellerProductListActivity">
+    tools:context="kr.co.mash_up.a9tique.ui.products.SellerProductListActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/abl_seller_product_list"
@@ -96,6 +96,6 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email"
         app:elevation="2dp"
-        app:layout_behavior=".FloatingActionButtonFloatonScrollBehavior"/>
+        app:layout_behavior=".ui.products.FloatingActionButtonFloatonScrollBehavior"/>
 
 </android.support.design.widget.CoordinatorLayout>
