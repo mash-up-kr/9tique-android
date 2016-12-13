@@ -36,4 +36,9 @@ ext {
     supportLibraryVersion = '25.0.1'
     junitVersion = '4.12'
     butterKnifeVersion = '8.4.0'
+    retrofitVersion = '2.1.0'
+    okhttpVersion = '3.4.2'
+    daggerVersion = '2.8'
+    rxjavaVersion = '1.2.3'
+    rxandroidVersion = '1.2.1'
 }

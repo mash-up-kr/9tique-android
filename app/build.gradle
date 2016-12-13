@@ -61,7 +61,17 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
     // dagger
-    // network
+//    compile "com.google.dagger:dagger:$rootProject.daggerVersion"
+//    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
 
-    
+    // network
+    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    compile "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"  // HttpLoggingInterceptor
+    compile "com.squareup.okhttp3:okhttp-urlconnection:$rootProject.okhttpVersion"  // JavaNetCookieJar
+
+    // rx
+    compile "io.reactivex:rxjava:$rootProject.rxjavaVersion"
+    compile "io.reactivex:rxandroid:$rootProject.rxandroidVersion"
 }
