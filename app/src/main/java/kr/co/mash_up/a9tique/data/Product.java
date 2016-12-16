@@ -27,7 +27,7 @@ public class Product {
 
     private List<String> imageUrl = new ArrayList<>(4);
 
-    private ProductStatus productStatus;
+    private Status status;
 
     private ZzimStatus zzimStatus;
 
@@ -53,5 +53,8 @@ public class Product {
         this.createdAt = createdAt;
     }
 
-
+    public enum  Status {
+        SELL,  // 판매중
+        SOLD_OUT  // 판매완료
+    }
 }
