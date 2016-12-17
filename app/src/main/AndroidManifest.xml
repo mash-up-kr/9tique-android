@@ -26,7 +26,6 @@
         <activity android:name=".InquireActivity" />
         <activity android:name=".VersionInfoActivity" />
         <activity android:name=".AgreementActivity" />
-        <activity android:name=".PrivacyActivity" />
         <activity android:name=".LicenseActivity" />
         <activity android:name=".SellerActivity" />
         <activity android:name=".About9tiqueActivity"></activity>

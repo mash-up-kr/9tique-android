@@ -23,6 +23,11 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+        Toolbar app_bar = (Toolbar) findViewById(R.id.app_bar);
+        app_bar.setTitle("설정");
+        setSupportActionBar(app_bar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -57,22 +62,18 @@ public class SettingActivity extends AppCompatActivity {
                     context.startActivity(intent);
                     break;
                 case 3:
-                    intent = new Intent(context, PrivacyActivity.class);
-                    context.startActivity(intent);
-                    break;
-                case 4:
                     intent = new Intent(context, LicenseActivity.class);
                     context.startActivity(intent);
                     break;
-                case 5:
+                case 4:
                     intent = new Intent(context, SellerActivity.class);
                     context.startActivity(intent);
                     break;
-                case 6:
+                case 5:
                     intent = new Intent(context, About9tiqueActivity.class);
                     context.startActivity(intent);
                     break;
-                case 7:
+                case 6:
                     Toast.makeText(context, "로그아웃", Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -87,9 +88,6 @@ public class SettingActivity extends AppCompatActivity {
         settingList.add(menu);
 
         menu = new Setting("이용약관"); // agreement
-        settingList.add(menu);
-
-        menu = new Setting("개인정보 취급방침"); // privacy
         settingList.add(menu);
 
         menu = new Setting("라이센스 정보"); // license
