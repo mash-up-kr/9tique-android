@@ -75,4 +75,7 @@ dependencies {
     // rx
     compile "io.reactivex:rxjava:$rootProject.rxjavaVersion"
     compile "io.reactivex:rxandroid:$rootProject.rxandroidVersion"
+
+    // 카카오톡 sdk를 사용하기 위해 필요.
+    compile group: 'com.kakao.sdk', name: 'kakaotalk', version: project.KAKAO_SDK_VERSION
 }

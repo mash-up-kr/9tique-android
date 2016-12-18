@@ -12,4 +12,8 @@
     <string name="title_activity_gallery">GalleryActivity</string>
     <string name="title_activity_seller_product_list">SellerProductListActivity</string>
 
+
+
+    <string name="error_message_for_service_unavailable">서비스 연결상태가 좋지 않습니다.\n\n잠시 후 다시 시도해 주세요.</string>
+
 </resources>

@@ -13,6 +13,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <!--kakao app key-->
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key"/>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -21,7 +26,19 @@
             android:name=".ui.splash.SplashActivity"
             android:theme="@style/AppTheme.SplashTheme">
         </activity>
-        <activity android:name=".FacebookLogin"/>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".KaKaoSignupActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".ui.addeditproduct.AddEditProductActivity"
             android:label="@string/title_activity_add_edit_product"
@@ -36,11 +53,7 @@
             android:name=".ui.products.SellerProductListActivity"
             android:label="@string/title_activity_seller_product_list"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.addeditproduct.categorysleleciton.CategorySelectionActivity"
@@ -51,5 +64,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.addeditproduct.AddEditProductActivity"/>
         </activity>
+
     </application>
 </manifest>
