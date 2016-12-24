@@ -9,20 +9,19 @@
     tools:context="kr.co.mash_up.a9tique.SettingActivity"
     android:background="#e7e7e7">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/app_bar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:elevation="3dp"/>
-
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/toolbar_title" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="66dp"/>
+        android:paddingTop="10dp"/>
+    </LinearLayout>
 
 </RelativeLayout>

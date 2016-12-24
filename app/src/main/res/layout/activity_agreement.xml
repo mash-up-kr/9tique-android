@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_agreement"
@@ -7,14 +8,6 @@
     android:scrollbars="vertical"
     android:background="#ffffff"
     tools:context="kr.co.mash_up.a9tique.AgreementActivity">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        android:elevation="3dp"/>
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -25,27 +18,30 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="72dp"
-        android:paddingLeft="62dp"
-        android:paddingRight="62dp"
-        android:id="@+id/agreement_tv1"
-        android:textSize="15sp"
-        android:textColor="#000000"/>
-    <TextView
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/agreement_tv2"
-        android:textSize="12sp"
-        android:textColor="#000000"
-        android:lineSpacingExtra="8dip"/>
+            <include android:id="@+id/tool_bar"
+                layout="@layout/toolbar_title"
+                xmlns:android="http://schemas.android.com/apk/res/android" />
 
+               <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:id="@+id/agreement_tv1"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"/>
+               <TextView
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/agreement_tv2"
+                    android:textSize="12sp"
+                    android:textColor="#000000"
+                    android:lineSpacingExtra="8dip"/>
         </LinearLayout>
-
     </ScrollView>
 
 </RelativeLayout>

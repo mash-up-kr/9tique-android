@@ -1,13 +1,71 @@
 package kr.co.mash_up.a9tique;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SellerActivity extends AppCompatActivity {
+    private List<Setting> settingList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private SellerAdapter sAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_seller);
+        setContentView(R.layout.activity_inquire);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        TextView toolbar_title = (TextView) findViewById(R.id.toolbar_title);
+        toolbar_title.setText("판매자 정보 확인");
+
+        ImageButton btn_back = (ImageButton) findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+        sAdapter = new SellerAdapter(settingList);
+        RecyclerView.LayoutManager sLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(sLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(sAdapter);
+
+        prepareSettingData();
     }
+
+
+
+    private void prepareSettingData() {
+        Setting menu = new Setting("판매자 이름");
+        settingList.add(menu);
+
+        menu = new Setting("매장명");
+        settingList.add(menu);
+
+        menu = new Setting("매장 정보");
+        settingList.add(menu);
+
+        menu = new Setting("연락처");
+        settingList.add(menu);
+
+        sAdapter.notifyDataSetChanged();
+    }
+
+
 }

@@ -24,11 +24,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".InquireActivity" />
-        <activity android:name=".VersionInfoActivity" />
         <activity android:name=".AgreementActivity" />
         <activity android:name=".LicenseActivity" />
-        <activity android:name=".SellerActivity" />
-        <activity android:name=".About9tiqueActivity"></activity>
+        <activity android:name=".About9tiqueActivity" />
+        <activity android:name=".SellerActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
     </application>
 
 </manifest>

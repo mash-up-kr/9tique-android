@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -20,9 +21,13 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView menu;
+        public ImageView imageView;
+        public TextView label;
 
         public MyViewHolder(View view) {
             super(view);
+            this.imageView = (ImageView) view.findViewById(R.id.image_id);
+            this.label = (TextView) view.findViewById(R.id.label);
             menu = (TextView) view.findViewById(R.id.menu);
             menu.setOnClickListener(this);
         }
@@ -57,6 +62,8 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.MyViewHo
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         Setting setting = settingList.get(position);
         holder.menu.setText(setting.getMenu());
+        holder.label.setText(setting.getLabel());
+        holder.imageView.setImageResource(setting.getImgId());
     }
 
     @Override

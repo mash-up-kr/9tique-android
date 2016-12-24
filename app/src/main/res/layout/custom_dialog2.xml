@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="280dp"
+    android:layout_height="160dp"
+    android:background="#ffffff">
+    <TextView
+        android:id="@+id/dlg_title"
+        android:textSize="15sp"
+        android:textColor="#000000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="24dp"/>
+    <TextView
+        android:id="@+id/dlg_message"
+        android:textSize="12sp"
+        android:textColor="#262626"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/dlg_cancel"
+            android:background="@android:color/transparent"
+            android:textSize="12sp"
+            android:textColor="#f1ac41"
+            android:paddingTop="41dp"
+            android:paddingBottom="17dp"
+            android:paddingLeft="146dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/dlg_agree"
+            android:background="@android:color/transparent"
+            android:textSize="12sp"
+            android:textColor="#f1ac41"
+            android:paddingTop="41dp"
+            android:paddingBottom="17dp"
+            android:paddingLeft="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

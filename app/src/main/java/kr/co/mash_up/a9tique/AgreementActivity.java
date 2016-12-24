@@ -1,9 +1,10 @@
 package kr.co.mash_up.a9tique;
 
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class AgreementActivity extends AppCompatActivity {
@@ -12,14 +13,24 @@ public class AgreementActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agreement);
-        Toolbar app_bar = (Toolbar) findViewById(R.id.app_bar);
-        app_bar.setTitle("이용약관");
-        setSupportActionBar(app_bar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        TextView toolbar_title = (TextView) findViewById(R.id.toolbar_title);
+        toolbar_title.setText("이용약관");
+
+        ImageButton btn_back = (ImageButton) findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         TextView agreement_tv1 = (TextView)findViewById(R.id.agreement_tv1);
         agreement_tv1.setText("전자상거래(인터넷사이버몰) 표준약관");
-        agreement_tv1.setPaintFlags(agreement_tv1.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
         TextView agreement_tv2 = (TextView)findViewById(R.id.agreement_tv2);
         agreement_tv2.setText("\n" + "제1조(목적)\n" +
                 "이 약관은 9tique가 운영하는 9tique 사이버 몰(이하 '몰'이라 한다)에서 제공하는 인터넷 관련 서비스(이하 '서비스'라 한다)를 이용함에 있어 사이버몰과 이용자의 권리•의무 및 책임사항을 규정함을 목적으로 합니다.\n" +
