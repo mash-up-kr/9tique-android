@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="kr.co.mash_up.a9tique"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="kr.co.mash_up.a9tique">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".NinetiqueApplication"
@@ -16,12 +16,11 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.splash.SplashActivity"
-            android:theme="@style/AppTheme.SplashTheme">
-        </activity>
-        <activity android:name=".FacebookLogin"/>
+            android:theme="@style/AppTheme.SplashTheme"></activity>
+        <activity android:name=".FacebookLogin" />
         <activity
             android:name=".ui.addeditproduct.AddEditProductActivity"
             android:label="@string/title_activity_add_edit_product"
@@ -29,18 +28,13 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="kr.co.mash_up.a9tique.ui.products.SellerProductListActivity"/>
+                android:value="kr.co.mash_up.a9tique.ui.products.SellerProductListActivity" />
         </activity>
-
         <activity
             android:name=".ui.products.SellerProductListActivity"
             android:label="@string/title_activity_seller_product_list"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.addeditproduct.categorysleleciton.CategorySelectionActivity"
@@ -49,7 +43,16 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.addeditproduct.AddEditProductActivity"/>
+                android:value=".ui.addeditproduct.AddEditProductActivity" />
+        </activity>
+        <activity
+            android:name=".CustomerGoodsDetail">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
+
 </manifest>
