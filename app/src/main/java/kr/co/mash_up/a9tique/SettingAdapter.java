@@ -19,6 +19,12 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.MyViewHo
     private List<Setting> settingList;
     OnItemClickListener mItemClickListener;
 
+    // setting adapter
+    public SettingAdapter(List<Setting> settingList) {
+        this.settingList = settingList;
+    }
+
+    // view holder
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView menu;
         public ImageView imageView;
@@ -38,26 +44,12 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.MyViewHo
             }
         }
     }
-
-    public SettingAdapter(List<Setting> settingList) {
-        this.settingList = settingList;
-    }
-
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.setting_list_row, parent, false);
 
         return new MyViewHolder(itemView);
     }
-
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-    }
-
-    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
-        this.mItemClickListener = mItemClickListener;
-    }
-
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         Setting setting = settingList.get(position);
@@ -70,4 +62,13 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.MyViewHo
     public int getItemCount() {
         return settingList.size();
     }
+
+    // item click listener
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
+    }
 }
+

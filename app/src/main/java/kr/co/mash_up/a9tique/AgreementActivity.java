@@ -14,25 +14,29 @@ public class AgreementActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agreement);
 
+        // 툴바 (메뉴 이름, 뒤로 가기 버튼)
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        TextView toolbar_title = (TextView) findViewById(R.id.toolbar_title);
-        toolbar_title.setText("이용약관");
+        // 툴바 제목: 메뉴 이름 (이용약관)
+        TextView toolbaTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbaTitle.setText("이용약관");
 
-        ImageButton btn_back = (ImageButton) findViewById(R.id.btn_back);
-        btn_back.setOnClickListener(new View.OnClickListener() {
+        // 뒤로 가기 버튼: 클릭 시 액티비티 종료
+        ImageButton btnBack = (ImageButton) findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
 
-        TextView agreement_tv1 = (TextView)findViewById(R.id.agreement_tv1);
-        agreement_tv1.setText("전자상거래(인터넷사이버몰) 표준약관");
-        TextView agreement_tv2 = (TextView)findViewById(R.id.agreement_tv2);
-        agreement_tv2.setText("\n" + "제1조(목적)\n" +
+        // 이용약관 텍스트뷰
+        TextView tvAgreement1 = (TextView)findViewById(R.id.tv_agreement_1);
+        tvAgreement1.setText("전자상거래(인터넷사이버몰) 표준약관");
+        TextView tvAgreement2 = (TextView)findViewById(R.id.tv_agreement_2);
+        tvAgreement2.setText("\n" + "제1조(목적)\n" +
                 "이 약관은 9tique가 운영하는 9tique 사이버 몰(이하 '몰'이라 한다)에서 제공하는 인터넷 관련 서비스(이하 '서비스'라 한다)를 이용함에 있어 사이버몰과 이용자의 권리•의무 및 책임사항을 규정함을 목적으로 합니다.\n" +
                 "※「PC통신 등을 이용하는 전자거래에 대해서도 그 성질에 반하지 않는 한 이 약관을 준용합니다」\n" +
                 "\n제2조(정의)\n" +

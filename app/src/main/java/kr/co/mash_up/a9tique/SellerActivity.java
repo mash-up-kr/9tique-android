@@ -15,42 +15,45 @@ import java.util.List;
 
 public class SellerActivity extends AppCompatActivity {
     private List<Setting> settingList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private SellerAdapter sAdapter;
+    private RecyclerView rvSeller;
+    private SellerAdapter sellerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inquire);
+        setContentView(R.layout.activity_seller);
 
+        // 툴바 (메뉴 이름, 뒤로 가기 버튼)
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        TextView toolbar_title = (TextView) findViewById(R.id.toolbar_title);
-        toolbar_title.setText("판매자 정보 확인");
+        // 툴바 제목: 메뉴 이름 (판매자 정보 확인)
+        TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("판매자 정보 확인");
 
-        ImageButton btn_back = (ImageButton) findViewById(R.id.btn_back);
-        btn_back.setOnClickListener(new View.OnClickListener() {
+        // 뒤로 가기 버튼: 클릭 시 액티비티 종료
+        ImageButton btnBack = (ImageButton) findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        // recycler view
+        rvSeller = (RecyclerView) findViewById(R.id.recycler_view);
 
-        sAdapter = new SellerAdapter(settingList);
-        RecyclerView.LayoutManager sLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(sLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(sAdapter);
+        sellerAdapter = new SellerAdapter(settingList);
+        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        rvSeller.setLayoutManager(linearLayoutManager);
+        rvSeller.setItemAnimator(new DefaultItemAnimator());
+        rvSeller.setAdapter(sellerAdapter);
 
         prepareSettingData();
     }
 
-
-
+    // 메뉴 추가
     private void prepareSettingData() {
         Setting menu = new Setting("판매자 이름");
         settingList.add(menu);
@@ -64,8 +67,6 @@ public class SellerActivity extends AppCompatActivity {
         menu = new Setting("연락처");
         settingList.add(menu);
 
-        sAdapter.notifyDataSetChanged();
+        sellerAdapter.notifyDataSetChanged();
     }
-
-
 }

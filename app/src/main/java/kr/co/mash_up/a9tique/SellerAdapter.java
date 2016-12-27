@@ -18,45 +18,45 @@ public class SellerAdapter extends RecyclerView.Adapter<SellerAdapter.MyViewHold
 
     private List<Setting> settingList;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView menu;
-        public EditText edittxt;
-
-        public MyViewHolder(View view) {
-            super(view);
-            menu = (TextView) view.findViewById(R.id.menu);
-            edittxt = (EditText) view.findViewById(R.id.edittxt);
-        }
-    }
-
+    // seller adapter
     public SellerAdapter(List<Setting> settingList) {
         this.settingList = settingList;
     }
 
+    // view holder
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView menu;
+        public EditText editTxt;
+
+        public MyViewHolder(View view) {
+            super(view);
+            menu = (TextView) view.findViewById(R.id.menu);
+            editTxt = (EditText) view.findViewById(R.id.edit_txt);
+        }
+    }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.setting_list_row2, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.seller_list_row, parent, false);
 
         return new MyViewHolder(itemView);
     }
-
-
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         Setting setting = settingList.get(position);
         holder.menu.setText(setting.getMenu());
+        // 메뉴에 따른 힌트 설정
         switch (position) {
             case 0:
-                holder.edittxt.setHint("판매자 성함을 입력해 주세요.");
+                holder.editTxt.setHint("판매자 성함을 입력해 주세요.");
                 break;
             case 1:
-                holder.edittxt.setHint("등록하시는 매장명을 입력해 주세요.");
+                holder.editTxt.setHint("등록하시는 매장명을 입력해 주세요.");
                 break;
             case 2:
-                holder.edittxt.setHint("매장에 대한 정보를 입력해 주세요.");
+                holder.editTxt.setHint("매장에 대한 정보를 입력해 주세요.");
                 break;
             case 3:
-                holder.edittxt.setHint("상품 문의가 가능한 연락처를 남겨 주세요.");
+                holder.editTxt.setHint("상품 문의가 가능한 연락처를 남겨 주세요.");
                 break;
         }
     }

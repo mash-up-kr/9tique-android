@@ -22,7 +22,7 @@
         android:textSize="15sp"
         android:textColor="#000000" />
     <EditText
-        android:id="@+id/edittxt"
+        android:id="@+id/edit_txt"
         android:textColorHint="#7d7d7d"
         android:textColor="#000000"
         android:layout_width="match_parent"

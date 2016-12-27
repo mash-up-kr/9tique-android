@@ -3,7 +3,6 @@ package kr.co.mash_up.a9tique;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,42 +16,61 @@ import java.util.List;
 
 public class InquireActivity extends AppCompatActivity {
     private List<Setting> settingList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private SettingAdapter sAdapter;
+    private RecyclerView rvInquire;
+    private SettingAdapter settingAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inquire);
 
+        // 툴바 (메뉴 이름, 뒤로 가기 버튼)
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        TextView toolbar_title = (TextView) findViewById(R.id.toolbar_title);
-        toolbar_title.setText("문의하기");
+        // 툴바 제목: 메뉴 이름 (문의하기)
+        TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("문의하기");
 
-        ImageButton btn_back = (ImageButton) findViewById(R.id.btn_back);
-        btn_back.setOnClickListener(new View.OnClickListener() {
+        // 뒤로 가기 버튼: 클릭 시 액티비티 종료
+        ImageButton btnBack = (ImageButton) findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        // recycler view
+        rvInquire = (RecyclerView) findViewById(R.id.recycler_view);
 
-        sAdapter = new SettingAdapter(settingList);
-        RecyclerView.LayoutManager sLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(sLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(sAdapter);
+        // setting adapter
+        settingAdapter = new SettingAdapter(settingList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        rvInquire.setLayoutManager(layoutManager);
+        rvInquire.setAdapter(settingAdapter);
 
-        sAdapter.setOnItemClickListener(onItemClickListener);
+        settingAdapter.setOnItemClickListener(onItemClickListener);
 
         prepareSettingData();
     }
 
+    // 메뉴 추가
+    private void prepareSettingData() {
+        Setting menu = new Setting("카카오톡 문의하기");
+        settingList.add(menu);
+
+        menu = new Setting("전화 문의하기");
+        settingList.add(menu);
+
+        menu = new Setting("이메일 문의하기");
+        settingList.add(menu);
+
+        settingAdapter.notifyDataSetChanged();
+    }
+
+    // 각 메뉴마다 카카오톡 문의하기, 전화 문의하기, 이메일 문의하기 Toast 띄우기
     SettingAdapter.OnItemClickListener onItemClickListener = new SettingAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
@@ -70,19 +88,4 @@ public class InquireActivity extends AppCompatActivity {
             }
         }
     };
-
-    private void prepareSettingData() {
-        Setting menu = new Setting("카카오톡 문의하기");
-        settingList.add(menu);
-
-        menu = new Setting("전화 문의하기");
-        settingList.add(menu);
-
-        menu = new Setting("이메일 문의하기");
-        settingList.add(menu);
-
-        sAdapter.notifyDataSetChanged();
-    }
-
-
 }
