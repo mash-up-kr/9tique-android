@@ -6,9 +6,11 @@ import com.google.gson.JsonObject;
 import java.util.List;
 
 import kr.co.mash_up.a9tique.data.Product;
+import kr.co.mash_up.a9tique.data.RequestUser;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
@@ -81,4 +83,9 @@ public interface BackendService {
     @Headers("Accept: application/json")
     @GET("product/{id}")
     Observable<JsonObject> getProductDetail(@Path("id") int productId);
+
+    // 로그인
+    @Headers("Accept: application/json")
+    @POST("login")
+    Observable<JsonObject> login(@Body RequestUser user);
 }

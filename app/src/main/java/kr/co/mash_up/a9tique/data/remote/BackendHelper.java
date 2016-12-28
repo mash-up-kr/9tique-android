@@ -3,17 +3,18 @@ package kr.co.mash_up.a9tique.data.remote;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.util.concurrent.TimeUnit;
 
 import kr.co.mash_up.a9tique.BuildConfig;
 import kr.co.mash_up.a9tique.common.Constants;
+import kr.co.mash_up.a9tique.data.RequestUser;
+import kr.co.mash_up.a9tique.data.User;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -89,13 +90,36 @@ public class BackendHelper {
                     if (jaRoot != null) {
                         Log.e(TAG, jaRoot.toString());
 
-                        callback.onSuccess();
+//                        callback.onSuccess();
                     } else {
                         callback.onFailure();
                     }
 
                 }, throwable -> {
                     Log.e(TAG, "getCategories " + throwable.getMessage());
+                });
+    }
+
+    public void login(RequestUser user, ResultCallback<User> callback) {
+        Observable<JsonObject> call = service.login(user);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    Integer statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, " " + statusCode);
+
+                    if (statusCode /100 == 2) {
+                        User resUser = new Gson().fromJson(jsonObject, User.class);
+
+                        Log.d(TAG, resUser.getAccessToken() + " " + resUser.getUserLevel());
+
+                        callback.onSuccess(resUser);
+                    } else {
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "login " + throwable.getMessage());
+                    callback.onFailure();
                 });
     }
 }

@@ -10,6 +10,10 @@ import com.kakao.auth.Session;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
 
+import kr.co.mash_up.a9tique.common.Constants;
+import kr.co.mash_up.a9tique.ui.products.SellerProductListActivity;
+import kr.co.mash_up.a9tique.util.PreferencesUtils;
+
 public class LoginActivity extends AppCompatActivity {
 
     public static final String TAG = LoginActivity.class.getSimpleName();
@@ -25,6 +29,15 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+//      자동 로그인, access token이 저장되 있으면 바로 메인으로 넘어간다.
+        String token = PreferencesUtils.getString(LoginActivity.this, Constants.PREF_ACCESS_TOKEN, "");
+        String userLevel = PreferencesUtils.getString(LoginActivity.this, Constants.PREF_USER_LEVEL, "");
+        //Todo: token 만료일 확인하고 서버로 token refresh request.
+
+        if(userLevel != null && !"".equals(userLevel)){
+            redirectProductListActivity(userLevel);
+        }
+
         mSessionCallback = new SessionCallback();
         Session.getCurrentSession().addCallback(mSessionCallback);
         if (!Session.getCurrentSession().checkAndImplicitOpen()) {
@@ -34,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)){
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
             return;
         }
 
@@ -44,9 +57,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Session.getCurrentSession().removeCallback(mSessionCallback);
+        if (mSessionCallback != null) {
+            Session.getCurrentSession().removeCallback(mSessionCallback);
+        }
     }
 
+    /**
+     * Kakao Talk Login session callback
+     */
     private class SessionCallback implements ISessionCallback {
 
         @Override
@@ -68,6 +86,22 @@ public class LoginActivity extends AppCompatActivity {
         final Intent intent = new Intent(this, KaKaoSignupActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
+        finish();
+    }
+
+    /**
+     * 판매자, 유저인지 확인하고 분기 시킨다.
+     */
+    private void redirectProductListActivity(String userLevel) {
+        switch (userLevel){
+            case "USER":
+                //Todo: start user product list activity
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+            case "SELLER":
+                startActivity(new Intent(this, SellerProductListActivity.class));
+                break;
+        }
         finish();
     }
 }
