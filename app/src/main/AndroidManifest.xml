@@ -24,11 +24,11 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".ui.splash.SplashActivity"
-            android:theme="@style/AppTheme.SplashTheme">
+            android:theme="@style/AppTheme.FullScreen">
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
