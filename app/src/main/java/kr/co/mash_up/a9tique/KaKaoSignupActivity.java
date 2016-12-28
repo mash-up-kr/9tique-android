@@ -7,10 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.kakao.auth.ApiResponseCallback;
-import com.kakao.auth.AuthService;
 import com.kakao.auth.ErrorCode;
-import com.kakao.auth.network.response.AccessTokenInfoResponse;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.MeResponseCallback;
@@ -19,7 +16,7 @@ import com.kakao.util.helper.log.Logger;
 
 import kr.co.mash_up.a9tique.common.AccountManager;
 import kr.co.mash_up.a9tique.common.Constants;
-import kr.co.mash_up.a9tique.data.RequestUser;
+import kr.co.mash_up.a9tique.data.remote.RequestUser;
 import kr.co.mash_up.a9tique.data.User;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;

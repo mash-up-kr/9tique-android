@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 
 import kr.co.mash_up.a9tique.BuildConfig;
 import kr.co.mash_up.a9tique.common.Constants;
-import kr.co.mash_up.a9tique.data.RequestUser;
 import kr.co.mash_up.a9tique.data.User;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -64,7 +63,8 @@ public class BackendHelper {
                 .connectTimeout(Constants.CONNECT_TIMEOUT, TimeUnit.SECONDS)  // 연결 타임아웃
                 .readTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS)  // 읽기 타임아웃
                 .writeTimeout(Constants.WRITE_TIMEOUT, TimeUnit.SECONDS)  // 쓰기 타임아웃
-                .addInterceptor(interceptor)
+                .addInterceptor(interceptor)  // http 로깅 설정
+                .addInterceptor(new AccessTokenHttpInterceptor())
                 .build();
     }
 

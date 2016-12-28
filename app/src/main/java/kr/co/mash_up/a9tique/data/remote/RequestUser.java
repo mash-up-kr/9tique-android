@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique.data;
+package kr.co.mash_up.a9tique.data.remote;
 
 import com.google.gson.annotations.SerializedName;
 
