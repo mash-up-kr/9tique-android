@@ -30,7 +30,7 @@
         android:textSize="12sp"
         android:paddingTop="4dp"
         android:background="@null"
-        android:cursorVisible="false"/>
+        android:textCursorDrawable="@drawable/gray_cursor"/>
     </LinearLayout>
 
 </RelativeLayout>

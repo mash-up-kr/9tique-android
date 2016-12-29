@@ -30,12 +30,12 @@ public class InquireActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // 툴바 제목: 메뉴 이름 (문의하기)
-        TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("문의하기");
+        TextView tvToolbarTitle = (TextView) findViewById(R.id.tv_toolbar_title);
+        tvToolbarTitle.setText("문의하기");
 
         // 뒤로 가기 버튼: 클릭 시 액티비티 종료
-        ImageButton btnBack = (ImageButton) findViewById(R.id.btn_back);
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        ImageButton ibtnToolbarBack = (ImageButton) findViewById(R.id.ibtn_toolbar_back);
+        ibtnToolbarBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();

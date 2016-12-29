@@ -11,17 +11,26 @@
         android:layout_height="20dp"
         android:src="@drawable/icn_back"
         android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
-        android:layout_margin="16dp"/>
-    
+        android:scaleType="fitCenter"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:layout_gravity="center"
+        android:layout_marginLeft="106dp"
         android:id="@+id/tv_toolbar_title"
         android:textStyle="bold"
         android:textColor="@android:color/white"
         android:textSize="15sp"/>
+
+    <Button
+        android:id="@+id/btn_toolbar_sign_up"
+        android:layout_width="28dp"
+        android:layout_height="22dp"
+        android:layout_marginLeft="83dp"
+        android:text="등록"
+        android:textSize="15sp"
+        android:textColor="#ffffff"
+        android:background="@android:color/transparent" />
 
 </android.support.v7.widget.Toolbar>

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -23,18 +24,27 @@ public class SellerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller);
 
-        // 툴바 (메뉴 이름, 뒤로 가기 버튼)
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        // 툴바 (메뉴 이름, 뒤로 가기 버튼, 등록 버튼)
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_seller_identify);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // 툴바 제목: 메뉴 이름 (판매자 정보 확인)
-        TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        TextView toolbarTitle = (TextView) findViewById(R.id.tv_toolbar_title);
         toolbarTitle.setText("판매자 정보 확인");
 
         // 뒤로 가기 버튼: 클릭 시 액티비티 종료
-        ImageButton btnBack = (ImageButton) findViewById(R.id.btn_back);
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        ImageButton ibtnToolbarBack = (ImageButton) findViewById(R.id.ibtn_toolbar_back);
+        ibtnToolbarBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        // 등록하기 버튼
+        Button btnToolbarSignUp = (Button) findViewById(R.id.btn_toolbar_sign_up);
+        btnToolbarSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();

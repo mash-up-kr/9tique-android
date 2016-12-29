@@ -28,7 +28,7 @@
                     android:paddingTop="16dp"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
-                    android:id="@+id/tv_agreement_1"
+                    android:id="@+id/tv_agreement_title"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:textColor="#000000"/>
@@ -37,7 +37,7 @@
                     android:paddingRight="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_agreement_2"
+                    android:id="@+id/tv_agreement_text"
                     android:textSize="12sp"
                     android:textColor="#000000"
                     android:lineSpacingExtra="8dip"/>

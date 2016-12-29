@@ -34,12 +34,12 @@ public class SettingActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // 툴바 제목 -> 메뉴 이름 (설정)
-        TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("설정");
+        TextView tvToolbarTitle = (TextView) findViewById(R.id.tv_toolbar_title);
+        tvToolbarTitle.setText("설정");
 
         // 뒤로 가기 버튼: 클릭 시 액티비티 종료
-        ImageButton btnBack = (ImageButton) findViewById(R.id.btn_back);
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        ImageButton ibtnToolbarBack = (ImageButton) findViewById(R.id.ibtn_toolbar_back);
+        ibtnToolbarBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -82,20 +82,20 @@ public class SettingActivity extends AppCompatActivity {
                     // 4. 판매자 등록 - 다이얼로그 출력
                     final Dialog dlgSeller = new Dialog(context);
                     dlgSeller.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dlgSeller.setContentView(R.layout.custom_dialog);
+                    dlgSeller.setContentView(R.layout.seller_dialog);
 
                     // 다이얼로그 타이틀 설정
-                    TextView tvSellerTitle = (TextView) dlgSeller.findViewById(R.id.dlg_title);
-                    tvSellerTitle.setText("인증코드 입력");
+                    TextView tvDlgSellerTitle = (TextView) dlgSeller.findViewById(R.id.dlg_title);
+                    tvDlgSellerTitle.setText("인증코드 입력");
 
                     // 다이얼로그 힌트 설정
-                    EditText etSeller = (EditText) dlgSeller.findViewById(R.id.dlg_edittxt);
-                    etSeller.setHint("발급된 인증코드를 입력해 주세요.");
+                    EditText etDlgSeller = (EditText) dlgSeller.findViewById(R.id.dlg_edittxt);
+                    etDlgSeller.setHint("발급된 인증코드를 입력해 주세요.");
 
                     // CANCEL 클릭 시 다이얼로그 종료
-                    Button btnSellerCancel = (Button) dlgSeller.findViewById(R.id.dlg_cancel);
-                    btnSellerCancel.setText("CANCEL");
-                    btnSellerCancel.setOnClickListener(new View.OnClickListener() {
+                    Button btnDlgSellerCancel = (Button) dlgSeller.findViewById(R.id.dlg_cancel);
+                    btnDlgSellerCancel.setText("CANCEL");
+                    btnDlgSellerCancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             dlgSeller.dismiss();
@@ -103,9 +103,9 @@ public class SettingActivity extends AppCompatActivity {
                     });
 
                     // AGREE 클릭 시 sellerActivity로 이동
-                    Button btnSellerAgree = (Button) dlgSeller.findViewById(R.id.dlg_agree);
-                    btnSellerAgree.setText("AGREE");
-                    btnSellerAgree.setOnClickListener(new View.OnClickListener() {
+                    Button btnDlgSellerAgree = (Button) dlgSeller.findViewById(R.id.dlg_agree);
+                    btnDlgSellerAgree.setText("AGREE");
+                    btnDlgSellerAgree.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent seller = new Intent(context, SellerActivity.class);
@@ -125,29 +125,29 @@ public class SettingActivity extends AppCompatActivity {
                     // 6. 로그아웃 - 다이얼로그 출력
                     final Dialog dlgLogout = new Dialog(context);
                     dlgLogout.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dlgLogout.setContentView(R.layout.custom_dialog2);
+                    dlgLogout.setContentView(R.layout.logout_dialog);
 
                     // 다이얼로그 타이틀 설정
-                    TextView tvLogoutTitle = (TextView) dlgLogout.findViewById(R.id.dlg_title);
-                    tvLogoutTitle.setText("로그아웃");
+                    TextView tvDlgLogoutTitle = (TextView) dlgLogout.findViewById(R.id.dlg_title);
+                    tvDlgLogoutTitle.setText("로그아웃");
 
                     // 다이얼로그 메시지 설정
-                    TextView tvLogoutMessage = (TextView) dlgLogout.findViewById(R.id.dlg_message);
-                    tvLogoutMessage.setText("로그아웃하시겠습니까?");
+                    TextView tvDlgLogoutMessage = (TextView) dlgLogout.findViewById(R.id.dlg_message);
+                    tvDlgLogoutMessage.setText("로그아웃하시겠습니까?");
 
                     // CANCEL 버튼 클릭 시 다이얼로그 종료
-                    Button btnLogoutCancel = (Button) dlgLogout.findViewById(R.id.dlg_cancel);
-                    btnLogoutCancel.setText("CANCEL");
-                    btnLogoutCancel.setOnClickListener(new View.OnClickListener() {
+                    Button btnDlgLogoutCancel = (Button) dlgLogout.findViewById(R.id.dlg_cancel);
+                    btnDlgLogoutCancel.setText("CANCEL");
+                    btnDlgLogoutCancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             dlgLogout.dismiss();
                         }
                     });
                     // AGREE 버튼 클릭 시 FacebookLogin으로 이동
-                    Button btnLogoutAgree = (Button) dlgLogout.findViewById(R.id.dlg_agree);
-                    btnLogoutAgree.setText("AGREE");
-                    btnLogoutAgree.setOnClickListener(new View.OnClickListener() {
+                    Button btnDlgLogoutAgree = (Button) dlgLogout.findViewById(R.id.dlg_agree);
+                    btnDlgLogoutAgree.setText("AGREE");
+                    btnDlgLogoutAgree.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent fbLogin = new Intent(context, FacebookLogin.class);
@@ -175,7 +175,7 @@ public class SettingActivity extends AppCompatActivity {
         menu = new Setting("라이센스 정보", R.drawable.icn_next); // license
         settingList.add(menu);
 
-        menu = new Setting("판매자 등록", R.drawable.icn_next);
+        menu = new Setting("판매자 등록", R.drawable.icn_next); // seller
         settingList.add(menu);
 
         menu = new Setting("About 9tique", R.drawable.icn_next); // About 9tique
