@@ -124,10 +124,10 @@ public class KaKaoSignupActivity extends AppCompatActivity {
      * 판매자, 유저인지 확인하고 분기 시킨다.
      */
     private void redirectProductListActivity(String userLevel) {
-        // 판매자, 유저인지 확인하고 분기 시킨다.
         switch (userLevel){
             case "USER":
-                startActivity(new Intent(this, MainActivity.class));
+                //Todo: start user product list activity
+                startActivity(new Intent(this, SellerProductListActivity.class));
                 break;
             case "SELLER":
                 startActivity(new Intent(this, SellerProductListActivity.class));

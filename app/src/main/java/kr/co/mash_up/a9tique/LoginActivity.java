@@ -34,14 +34,14 @@ public class LoginActivity extends AppCompatActivity {
         String userLevel = PreferencesUtils.getString(LoginActivity.this, Constants.PREF_USER_LEVEL, "");
         //Todo: token 만료일 확인하고 서버로 token refresh request.
 
-        if(userLevel != null && !"".equals(userLevel)){
+        if (userLevel != null && !"".equals(userLevel)) {
             redirectProductListActivity(userLevel);
-        }
-
-        mSessionCallback = new SessionCallback();
-        Session.getCurrentSession().addCallback(mSessionCallback);
-        if (!Session.getCurrentSession().checkAndImplicitOpen()) {
-            setContentView(R.layout.activity_login);
+        } else {
+            mSessionCallback = new SessionCallback();
+            Session.getCurrentSession().addCallback(mSessionCallback);
+            if (!Session.getCurrentSession().checkAndImplicitOpen()) {
+                setContentView(R.layout.activity_login);
+            }
         }
     }
 
@@ -93,10 +93,10 @@ public class LoginActivity extends AppCompatActivity {
      * 판매자, 유저인지 확인하고 분기 시킨다.
      */
     private void redirectProductListActivity(String userLevel) {
-        switch (userLevel){
+        switch (userLevel) {
             case "USER":
                 //Todo: start user product list activity
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, SellerProductListActivity.class));
                 break;
             case "SELLER":
                 startActivity(new Intent(this, SellerProductListActivity.class));
