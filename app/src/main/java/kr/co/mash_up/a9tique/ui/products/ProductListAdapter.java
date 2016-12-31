@@ -1,6 +1,8 @@
 package kr.co.mash_up.a9tique.ui.products;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import kr.co.mash_up.a9tique.base.ui.BaseViewHolder;
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.ui.OnItemClickListener;
 
@@ -16,7 +19,10 @@ import kr.co.mash_up.a9tique.ui.OnItemClickListener;
  * Created by Dong on 2016-11-12.
  */
 
-public class ProductListAdapter extends RecyclerView.Adapter<ProductViewHolder> {
+public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    public static final int VIEW_TYPE_CONTENT = 0;
+    public static final int VIEW_TYPE_FOOTER = 1;
 
     private ArrayList<Product> mProducts;
     private final Context mContext;
@@ -31,13 +37,13 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductViewHolder> 
         this.mContext = context;
         this.mProducts = new ArrayList<>();
 
-        dummyData();
+//        dummyData();
     }
 
     //Todo: remove
-    private void dummyData(){
+    private void dummyData() {
         Product product;
-        for(int i=0; i<30; i++){
+        for (int i = 0; i < 30; i++) {
             product = new Product();
             product.setName("name " + i);
             product.setBrandName("brand name " + i);
@@ -53,17 +59,25 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductViewHolder> 
     }
 
     @Override
-    public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return ProductViewHolder.newInstance(parent, mOnItemClickListener);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        switch (viewType) {
+            case VIEW_TYPE_CONTENT:
+                return ProductViewHolder.newInstance(parent, mOnItemClickListener);
+            case VIEW_TYPE_FOOTER:
+                return ProductFooterViewHolder.newInstance(parent);
+            default:
+                return null;
+        }
     }
 
     @Override
-    public void onBindViewHolder(ProductViewHolder holder, int position) {
-        if (mProducts.size() == 0) {
-            return;
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof ProductViewHolder) {
+            Product product = mProducts.get(position);
+            ((ProductViewHolder) holder).bind(product);
+        } else {
+            ((ProductFooterViewHolder) holder).bind(null);
         }
-        Product product = mProducts.get(position);
-        holder.bind(product);
     }
 
     @Override
@@ -71,7 +85,15 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductViewHolder> 
         return mProducts != null ? mProducts.size() : 0;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return mProducts.get(position) == null ? VIEW_TYPE_FOOTER : VIEW_TYPE_CONTENT;
+    }
+
     public void addItem(Product product, int position) {
+        if (position < 0) {
+            position = 0;
+        }
         mProducts.add(position, product);
         notifyItemInserted(position);
     }
@@ -79,10 +101,14 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductViewHolder> 
     public void removeItem(int position) {
         mProducts.remove(position);
         notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mProducts.size());
     }
 
     public void setProducts(List<Product> products) {
-        mProducts = (ArrayList<Product>) products;
+
+        for (int i = 0; i < products.size(); i++) {
+            mProducts.add(products.get(i));
+        }
         notifyDataSetChanged();
     }
 }

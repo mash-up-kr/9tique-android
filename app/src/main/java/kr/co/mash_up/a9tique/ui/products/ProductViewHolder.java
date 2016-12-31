@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.common.Constants;
@@ -58,9 +60,9 @@ public class ProductViewHolder extends BaseViewHolder<Product> {
         tvName.setText(product.getName());
         tvBrandName.setText(product.getBrandName());
         tvSize.setText(product.getSize());
-        tvPrice.setText(String.valueOf(product.getPrice()));
+        tvPrice.setText(NumberFormat.getInstance(Locale.KOREA).format(product.getPrice()));
 
-        if(product.getProductImages().size() > 0){  //Todo: remove
+        if (product.getProductImages().size() > 0) {  //Todo: remove
             Glide.with(itemView.getContext())
                     .load(Constants.END_POINT + product.getProductImages().get(0).getImageUrl())
                     .fitCenter()
