@@ -10,9 +10,9 @@ import java.util.List;
 public class MainCategory implements Parent<SubCategory> {
 
     private String mName;
-    private List<SubCategory> mSubCategories;
+    private java.util.List<SubCategory> mSubCategories;
 
-    public MainCategory(String name, List<SubCategory> subCategories) {
+    public MainCategory(String name, java.util.List<SubCategory> subCategories) {
         mName = name;
         mSubCategories = subCategories;
     }
@@ -22,7 +22,7 @@ public class MainCategory implements Parent<SubCategory> {
     }
 
     @Override
-    public List<SubCategory> getChildList() {
+    public java.util.List<SubCategory> getChildList() {
         return mSubCategories;
     }
 
@@ -35,7 +35,7 @@ public class MainCategory implements Parent<SubCategory> {
         return mSubCategories.get(position);
     }
 
-    enum MainCategoryList {
+    public enum List {
         NEW,  // 신상품
         OUTER,  // 아우터
         TOP,  // 상의

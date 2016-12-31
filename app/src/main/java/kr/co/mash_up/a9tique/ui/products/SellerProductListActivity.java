@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
+import kr.co.mash_up.a9tique.data.MainCategory;
 import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
 
 //Todo: EventPage 무한 스크롤
@@ -121,12 +123,12 @@ public class SellerProductListActivity extends BaseActivity {
 
     private void setupMainCategoryViewPager() {
         mMainCategoryPagerAdapter = new CategoryPagerAdapter(getSupportFragmentManager());
-        mMainCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance("New"), "New");
-        mMainCategoryPagerAdapter.addFragment(OuterCategoryFragment.newInstance("아우터"), "아우터");
-        mMainCategoryPagerAdapter.addFragment(TopCategoryFragment.newInstance("상의"), "상의");
-        mMainCategoryPagerAdapter.addFragment(BottomCategoryFragment.newInstance("하의"), "하의");
-        mMainCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance("신발"), "신발");
-        mMainCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance("모자"), "모자");
+        mMainCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance(MainCategory.List.NEW.name(), ""), "New");
+        mMainCategoryPagerAdapter.addFragment(OuterCategoryFragment.newInstance(MainCategory.List.OUTER.name()), "아우터");
+        mMainCategoryPagerAdapter.addFragment(TopCategoryFragment.newInstance(MainCategory.List.TOP.name()), "상의");
+        mMainCategoryPagerAdapter.addFragment(BottomCategoryFragment.newInstance(MainCategory.List.BOTTOM.name()), "하의");
+        mMainCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance(MainCategory.List.SHOSE.name(), ""), "신발");
+        mMainCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance(MainCategory.List.CAP.name(), ""), "모자");
         mVpMainCategories.setAdapter(mMainCategoryPagerAdapter);
     }
 

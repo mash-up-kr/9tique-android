@@ -16,7 +16,8 @@ public class SubCategory {
         mName = name;
     }
 
-    enum SubCategoryList {
+    public enum List {
+        ALL,
         JACKET,  // 자켓
         COATS,  // 코트
         JUMPER,  // 점퍼

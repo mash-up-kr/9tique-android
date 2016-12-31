@@ -7,6 +7,7 @@ import android.view.View;
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
+import kr.co.mash_up.a9tique.data.SubCategory;
 import kr.co.mash_up.a9tique.ui.widget.SwipeViewPager;
 
 /**
@@ -15,9 +16,9 @@ import kr.co.mash_up.a9tique.ui.widget.SwipeViewPager;
 
 public class BottomCategoryFragment extends BaseFragment {
 
-    private static final String ARG_PARAM_TITLE = "title";
+    private static final String ARG_PARAM_MAIN_CATEGORY = "mainCategory";
 
-    private String mParamTitle;
+    private String mParamMainCategory;
 
     @BindView(R.id.tl_sub_categories)
     TabLayout mTlSubCategories;
@@ -31,10 +32,10 @@ public class BottomCategoryFragment extends BaseFragment {
         // Required empty public constructor
     }
 
-    public static BottomCategoryFragment newInstance(String paramTitle) {
+    public static BottomCategoryFragment newInstance(String mainCategory) {
         BottomCategoryFragment fragment = new BottomCategoryFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM_TITLE, paramTitle);
+        args.putString(ARG_PARAM_MAIN_CATEGORY, mainCategory);
         fragment.setArguments(args);
         return fragment;
     }
@@ -43,7 +44,7 @@ public class BottomCategoryFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParamTitle = getArguments().getString(ARG_PARAM_TITLE);
+            mParamMainCategory = getArguments().getString(ARG_PARAM_MAIN_CATEGORY);
         }
     }
 
@@ -61,11 +62,11 @@ public class BottomCategoryFragment extends BaseFragment {
 
     private void setupSubCategoryViewPager() {
         mSubCategoryPagerAdapter = new CategoryPagerAdapter(getChildFragmentManager());
-        mSubCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance("ALL"), "ALL");
-        mSubCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance("데님팬츠"), "데님팬츠");
-        mSubCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance("팬츠"), "팬츠");
-        mSubCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance("쇼츠"), "쇼츠");
-        mSubCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance("스커트"), "스커트");
+        mSubCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance(mParamMainCategory, SubCategory.List.ALL.name()), "ALL");
+        mSubCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance(mParamMainCategory, SubCategory.List.DENIM_PANTS.name()), "데님팬츠");
+        mSubCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance(mParamMainCategory, SubCategory.List.PANTS.name()), "팬츠");
+        mSubCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance(mParamMainCategory, SubCategory.List.SHORTS.name()), "쇼츠");
+        mSubCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance(mParamMainCategory, SubCategory.List.SKIRT.name()), "스커트");
         mVpProducts.setAdapter(mSubCategoryPagerAdapter);
     }
 }

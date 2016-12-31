@@ -1,6 +1,11 @@
 package kr.co.mash_up.a9tique.data;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ProductImage {
+
+    @SerializedName("url")
+    private String imageUrl;
 
     private String imagePath;
 
@@ -17,5 +22,18 @@ public class ProductImage {
     }
 
     public ProductImage() {
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public String toString() {
+        return imageUrl;
     }
 }

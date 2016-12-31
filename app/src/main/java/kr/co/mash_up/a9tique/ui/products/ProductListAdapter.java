@@ -34,16 +34,23 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductViewHolder> 
         dummyData();
     }
 
+    //Todo: remove
     private void dummyData(){
         Product product;
         for(int i=0; i<30; i++){
             product = new Product();
             product.setName("name " + i);
-            product.setCreatedAt(new Date());
+            product.setBrandName("brand name " + i);
+            product.setPrice(10000);
+            product.setSize("size " + i);
+            product.setDescription("description " + i);
+            product.setMainCategory("main " + i);
+            product.setSubCategory("sub " + i);
+            product.setProductImages(new ArrayList<>());
+            product.setCreatedAt(new Date().getTime());
             addItem(product, i);
         }
     }
-
 
     @Override
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -74,7 +81,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductViewHolder> 
         notifyItemRemoved(position);
     }
 
-    public void setTeamArrayList(List<Product> products) {
+    public void setProducts(List<Product> products) {
         mProducts = (ArrayList<Product>) products;
         notifyDataSetChanged();
     }

@@ -7,10 +7,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import kr.co.mash_up.a9tique.BuildConfig;
 import kr.co.mash_up.a9tique.common.Constants;
+import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.data.User;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -82,7 +85,7 @@ public class BackendHelper {
 
     //Todo: implements
     public void getCategories(ResultCallback callback) {
-        Observable<JsonArray> call = service.getCategories();
+        Observable<JsonObject> call = service.getCategories();
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(jaRoot -> {
@@ -106,9 +109,9 @@ public class BackendHelper {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(jsonObject -> {
                     Integer statusCode = jsonObject.get("status").getAsInt();
-                    Log.d(TAG, " " + statusCode);
+                    Log.d(TAG, "status code: " + statusCode);
 
-                    if (statusCode /100 == 2) {
+                    if (statusCode / 100 == 2) {
                         User resUser = new Gson().fromJson(jsonObject, User.class);
 
                         Log.d(TAG, resUser.getAccessToken() + " " + resUser.getUserLevel());
@@ -117,6 +120,38 @@ public class BackendHelper {
                     } else {
                         callback.onFailure();
                     }
+                }, throwable -> {
+                    Log.e(TAG, "login " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
+
+    public void getProducts(int pageNo, String mainCategory, String subCategory, ResultCallback<ResponseProduct> callback) {
+        Observable<JsonObject> call = service.getProducts(pageNo, 20, mainCategory, subCategory);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    int statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if (statusCode / 100 == 2) {
+                        int currentPageNo = jsonObject.get("page_no").getAsInt();
+                        int pageTotal = jsonObject.get("page_total").getAsInt();
+
+                        List<Product> products = new ArrayList<Product>();
+                        JsonArray jsonArray = jsonObject.getAsJsonArray("list");
+                        Product product;
+                        for (int i = 0; i < jsonArray.size(); i++) {
+                            product = new Gson().fromJson(jsonArray.get(i).getAsJsonObject(), Product.class);
+                            Log.d(TAG, "product: " + product.toString());
+                            products.add(product);
+                        }
+
+                        callback.onSuccess(new ResponseProduct(products, currentPageNo, pageTotal));
+                    } else {
+                        callback.onFailure();
+                    }
+
                 }, throwable -> {
                     Log.e(TAG, "login " + throwable.getMessage());
                     callback.onFailure();

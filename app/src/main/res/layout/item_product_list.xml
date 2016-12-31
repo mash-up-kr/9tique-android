@@ -19,26 +19,31 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/iv_product_thumbnail"
             android:src="@mipmap/ic_launcher"
             android:layout_width="177dp"
             android:layout_height="180dp"/>
 
         <TextView
+            android:id="@+id/tv_product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name"/>
 
         <TextView
+            android:id="@+id/tv_product_brand_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Brand name"/>
 
         <TextView
+            android:id="@+id/tv_product_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Size"/>
 
         <TextView
+            android:id="@+id/tv_product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="\ 105,000"/>
