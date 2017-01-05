@@ -45,6 +45,6 @@ public class SellerProductListEventFragment extends BaseFragment {
 
     @Override
     public void initView(View rootView) {
-        ivEvent.setImageResource(R.mipmap.ic_launcher);
+        ivEvent.setImageResource(R.drawable.img_event);
     }
 }

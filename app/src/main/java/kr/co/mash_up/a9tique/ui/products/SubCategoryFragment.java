@@ -2,6 +2,7 @@ package kr.co.mash_up.a9tique.ui.products;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +22,9 @@ public class SubCategoryFragment extends BaseFragment {
 
     @BindView(R.id.rv_products)
     RecyclerView mRvProducts;
+
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     private ProductListAdapter mProductListAdapter;
 
@@ -74,6 +78,15 @@ public class SubCategoryFragment extends BaseFragment {
     public void initView(View rootView) {
         mRvProducts.setHasFixedSize(true);
         GridLayoutManager glmProducts = new GridLayoutManager(getActivity(), 2);
+        glmProducts.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (mProductListAdapter.getItemViewType(position) == ProductListAdapter.VIEW_TYPE_FOOTER) {
+                    return 2;
+                }
+                return 1;
+            }
+        });
         mRvProducts.setLayoutManager(glmProducts);
 
         mProductListAdapter = new ProductListAdapter(getActivity());
@@ -99,6 +112,15 @@ public class SubCategoryFragment extends BaseFragment {
                 productsLoadMoreDataFromApi(mParamCurrentPageNo + 1);
             }
         });
+
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.my_sin, R.color.nero);
+        mSwipeRefreshLayout.setOnRefreshListener(this::refresh);
+    }
+
+    private void refresh() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        productsLoadMoreDataFromApi(mParamCurrentPageNo + 1);
+        mRvProducts.scrollToPosition(0);
     }
 
     private void productsLoadMoreDataFromApi(int currentPageNo) {
@@ -132,6 +154,9 @@ public class SubCategoryFragment extends BaseFragment {
                     });
         }
         mFirstLoad = false;
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
