@@ -21,6 +21,7 @@ import com.sangcomz.fishbun.define.Define;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.OnClick;
 import kr.co.mash_up.a9tique.R;
@@ -63,7 +64,10 @@ public class AddEditProductFragment extends BaseFragment implements Confirmation
     @BindView(R.id.et_detail_description)
     EditText mEtDetailDescription;
 
-    ProductImageListAdapter mProductImageListAdapter;
+    @BindDimen(R.dimen.product_image_list_margin)
+    int itemSpacingSize;
+
+    private ProductImageListAdapter mProductImageListAdapter;
 
     public AddEditProductFragment() {
         // Required empty public constructor
@@ -94,19 +98,27 @@ public class AddEditProductFragment extends BaseFragment implements Confirmation
     public void initView(View rootView) {
         mRvImage.setHasFixedSize(true);
         mRvImage.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mRvImage.addItemDecoration(new SpacingItemDecoration(itemSpacingSize));
 
         mProductImageListAdapter = new ProductImageListAdapter(getActivity());
-        mProductImageListAdapter.setOnItemClickListener(object -> {
-            // show dialog select camera or gallery
-            Log.e(TAG, "click");
-            PictureSelectionDialogFragment dialog = PictureSelectionDialogFragment.newInstance("사진 업로드", "");
-            dialog.setTargetFragment(AddEditProductFragment.this, 0);
-            dialog.show(getChildFragmentManager(), PictureSelectionDialogFragment.TAG);
+        mProductImageListAdapter.setOnItemClickListener(new ProductImageListAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(Object o) {
+                // show dialog select camera or gallery
+                PictureSelectionDialogFragment dialog = PictureSelectionDialogFragment.newInstance("사진 업로드");
+                dialog.setTargetFragment(AddEditProductFragment.this, 0);
+                dialog.show(getChildFragmentManager(), PictureSelectionDialogFragment.TAG);
+            }
+
+            @Override
+            public void onRemove(int position) {
+                mProductImageListAdapter.removeItem(position);
+                setProductImageCount();
+            }
         });
         mRvImage.setAdapter(mProductImageListAdapter);
 
         setProductImageCount();
-
     }
 
     @OnClick(R.id.iv_category_select)
@@ -127,7 +139,7 @@ public class AddEditProductFragment extends BaseFragment implements Confirmation
      * 이미지 갯수 표시
      */
     private void setProductImageCount() {
-        mTvImageCount.setText(String.format(Locale.KOREA, "%d/4", mProductImageListAdapter.getItemCount() - 1));
+        mTvImageCount.setText(String.format(Locale.KOREA, "(%d/4)", mProductImageListAdapter.getItemCount() - 1));
     }
 
     @Override

@@ -9,17 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.mash_up.a9tique.data.ProductImage;
-import kr.co.mash_up.a9tique.ui.OnItemClickListener;
 
 public class ProductImageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int VIEW_TYPE_NORMAL = 0;
     public static final int VIEW_TYPE_FOOTER = 1;
 
+    public interface OnItemClickListener<T> {
+        void onClick(T t);
+        void onRemove(int position);
+    }
+
     private List<ProductImage> mProductImageList;
     private Context mContext;
 
-    OnItemClickListener mOnItemClickListener;
+    private OnItemClickListener mOnItemClickListener;
 
     public List<ProductImage> getProductImageList() {
         return mProductImageList;
@@ -44,7 +48,7 @@ public class ProductImageListAdapter extends RecyclerView.Adapter<RecyclerView.V
         if (viewType == VIEW_TYPE_FOOTER) {
             return ProductImageFooterViewHolder.newInstance(parent, mOnItemClickListener);
         }
-        return ProductImageNormalViewHolder.newInstance(parent);
+        return ProductImageNormalViewHolder.newInstance(parent, mOnItemClickListener);
     }
 
     @Override
@@ -70,7 +74,7 @@ public class ProductImageListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public void removeItem(int position) {
         mProductImageList.remove(position);
-        notifyItemRemoved(position - 1);
+        notifyItemRemoved(position);
 //        notifyItemRangeChanged(position, mProductImageList.size());
     }
 
