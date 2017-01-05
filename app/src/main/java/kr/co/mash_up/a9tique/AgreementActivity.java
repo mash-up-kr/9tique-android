@@ -4,38 +4,41 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class AgreementActivity extends AppCompatActivity {
+
+    @BindView(R.id.tool_bar)
+    Toolbar toolbar;
+    @BindView(R.id.tv_toolbar_title)
+    TextView tvToolbarTitle;
+    @BindView(R.id.tv_agreement_title)
+    TextView tvAgreementTitle;
+    @BindView(R.id.tv_agreement_text)
+    TextView tvAgreementText;
+
+    @OnClick(R.id.ibtn_toolbar_back)
+    public void click(View view) {
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agreement);
 
-        // 툴바 (메뉴 이름, 뒤로 가기 버튼)
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        // 툴바 제목: 메뉴 이름 (이용약관)
-        TextView tvToolbarTitle = (TextView) findViewById(R.id.tv_toolbar_title);
         tvToolbarTitle.setText("이용약관");
 
-        // 뒤로 가기 버튼: 클릭 시 액티비티 종료
-        ImageButton ibtnBack = (ImageButton) findViewById(R.id.ibtn_toolbar_back);
-        ibtnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
-        // 이용약관 텍스트뷰
-        TextView tvAgreementTitle = (TextView)findViewById(R.id.tv_agreement_title);
         tvAgreementTitle.setText("전자상거래(인터넷사이버몰) 표준약관");
-        TextView tvAgreementText = (TextView)findViewById(R.id.tv_agreement_text);
         tvAgreementText.setText("\n" + "제1조(목적)\n" +
                 "이 약관은 9tique가 운영하는 9tique 사이버 몰(이하 '몰'이라 한다)에서 제공하는 인터넷 관련 서비스(이하 '서비스'라 한다)를 이용함에 있어 사이버몰과 이용자의 권리•의무 및 책임사항을 규정함을 목적으로 합니다.\n" +
                 "※「PC통신 등을 이용하는 전자거래에 대해서도 그 성질에 반하지 않는 한 이 약관을 준용합니다」\n" +

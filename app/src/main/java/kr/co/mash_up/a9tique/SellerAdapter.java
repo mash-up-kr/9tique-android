@@ -18,12 +18,10 @@ public class SellerAdapter extends RecyclerView.Adapter<SellerAdapter.MyViewHold
 
     private List<Setting> settingList;
 
-    // seller adapter
     public SellerAdapter(List<Setting> settingList) {
         this.settingList = settingList;
     }
 
-    // view holder
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView menu;
         public EditText editTxt;
@@ -44,7 +42,6 @@ public class SellerAdapter extends RecyclerView.Adapter<SellerAdapter.MyViewHold
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         Setting setting = settingList.get(position);
         holder.menu.setText(setting.getMenu());
-        // 메뉴에 따른 힌트 설정
         switch (position) {
             case 0:
                 holder.editTxt.setHint("판매자 성함을 입력해 주세요.");

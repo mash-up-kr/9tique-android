@@ -19,12 +19,10 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.MyViewHo
     private List<Setting> settingList;
     OnItemClickListener mItemClickListener;
 
-    // setting adapter
     public SettingAdapter(List<Setting> settingList) {
         this.settingList = settingList;
     }
 
-    // view holder
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView menu;
         public ImageView imageView;
@@ -63,7 +61,6 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.MyViewHo
         return settingList.size();
     }
 
-    // item click listener
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
     }

@@ -12,42 +12,42 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class SettingActivity extends AppCompatActivity {
     private List<Setting> settingList = new ArrayList<>();
-    private RecyclerView rvSetting;
     private SettingAdapter settingAdapter;
+
+    @BindView(R.id.tool_bar)
+    Toolbar toolbar;
+    @BindView(R.id.tv_toolbar_title)
+    TextView tvToolbarTitle;
+    @BindView(R.id.recycler_view)
+    RecyclerView rvSetting;
+
+    @OnClick(R.id.ibtn_toolbar_back)
+    public void ibtnToolbarBackClick(View view) {
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        // // 툴바 (메뉴 이름, 뒤로 가기 버튼)
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        // 툴바 제목 -> 메뉴 이름 (설정)
-        TextView tvToolbarTitle = (TextView) findViewById(R.id.tv_toolbar_title);
         tvToolbarTitle.setText("설정");
-
-        // 뒤로 가기 버튼: 클릭 시 액티비티 종료
-        ImageButton ibtnToolbarBack = (ImageButton) findViewById(R.id.ibtn_toolbar_back);
-        ibtnToolbarBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
-        // recycler view
-        rvSetting = (RecyclerView) findViewById(R.id.recycler_view);
 
         settingAdapter = new SettingAdapter(settingList);
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -64,35 +64,28 @@ public class SettingActivity extends AppCompatActivity {
             final Context context = v.getContext();
             switch (position) {
                 case 0:
-                    // 0. 문의하기 - InquireActivity로 이동
                     Intent intent = new Intent(context, InquireActivity.class);
                     context.startActivity(intent);
                     break;
                 case 2:
-                    // 2. 이용약관 - AgreementActivity로 이동
                     intent = new Intent(context, AgreementActivity.class);
                     context.startActivity(intent);
                     break;
                 case 3:
-                    // 3. 라이센스 정보 - LicenseActivity로 이동
                     intent = new Intent(context, LicenseActivity.class);
                     context.startActivity(intent);
                     break;
                 case 4:
-                    // 4. 판매자 등록 - 다이얼로그 출력
                     final Dialog dlgSeller = new Dialog(context);
                     dlgSeller.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dlgSeller.setContentView(R.layout.seller_dialog);
 
-                    // 다이얼로그 타이틀 설정
                     TextView tvDlgSellerTitle = (TextView) dlgSeller.findViewById(R.id.dlg_title);
                     tvDlgSellerTitle.setText("인증코드 입력");
 
-                    // 다이얼로그 힌트 설정
                     EditText etDlgSeller = (EditText) dlgSeller.findViewById(R.id.dlg_edittxt);
                     etDlgSeller.setHint("발급된 인증코드를 입력해 주세요.");
 
-                    // CANCEL 클릭 시 다이얼로그 종료
                     Button btnDlgSellerCancel = (Button) dlgSeller.findViewById(R.id.dlg_cancel);
                     btnDlgSellerCancel.setText("CANCEL");
                     btnDlgSellerCancel.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +95,6 @@ public class SettingActivity extends AppCompatActivity {
                         }
                     });
 
-                    // AGREE 클릭 시 sellerActivity로 이동
                     Button btnDlgSellerAgree = (Button) dlgSeller.findViewById(R.id.dlg_agree);
                     btnDlgSellerAgree.setText("AGREE");
                     btnDlgSellerAgree.setOnClickListener(new View.OnClickListener() {
@@ -117,25 +109,20 @@ public class SettingActivity extends AppCompatActivity {
                     dlgSeller.show();
                     break;
                 case 5:
-                    // 5. About 9tique - About9tiqueActivity로 이동
                     intent = new Intent(context, About9tiqueActivity.class);
                     context.startActivity(intent);
                     break;
                 case 6:
-                    // 6. 로그아웃 - 다이얼로그 출력
                     final Dialog dlgLogout = new Dialog(context);
                     dlgLogout.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dlgLogout.setContentView(R.layout.logout_dialog);
 
-                    // 다이얼로그 타이틀 설정
                     TextView tvDlgLogoutTitle = (TextView) dlgLogout.findViewById(R.id.dlg_title);
                     tvDlgLogoutTitle.setText("로그아웃");
 
-                    // 다이얼로그 메시지 설정
                     TextView tvDlgLogoutMessage = (TextView) dlgLogout.findViewById(R.id.dlg_message);
                     tvDlgLogoutMessage.setText("로그아웃하시겠습니까?");
 
-                    // CANCEL 버튼 클릭 시 다이얼로그 종료
                     Button btnDlgLogoutCancel = (Button) dlgLogout.findViewById(R.id.dlg_cancel);
                     btnDlgLogoutCancel.setText("CANCEL");
                     btnDlgLogoutCancel.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +131,6 @@ public class SettingActivity extends AppCompatActivity {
                             dlgLogout.dismiss();
                         }
                     });
-                    // AGREE 버튼 클릭 시 FacebookLogin으로 이동
                     Button btnDlgLogoutAgree = (Button) dlgLogout.findViewById(R.id.dlg_agree);
                     btnDlgLogoutAgree.setText("AGREE");
                     btnDlgLogoutAgree.setOnClickListener(new View.OnClickListener() {
@@ -161,7 +147,6 @@ public class SettingActivity extends AppCompatActivity {
         }
     };
 
-    // 메뉴 추가
     private void prepareSettingData() {
         Setting menu = new Setting("문의하기", R.drawable.icn_next); // inquire
         settingList.add(menu);
