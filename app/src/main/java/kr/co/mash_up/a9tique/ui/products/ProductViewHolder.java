@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.io.File;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -45,7 +44,7 @@ public class ProductViewHolder extends BaseViewHolder<Product> {
 
     public static ProductViewHolder newInstance(@NonNull ViewGroup parent, OnItemClickListener<Product> listener) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_product_list, parent, false);
+                .inflate(R.layout.item_content_product_list, parent, false);
         return new ProductViewHolder(itemView, listener);
     }
 
@@ -60,7 +59,7 @@ public class ProductViewHolder extends BaseViewHolder<Product> {
         tvName.setText(product.getName());
         tvBrandName.setText(product.getBrandName());
         tvSize.setText(product.getSize());
-        tvPrice.setText(NumberFormat.getInstance(Locale.KOREA).format(product.getPrice()));
+        tvPrice.setText(String.format("￦ %s", NumberFormat.getInstance(Locale.KOREA).format(product.getPrice())));
 
         if (product.getProductImages().size() > 0) {  //Todo: remove
             Glide.with(itemView.getContext())

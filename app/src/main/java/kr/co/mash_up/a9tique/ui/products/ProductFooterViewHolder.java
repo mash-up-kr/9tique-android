@@ -16,7 +16,7 @@ public class ProductFooterViewHolder extends BaseViewHolder {
 
     public static ProductFooterViewHolder newInstance(ViewGroup parent) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_content_footer, parent, false);
+                .inflate(R.layout.item_footer_product_list, parent, false);
         return new ProductFooterViewHolder(itemView);
     }
 

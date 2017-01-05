@@ -3,14 +3,15 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="gray">#808080</color>
 
-    <color name="google_red">#EA4235</color>
-    <color name="google_blue">#4286F5</color>
-    <color name="google_yellow">#F8BC04</color>
-    <color name="google_green">#34AA52</color>
+    <!-- App color -->
+    <color name="black">#000000</color>
+    <color name="nero">#262626</color>
+    <color name="white">#ffffff</color>
+    <color name="grey">#7d7d7d</color>
+    <color name="very_light_grey">#c9c9c9</color>
+    <color name="whisper">#e7e7e7</color>
+    <color name="my_sin">#f0ac41</color>
 
-    <!-- MainActivity-->
-    <color name="tab_text">#757575</color>
-    <color name="tab_background">#ffffff</color>
+
 </resources>

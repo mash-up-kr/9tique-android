@@ -109,11 +109,11 @@ public class SellerProductListActivity extends BaseActivity {
 //        });
     }
 
-    private void setupToolbar(){
+    private void setupToolbar() {
         setSupportActionBar(mToolbar);
         final ActionBar ab = getSupportActionBar();
         if (ab != null) {
-            ab.setHomeAsUpIndicator(android.R.drawable.ic_menu_day);
+            ab.setHomeAsUpIndicator(R.drawable.ic_setting_white);
             ab.setDisplayShowHomeEnabled(true);
             ab.setDisplayHomeAsUpEnabled(true);
             ab.setDisplayShowTitleEnabled(false);

@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="256dp"
         android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="4dp">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/ctl_seller_product_list"
@@ -64,22 +65,17 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--<include layout="@layout/content_seller_product_list"/>-->
-
     <LinearLayout
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tl_main_categories"
+            style="@style/MainCategoryTabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/MyCustomTabLayout"
-            app:tabMode="fixed"
-            app:tabGravity="fill"
-            />
+            android:layout_height="wrap_content"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_main_categories"
@@ -94,8 +90,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email"
-        app:elevation="2dp"
-        app:layout_behavior=".ui.products.FloatingActionButtonFloatonScrollBehavior"/>
+        app:elevation="6dp"
+        app:layout_behavior=".ui.products.FloatingActionButtonFloatonScrollBehavior"
+        app:srcCompat="@drawable/ic_add_white_24dp"/>
 
 </android.support.design.widget.CoordinatorLayout>

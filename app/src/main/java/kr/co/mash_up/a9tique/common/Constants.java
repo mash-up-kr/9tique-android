@@ -7,7 +7,7 @@ package kr.co.mash_up.a9tique.common;
 public class Constants {
 
     // network
-    public static final String END_POINT = "http://192.168.0.5:8081/";
+    public static final String END_POINT = "http://192.168.0.5:8080/";
     public static final int CONNECT_TIMEOUT = 10;
     public static final int READ_TIMEOUT = 10;
     public static final int WRITE_TIMEOUT = 10;
