@@ -119,7 +119,12 @@ public interface BackendService {
     @POST("login")
     Observable<JsonObject> login(@Body RequestUser user);
 
-    //Todo: /api/user/{id} - 판매자 권한 획득 정의
+    /**
+     * 판매자 권한 획득
+     * @return access token, user level
+     */
+    @PUT("api/user")
+    Observable<JsonObject> registerSeller();
 
     /****************** Zzim ********************/
     /**

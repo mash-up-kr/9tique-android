@@ -161,7 +161,7 @@ public class BackendHelper {
                 });
     }
 
-    public void addProduct(Map<String, RequestBody> requestProduct, List<MultipartBody.Part> imageFiles, ResultCallback callback){
+    public void addProduct(Map<String, RequestBody> requestProduct, List<MultipartBody.Part> imageFiles, ResultCallback callback) {
         Observable<JsonObject> call = service.addProduct(requestProduct, imageFiles);
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -172,12 +172,35 @@ public class BackendHelper {
                     if (statusCode / 100 == 2) {
 
                         callback.onSuccess(null);
-                    }else{
+                    } else {
                         callback.onFailure();
                     }
 
                 }, throwable -> {
                     Log.e(TAG, "addProduct " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
+
+    public void registerSeller(ResultCallback<User> callback) {
+        Observable<JsonObject> call = service.registerSeller();
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    Integer statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if (statusCode / 100 == 2) {
+                        User resUser = new Gson().fromJson(jsonObject, User.class);
+
+                        Log.d(TAG, resUser.getAccessToken() + " " + resUser.getUserLevel());
+
+                        callback.onSuccess(resUser);
+                    } else {
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "register seller " + throwable.getMessage());
                     callback.onFailure();
                 });
     }
