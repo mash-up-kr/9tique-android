@@ -67,6 +67,7 @@ public class OuterCategoryFragment extends BaseFragment {
         mSubCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance(mParamMainCategory,  SubCategory.List.COATS.name()), "코트");
         mSubCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance(mParamMainCategory,  SubCategory.List.JUMPER.name()), "점퍼");
         mSubCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance(mParamMainCategory,  SubCategory.List.HOODS_ZIPUP.name()), "후드집업");
+        mSubCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance(mParamMainCategory,  SubCategory.List.PADDING_JUMPER.name()), "패딩점버");
         mSubCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance(mParamMainCategory,  SubCategory.List.VEST.name()), "베스트");
         mVpProducts.setAdapter(mSubCategoryPagerAdapter);
     }

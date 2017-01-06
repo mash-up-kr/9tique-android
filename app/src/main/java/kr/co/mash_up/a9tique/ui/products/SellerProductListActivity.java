@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rd.PageIndicatorView;
@@ -25,12 +29,16 @@ import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
 import kr.co.mash_up.a9tique.data.MainCategory;
 import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
+import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 //Todo: EventPage 무한 스크롤
 //Todo: EventPage 오토 스크롤
 public class SellerProductListActivity extends BaseActivity {
 
     public static final String TAG = SellerProductListActivity.class.getSimpleName();
+
+    @BindView(R.id.cl_root)
+    CoordinatorLayout mClRoot;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -189,11 +197,14 @@ public class SellerProductListActivity extends BaseActivity {
         switch (requestCode) {
             case AddEditProductActivity.REQUEST_CODE_ADD_EDIT_RPODUCT:
                 if (resultCode == Activity.RESULT_OK) {
+                    SnackbarUtil.showMessage(SellerProductListActivity.this, mClRoot, "상품 등록 완료", "", null);
                     //Todo: reloading
 
                 } else {
-                    //Todo: show product registration faiil message. snackbar
-
+                    SnackbarUtil.showMessage(SellerProductListActivity.this, mClRoot, "상품 등록 실패. 다시 등록해주세요", "RETRY", view -> {
+                        Intent intent = new Intent(SellerProductListActivity.this, AddEditProductActivity.class);
+                        startActivityForResult(intent, AddEditProductActivity.REQUEST_CODE_ADD_EDIT_RPODUCT);
+                    });
                 }
                 break;
         }
