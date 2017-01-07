@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e7e7e7"
+    android:background="@color/whisper"
     android:orientation="vertical"
     tools:context=".ui.addeditproduct.AddEditProductFragment">
 
@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        app:cardBackgroundColor="#ffffff"
+        android:layout_marginTop="10dp"
+        app:cardBackgroundColor="@color/white"
         app:cardElevation="0dp"
         app:contentPadding="16dp">
 
@@ -63,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="1dp"
         app:cardBackgroundColor="#ffffff"
         app:cardElevation="0dp"
         app:contentPadding="16dp">
@@ -99,7 +99,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="1dp"
         app:cardBackgroundColor="#ffffff"
         app:cardElevation="0dp"
         app:contentPadding="16dp">
@@ -135,7 +135,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="1dp"
         app:cardBackgroundColor="#ffffff"
         app:cardElevation="0dp"
         app:contentPadding="16dp">
@@ -171,7 +171,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="1dp"
         app:cardBackgroundColor="#ffffff"
         app:cardElevation="0dp"
         app:contentPadding="16dp">
@@ -227,7 +227,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="1dp"
         app:cardBackgroundColor="#ffffff"
         app:cardElevation="0dp"
         app:contentPadding="16dp">
@@ -271,7 +271,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="1dp"
         app:cardBackgroundColor="#ffffff"
         app:cardElevation="0dp"
         app:contentPadding="16dp">

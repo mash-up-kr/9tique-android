@@ -19,7 +19,7 @@ public class SnackbarUtil {
                 .setAction(actionMessage, listener);
         ((TextView) snackbar
                 .getView().findViewById(android.support.design.R.id.snackbar_text))
-                .setTextColor(ContextCompat.getColor(context, R.color.my_sin));
+                .setTextColor(ContextCompat.getColor(context, R.color.white));
         snackbar.show();
     }
 }

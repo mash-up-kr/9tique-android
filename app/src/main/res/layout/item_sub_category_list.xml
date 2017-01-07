@@ -3,16 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:foreground="?attr/selectableItemBackground"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="11dp">
 
     <TextView
         android:id="@+id/tv_sub_category_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:text="sub"
         android:textColor="@color/black"
         android:textSize="12sp"

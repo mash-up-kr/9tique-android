@@ -9,8 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -113,7 +111,7 @@ public class AddEditProductFragment extends BaseFragment implements Confirmation
     public void initView(View rootView) {
         mRvImage.setHasFixedSize(true);
         mRvImage.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        mRvImage.addItemDecoration(new SpacingItemDecoration(itemSpacingSize));
+        mRvImage.addItemDecoration(new OrientationSpacingItemDecoration(itemSpacingSize, OrientationSpacingItemDecoration.Orientation.RIGHT));
 
         mProductImageListAdapter = new ProductImageListAdapter(getActivity());
         mProductImageListAdapter.setOnItemClickListener(new ProductImageListAdapter.OnItemClickListener() {
