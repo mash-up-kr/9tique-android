@@ -13,7 +13,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <!--kakao app key-->
+
+        <!-- kakao app key -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key"/>
@@ -29,11 +30,7 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".KaKaoSignupActivity"
@@ -48,12 +45,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kr.co.mash_up.a9tique.ui.products.SellerProductListActivity"/>
         </activity>
-
         <activity
             android:name=".ui.products.SellerProductListActivity"
             android:label="@string/title_activity_seller_product_list"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
         <activity
             android:name=".ui.addeditproduct.categorysleleciton.CategorySelectionActivity"
@@ -64,6 +59,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.addeditproduct.AddEditProductActivity"/>
         </activity>
+        <activity
+            android:name=".ui.productdetail.SellerProductDetailActivity"
+            android:label="@string/title_activity_seller_product_detail"
+            android:parentActivityName=".ui.products.SellerProductListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kr.co.mash_up.a9tique.ui.products.SellerProductListActivity"/>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
+
 </manifest>
