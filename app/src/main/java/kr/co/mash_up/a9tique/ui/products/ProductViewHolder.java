@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -13,10 +14,10 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import butterknife.BindView;
-import kr.co.mash_up.a9tique.common.Constants;
-import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseViewHolder;
+import kr.co.mash_up.a9tique.common.Constants;
+import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.ui.OnItemClickListener;
 
 /**
@@ -39,6 +40,9 @@ public class ProductViewHolder extends BaseViewHolder<Product> {
 
     @BindView(R.id.tv_product_price)
     TextView tvPrice;
+
+    @BindView(R.id.rl_sold_out_filter)
+    RelativeLayout mRlSoldoutFilter;
 
     private OnItemClickListener<Product> mOnItemClickListener;
 
@@ -67,6 +71,10 @@ public class ProductViewHolder extends BaseViewHolder<Product> {
                     .fitCenter()
                     .centerCrop()
                     .into(ivThumbnail);
+        }
+
+        if (product.getStatus().equals(Product.Status.SELL)) {
+            mRlSoldoutFilter.setVisibility(View.GONE);
         }
 
         itemView.setOnClickListener(view -> {
