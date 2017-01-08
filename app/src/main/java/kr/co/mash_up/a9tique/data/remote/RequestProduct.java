@@ -19,7 +19,7 @@ public class RequestProduct {
     String size;
 
     @SerializedName("price")
-    int price;
+    Integer price;
 
     @SerializedName("description")
     String description;
@@ -60,11 +60,11 @@ public class RequestProduct {
         this.size = size;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

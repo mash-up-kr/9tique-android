@@ -21,7 +21,6 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".ui.splash.SplashActivity"
@@ -30,7 +29,11 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".KaKaoSignupActivity"
@@ -38,7 +41,6 @@
         </activity>
         <activity
             android:name=".ui.addeditproduct.AddEditProductActivity"
-            android:label="@string/title_activity_add_edit_product"
             android:parentActivityName=".ui.products.SellerProductListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -47,12 +49,10 @@
         </activity>
         <activity
             android:name=".ui.products.SellerProductListActivity"
-            android:label="@string/title_activity_seller_product_list"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".ui.addeditproduct.categorysleleciton.CategorySelectionActivity"
-            android:label="@string/title_activity_category_selection"
             android:parentActivityName=".ui.addeditproduct.AddEditProductActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -61,17 +61,11 @@
         </activity>
         <activity
             android:name=".ui.productdetail.SellerProductDetailActivity"
-            android:label="@string/title_activity_seller_product_detail"
             android:parentActivityName=".ui.products.SellerProductListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kr.co.mash_up.a9tique.ui.products.SellerProductListActivity"/>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
     </application>
 

@@ -45,6 +45,10 @@ public class ConfirmationDialogFragment extends DialogFragment {
 
     private Callback callback;
 
+    public void setCallback(Callback callback) {
+        this.callback = callback;
+    }
+
     public static ConfirmationDialogFragment newInstance(String title, String message) {
         ConfirmationDialogFragment fragment = new ConfirmationDialogFragment();
         Bundle args = new Bundle();
@@ -67,10 +71,12 @@ public class ConfirmationDialogFragment extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        try {
-            callback = (Callback) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + "must implement DialogListener");
+        if (callback == null) {
+            try {
+                callback = (Callback) getTargetFragment();
+            } catch (ClassCastException e) {
+                throw new ClassCastException(context.toString() + "must implement DialogListener");
+            }
         }
     }
 

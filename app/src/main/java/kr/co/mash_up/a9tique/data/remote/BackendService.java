@@ -55,7 +55,6 @@ public interface BackendService {
     @POST("api/product")
     Observable<JsonObject> addProduct(@Body RequestProduct requestProduct);
 
-    /****************** Product ********************/
     /**
      * 상품 정보 삭제
      *
@@ -63,7 +62,7 @@ public interface BackendService {
      * @return 성공 or 실패
      */
     @DELETE("api/product/{id}")
-    Observable<JsonObject> deleteProduct(@Path("id") int productId);
+    Observable<JsonObject> deleteProduct(@Path("id") long productId);
 
     /**
      * 상품 정보 수정
@@ -73,7 +72,7 @@ public interface BackendService {
      * @return 성공 or 실패
      */
     @PUT("api/product/{id}")
-    Observable<JsonObject> updateProduct(@Path("id") int productId,
+    Observable<JsonObject> updateProduct(@Path("id") long productId,
                                          @Body RequestProduct requestProduct);
 
     /**

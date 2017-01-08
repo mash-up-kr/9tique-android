@@ -31,6 +31,6 @@ public class ProductImageListAdapter extends RecyclerView.Adapter<ProductImageVi
 
     @Override
     public int getItemCount() {
-        return mProductImageList.size();
+        return mProductImageList != null ? mProductImageList.size() : 0;
     }
 }

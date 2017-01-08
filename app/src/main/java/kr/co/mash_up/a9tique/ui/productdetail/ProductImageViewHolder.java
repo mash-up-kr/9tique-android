@@ -21,7 +21,7 @@ public class ProductImageViewHolder extends BaseViewHolder<ProductImage> {
 
     public static ProductImageViewHolder newInstance(@NonNull ViewGroup parent) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_product_image_list, parent, false);
+                .inflate(R.layout.item_detail_product_image_list, parent, false);
         return new ProductImageViewHolder(itemView);
     }
 
