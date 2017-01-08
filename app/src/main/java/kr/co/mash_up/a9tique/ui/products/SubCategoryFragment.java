@@ -60,6 +60,7 @@ public class SubCategoryFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         if (getArguments() != null) {
             mParamMainCategory = getArguments().getString(ARG_PARAM_MAIN_CATEGORY);
             mParamSubCategory = getArguments().getString(ARG_PARAM_SUB_CATEGORY);
@@ -115,6 +116,7 @@ public class SubCategoryFragment extends BaseFragment {
 
         mSwipeRefreshLayout.setColorSchemeResources(R.color.my_sin, R.color.nero);
         mSwipeRefreshLayout.setOnRefreshListener(this::refresh);
+        Log.e(TAG, "initView " + mParamMainCategory + " " + mParamSubCategory);
     }
 
     private void refresh() {
@@ -124,14 +126,19 @@ public class SubCategoryFragment extends BaseFragment {
     }
 
     private void productsLoadMoreDataFromApi(int currentPageNo) {
-
         if (mFirstLoad) {
             currentPageNo--;
         }
 
-        // total 7, 요청은 0~6까지
+        /*Todo: 아래로 안들어가서 화면이 안보이는 것
+         1. mFirstLoad, currentPageNo, mParamPageTotal 초기화해서 이부분에 들어가게 해야한다.
+         2. 데이터를 보존시켜서 재로딩안하게
+            1. offset limit을 건다. -> 간단하지만 메모리에 문제가 있을 수도 있다. 이걸로 해결함
+            2. life cycle안에서 store, restore한다.
+        */
         if (mFirstLoad || currentPageNo < mParamPageTotal) {
             mProductListAdapter.addItem(null, mLoadingItemPosition);
+            Log.e(TAG, "productsLoadMoreDataFromApi 2 " + mParamMainCategory + " " + mParamSubCategory);
 
             BackendHelper.getInstance().getProducts(currentPageNo, mParamMainCategory, mParamSubCategory,
                     new ResultCallback<ResponseProduct>() {
@@ -162,6 +169,7 @@ public class SubCategoryFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.e(TAG, "onResume " + mParamMainCategory + " " + mParamSubCategory);
         Log.e(TAG, mParamCurrentPageNo + " " + mParamPageTotal);
         productsLoadMoreDataFromApi(mParamCurrentPageNo + 1);
     }

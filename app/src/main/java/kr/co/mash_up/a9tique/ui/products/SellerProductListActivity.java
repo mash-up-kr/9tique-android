@@ -3,6 +3,7 @@ package kr.co.mash_up.a9tique.ui.products;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -31,6 +32,7 @@ import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
 public class SellerProductListActivity extends BaseActivity {
 
     public static final String TAG = SellerProductListActivity.class.getSimpleName();
+    public static final String CURRENT_PAGER_POSITION = "current_pager_position";
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -130,6 +132,7 @@ public class SellerProductListActivity extends BaseActivity {
         mMainCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance(MainCategory.List.SHOSE.name(), ""), "신발");
         mMainCategoryPagerAdapter.addFragment(SubCategoryFragment.newInstance(MainCategory.List.CAP.name(), ""), "모자");
         mVpMainCategories.setAdapter(mMainCategoryPagerAdapter);
+        mVpMainCategories.setOffscreenPageLimit(mMainCategoryPagerAdapter.getCount());
     }
 
     private void setupEventViewPager() {
@@ -197,5 +200,17 @@ public class SellerProductListActivity extends BaseActivity {
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(CURRENT_PAGER_POSITION, mTlMainCategories.getSelectedTabPosition());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mVpMainCategories.setCurrentItem(savedInstanceState.getInt(CURRENT_PAGER_POSITION));
     }
 }

@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <kr.co.mash_up.a9tique.ui.widget.SwipeViewPager
-        android:id="@+id/vp_products"
+    <FrameLayout
+        android:id="@+id/fl_products_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

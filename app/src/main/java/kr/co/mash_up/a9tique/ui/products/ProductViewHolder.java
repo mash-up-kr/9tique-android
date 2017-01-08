@@ -75,6 +75,8 @@ public class ProductViewHolder extends BaseViewHolder<Product> {
 
         if (product.getStatus().equals(Product.Status.SELL)) {
             mRlSoldoutFilter.setVisibility(View.GONE);
+        } else {
+            mRlSoldoutFilter.setVisibility(View.VISIBLE);
         }
 
         itemView.setOnClickListener(view -> {
