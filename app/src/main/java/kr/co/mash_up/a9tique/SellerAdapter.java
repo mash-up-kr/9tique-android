@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by CY on 2016. 11. 15..
  */
@@ -23,13 +26,14 @@ public class SellerAdapter extends RecyclerView.Adapter<SellerAdapter.MyViewHold
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView menu;
-        public EditText editTxt;
+        @BindView(R.id.menu)
+        TextView menu;
+        @BindView(R.id.edit_txt)
+        EditText editTxt;
 
         public MyViewHolder(View view) {
             super(view);
-            menu = (TextView) view.findViewById(R.id.menu);
-            editTxt = (EditText) view.findViewById(R.id.edit_txt);
+            ButterKnife.bind(this, view);
         }
     }
     @Override

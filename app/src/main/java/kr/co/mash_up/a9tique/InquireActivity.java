@@ -1,6 +1,5 @@
 package kr.co.mash_up.a9tique;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,13 +42,10 @@ public class InquireActivity extends AppCompatActivity {
 
         tvToolbarTitle.setText("문의하기");
 
-        // setting adapter
         settingAdapter = new SettingAdapter(settingList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         rvInquire.setLayoutManager(layoutManager);
         rvInquire.setAdapter(settingAdapter);
-
-        settingAdapter.setOnItemClickListener(onItemClickListener);
 
         prepareSettingData();
     }
@@ -67,22 +62,4 @@ public class InquireActivity extends AppCompatActivity {
 
         settingAdapter.notifyDataSetChanged();
     }
-
-    SettingAdapter.OnItemClickListener onItemClickListener = new SettingAdapter.OnItemClickListener() {
-        @Override
-        public void onItemClick(View v, int position) {
-            Context context = v.getContext();
-            switch (position) {
-                case 0:
-                    Toast.makeText(context, "카카오톡 문의하기", Toast.LENGTH_SHORT).show();
-                    break;
-                case 1:
-                    Toast.makeText(context, "전화 문의하기", Toast.LENGTH_SHORT).show();
-                    break;
-                case 2:
-                    Toast.makeText(context, "이메일 문의하기", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-        }
-    };
 }
