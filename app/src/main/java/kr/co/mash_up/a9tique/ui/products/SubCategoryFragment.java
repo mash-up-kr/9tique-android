@@ -1,5 +1,6 @@
 package kr.co.mash_up.a9tique.ui.products;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,6 +16,7 @@ import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.ResponseProduct;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
 import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
+import kr.co.mash_up.a9tique.ui.productdetail.SellerProductDetailActivity;
 
 public class SubCategoryFragment extends BaseFragment {
 
@@ -92,10 +94,9 @@ public class SubCategoryFragment extends BaseFragment {
 
         mProductListAdapter = new ProductListAdapter(getActivity());
         mProductListAdapter.setOnItemClickListener(product -> {
-            //Todo: show detail product activity
-            //Todo: remove snackbar
-            Snackbar.make(getView(), "show detail product activity", Snackbar.LENGTH_SHORT)
-                    .show();
+            Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
+            intent.putExtra("product", product);
+            startActivityForResult(intent, SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
         });
         mRvProducts.setAdapter(mProductListAdapter);
         mRvProducts.addOnScrollListener(new EndlessRecyclerViewScrollListener(glmProducts) {

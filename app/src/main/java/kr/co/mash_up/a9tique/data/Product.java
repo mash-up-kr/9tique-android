@@ -1,5 +1,8 @@
 package kr.co.mash_up.a9tique.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -9,7 +12,7 @@ import java.util.List;
 /**
  * 판매상품을 나타내는 Model 클래스
  */
-public class Product {
+public class Product implements Parcelable {
 
     private Long id;
 
@@ -47,7 +50,7 @@ public class Product {
     @SerializedName("updated_at")
     private long updatedAt;
 
-    public enum  Status {
+    public enum Status {
         SELL,  // 판매중
         SOLD_OUT  // 판매완료
     }
@@ -182,5 +185,64 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", id=" + id +
                 '}';
+    }
+
+    public Product() {
+    }
+
+    protected Product(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        brandName = in.readString();
+        size = in.readString();
+        price = in.readInt();
+        description = in.readString();
+        mainCategory = in.readString();
+        subCategory = in.readString();
+        productImages = in.createTypedArrayList(ProductImage.CREATOR);
+        if (in.readString().equals(Status.SELL.name())) {
+            status = Status.SELL;
+        } else {
+            status = Status.SOLD_OUT;
+        }
+        zzimStatus = in.readByte() != 0;
+        sellerInfo = in.readParcelable(SellerInfo.class.getClassLoader());
+        createdAt = in.readLong();
+        updatedAt = in.readLong();
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(name);
+        parcel.writeString(brandName);
+        parcel.writeString(size);
+        parcel.writeInt(price);
+        parcel.writeString(description);
+        parcel.writeString(mainCategory);
+        parcel.writeString(subCategory);
+        parcel.writeTypedList(productImages);
+        parcel.writeString(status.name());
+        parcel.writeByte((byte) (zzimStatus ? 1 : 0));
+        parcel.writeParcelable(sellerInfo, i);
+        parcel.writeLong(createdAt);
+        parcel.writeLong(updatedAt);
     }
 }

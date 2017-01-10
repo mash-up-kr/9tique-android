@@ -157,4 +157,42 @@ public class BackendHelper {
                     callback.onFailure();
                 });
     }
+
+    public void deleteProduct(long productId, ResultCallback callback) {
+        Observable<JsonObject> call = service.deleteProduct(productId);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    int statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if (statusCode / 100 == 2) {
+                        callback.onSuccess(null);
+                    }else{
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "getProducts " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
+
+    public void updateProduct(long productId, RequestProduct requestProduct, ResultCallback callback){
+        Observable<JsonObject> call = service.updateProduct(productId, requestProduct);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    int statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if (statusCode / 100 == 2) {
+                        callback.onSuccess(null);
+                    }else{
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "getProducts " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
 }
