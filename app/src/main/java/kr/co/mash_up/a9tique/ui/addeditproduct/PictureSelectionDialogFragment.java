@@ -24,16 +24,11 @@ public class PictureSelectionDialogFragment extends DialogFragment {
 
     public static final String TAG = PictureSelectionDialogFragment.class.getSimpleName();
     public static final String PARAM_TITLE = "title";
-    public static final String PARAM_MESSAGE = "message";
 
     private String mTitle;
-    private String mMessage;
 
     @BindView(R.id.tv_title)
     TextView mTvTitle;
-
-    @BindView(R.id.tv_message)
-    TextView mTvMessage;
 
     Unbinder mUnbinder;
 
@@ -45,11 +40,10 @@ public class PictureSelectionDialogFragment extends DialogFragment {
 
     private Callback callback;
 
-    public static PictureSelectionDialogFragment newInstance(String title, String message) {
+    public static PictureSelectionDialogFragment newInstance(String title) {
         PictureSelectionDialogFragment fragment = new PictureSelectionDialogFragment();
         Bundle args = new Bundle();
         args.putString(PARAM_TITLE, title);
-        args.putString(PARAM_MESSAGE, message);
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,7 +53,6 @@ public class PictureSelectionDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mTitle = getArguments().getString(PARAM_TITLE);
-            mMessage = getArguments().getString(PARAM_MESSAGE);
         }
     }
 
@@ -100,7 +93,6 @@ public class PictureSelectionDialogFragment extends DialogFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTvTitle.setText(mTitle);
-        mTvMessage.setText(mMessage);
     }
 
     @Override
@@ -117,19 +109,24 @@ public class PictureSelectionDialogFragment extends DialogFragment {
         window.setGravity(Gravity.CENTER);
     }
 
-    @OnClick(R.id.btn_take_picture)
-    void onClickOk(View view) {
+    @OnClick(R.id.ll_take_picture)
+    void onClickTakePircute() {
         if (callback != null) {
             callback.onClickCameraStart();
         }
         dismiss();
     }
 
-    @OnClick(R.id.btn_pick_pirture)
-    void onClickCancel(View view) {
+    @OnClick(R.id.ll_pick_picture)
+    void onClickPickPicture() {
         if (callback != null) {
             callback.onClickGalleryStart();
         }
+        dismiss();
+    }
+
+    @OnClick(R.id.iv_close)
+    void onClickClose() {
         dismiss();
     }
 }

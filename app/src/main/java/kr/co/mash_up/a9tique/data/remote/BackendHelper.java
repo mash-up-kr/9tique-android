@@ -9,13 +9,16 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import kr.co.mash_up.a9tique.BuildConfig;
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.data.User;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -126,6 +129,29 @@ public class BackendHelper {
                 });
     }
 
+    public void registerSeller(ResultCallback<User> callback) {
+        Observable<JsonObject> call = service.registerSeller();
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    Integer statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if (statusCode / 100 == 2) {
+                        User resUser = new Gson().fromJson(jsonObject, User.class);
+
+                        Log.d(TAG, resUser.getAccessToken() + " " + resUser.getUserLevel());
+
+                        callback.onSuccess(resUser);
+                    } else {
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "register seller " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
+
     public void getProducts(int pageNo, String mainCategory, String subCategory, ResultCallback<ResponseProduct> callback) {
         Observable<JsonObject> call = service.getProducts(pageNo, 20, mainCategory, subCategory);
         call.subscribeOn(Schedulers.io())
@@ -158,6 +184,44 @@ public class BackendHelper {
                 });
     }
 
+    public void addProduct(Map<String, RequestBody> requestProduct, List<MultipartBody.Part> imageFiles, ResultCallback callback) {
+        Observable<JsonObject> call = service.addProduct(requestProduct, imageFiles);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    int statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if (statusCode / 100 == 2) {
+                        callback.onSuccess(null);
+                    } else {
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "addProduct " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
+
+    public void updateProduct(long productId, RequestProduct requestProduct, ResultCallback callback) {
+        Observable<JsonObject> call = service.updateProduct(productId, requestProduct);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    int statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if (statusCode / 100 == 2) {
+                        callback.onSuccess(null);
+                    } else {
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "updateProduct " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
+
     public void deleteProduct(long productId, ResultCallback callback) {
         Observable<JsonObject> call = service.deleteProduct(productId);
         call.subscribeOn(Schedulers.io())
@@ -168,30 +232,11 @@ public class BackendHelper {
 
                     if (statusCode / 100 == 2) {
                         callback.onSuccess(null);
-                    }else{
+                    } else {
                         callback.onFailure();
                     }
                 }, throwable -> {
-                    Log.e(TAG, "getProducts " + throwable.getMessage());
-                    callback.onFailure();
-                });
-    }
-
-    public void updateProduct(long productId, RequestProduct requestProduct, ResultCallback callback){
-        Observable<JsonObject> call = service.updateProduct(productId, requestProduct);
-        call.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(jsonObject -> {
-                    int statusCode = jsonObject.get("status").getAsInt();
-                    Log.d(TAG, "status code: " + statusCode);
-
-                    if (statusCode / 100 == 2) {
-                        callback.onSuccess(null);
-                    }else{
-                        callback.onFailure();
-                    }
-                }, throwable -> {
-                    Log.e(TAG, "getProducts " + throwable.getMessage());
+                    Log.e(TAG, "deleteProduct " + throwable.getMessage());
                     callback.onFailure();
                 });
     }

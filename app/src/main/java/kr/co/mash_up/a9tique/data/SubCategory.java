@@ -22,6 +22,7 @@ public class SubCategory {
         COATS,  // 코트
         JUMPER,  // 점퍼
         HOODS_ZIPUP,  // 후드집업
+        PADDING_JUMPER,  // 패딩점퍼
         VEST,  // 베스트
         TSHIRT,  // 티셔츠
         HOODS_TSHIRT,  // 후드티셔츠
