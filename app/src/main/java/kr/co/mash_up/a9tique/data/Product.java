@@ -5,8 +5,6 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,14 +39,17 @@ public class Product implements Parcelable {
     @SerializedName("zzim_status")
     private boolean zzimStatus;
 
-    @SerializedName("seller_info")
-    private SellerInfo sellerInfo;
+    @SerializedName("shop")
+    private Shop shop;
 
     @SerializedName("created_at")
     private long createdAt;
 
     @SerializedName("updated_at")
     private long updatedAt;
+
+    @SerializedName("seller")
+    private boolean seller;
 
     public enum Status {
         SELL,  // 판매중
@@ -143,12 +144,12 @@ public class Product implements Parcelable {
         this.zzimStatus = zzimStatus;
     }
 
-    public SellerInfo getSellerInfo() {
-        return sellerInfo;
+    public Shop getShop() {
+        return shop;
     }
 
-    public void setSellerInfo(SellerInfo sellerInfo) {
-        this.sellerInfo = sellerInfo;
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 
     public long getCreatedAt() {
@@ -167,12 +168,20 @@ public class Product implements Parcelable {
         this.updatedAt = updatedAt;
     }
 
+    public boolean isSeller() {
+        return seller;
+    }
+
+    public void setSeller(boolean seller) {
+        this.seller = seller;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
                 "updatedAt=" + updatedAt +
                 ", createdAt=" + createdAt +
-                ", sellerInfo=" + sellerInfo +
+                ", shop=" + shop +
                 ", zzimStatus=" + zzimStatus +
                 ", status=" + status +
                 ", productImages=" + productImages +
@@ -184,6 +193,7 @@ public class Product implements Parcelable {
                 ", brandName='" + brandName + '\'' +
                 ", name='" + name + '\'' +
                 ", id=" + id +
+                ", seller=" + seller +
                 '}';
     }
 
@@ -206,9 +216,10 @@ public class Product implements Parcelable {
             status = Status.SOLD_OUT;
         }
         zzimStatus = in.readByte() != 0;
-        sellerInfo = in.readParcelable(SellerInfo.class.getClassLoader());
+        shop = in.readParcelable(Shop.class.getClassLoader());
         createdAt = in.readLong();
         updatedAt = in.readLong();
+        seller = in.readByte() != 0;
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -241,8 +252,9 @@ public class Product implements Parcelable {
         parcel.writeTypedList(productImages);
         parcel.writeString(status.name());
         parcel.writeByte((byte) (zzimStatus ? 1 : 0));
-        parcel.writeParcelable(sellerInfo, i);
+        parcel.writeParcelable(shop, i);
         parcel.writeLong(createdAt);
         parcel.writeLong(updatedAt);
+        parcel.writeByte((byte) (seller ? 1 : 0));
     }
 }

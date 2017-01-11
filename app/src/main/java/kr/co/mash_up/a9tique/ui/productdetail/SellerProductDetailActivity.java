@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
+import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.ui.products.SellerProductListActivity;
 
@@ -87,9 +88,8 @@ public class SellerProductDetailActivity extends BaseActivity {
 
         mProduct = getIntent().getParcelableExtra("product");
 
-        if(mProduct.getProductImages() != null && mProduct.getProductImages().size() != 0)
         Glide.with(SellerProductDetailActivity.this)
-                .load(mProduct.getProductImages().get(0).getImageUrl())
+                .load(Constants.END_POINT + mProduct.getProductImages().get(0).getImageUrl())
                 .placeholder(R.mipmap.ic_launcher)
                 .crossFade()
                 .fitCenter()

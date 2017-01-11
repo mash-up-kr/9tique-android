@@ -94,9 +94,16 @@ public class SubCategoryFragment extends BaseFragment {
 
         mProductListAdapter = new ProductListAdapter(getActivity());
         mProductListAdapter.setOnItemClickListener(product -> {
-            Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
-            intent.putExtra("product", product);
-            startActivityForResult(intent, SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
+            if (product.isSeller()){
+                Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
+                intent.putExtra("product", product);
+                startActivityForResult(intent, SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
+            }else{
+                //Todo: show customer product detail activity
+                Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
+                intent.putExtra("product", product);
+                startActivityForResult(intent, SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
+            }
         });
         mRvProducts.setAdapter(mProductListAdapter);
         mRvProducts.addOnScrollListener(new EndlessRecyclerViewScrollListener(glmProducts) {

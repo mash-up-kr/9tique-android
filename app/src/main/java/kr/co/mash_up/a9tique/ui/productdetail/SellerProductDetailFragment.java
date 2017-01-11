@@ -25,6 +25,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
+import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.data.ProductImage;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
@@ -111,7 +112,7 @@ public class SellerProductDetailFragment extends BaseFragment {
 
         LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
         List<ProductImage> productImages = mProduct.getProductImages();
-        for(int i=0; i<productImages.size(); i++){
+        for (int i = 0; i < productImages.size(); i++) {
             ProductImage productImage = productImages.get(i);
             CardView cardView = (CardView) layoutInflater.inflate(R.layout.item_detail_product_image_list, mLlDetailImageContainer, false);
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) cardView.getLayoutParams();
@@ -120,7 +121,7 @@ public class SellerProductDetailFragment extends BaseFragment {
 
             ImageView ivImage = (ImageView) cardView.findViewById(R.id.iv_product_image);
             Glide.with(getActivity())
-                    .load(productImage.getImageUrl())
+                    .load(Constants.END_POINT + productImage.getImageUrl())
                     .placeholder(R.mipmap.ic_launcher)
                     .crossFade()
                     .fitCenter()
