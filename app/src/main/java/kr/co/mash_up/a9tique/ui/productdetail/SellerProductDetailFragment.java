@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -54,6 +55,12 @@ public class SellerProductDetailFragment extends BaseFragment {
     @BindView(R.id.ll_detail_image_container)
     LinearLayout mLlDetailImageContainer;
 
+    @BindView(R.id.btn_product_status_update_top)
+    Button mBtnSoldOutTop;
+
+    @BindView(R.id.btn_product_status_update_bottom)
+    Button mBtnSoldOutBottom;
+
     @BindDimen(R.dimen.product_detail_image_list_item_bottom_margin)
     int listItemBottomMargin;
 
@@ -87,23 +94,16 @@ public class SellerProductDetailFragment extends BaseFragment {
         return R.layout.fragment_seller_product_detail;
     }
 
-    @Override
-    public void initView(View rootView) {
-        mTvName.setText(mProduct.getName());
-        mTvProductBrandName.setText(mProduct.getBrandName());
-        mTvProductSize.setText(mProduct.getSize());
-        mTvProductPrice.setText(String.valueOf(mProduct.getPrice()));
-        mTvProductDescription.setText(mProduct.getDescription());
+    private void initDetailProductImageList(List<ProductImage> productImages) {
 
 //        mRvImage.setHasFixedSize(true);
 //        mRvImage.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 //        mRvImage.addItemDecoration(new SpacingItemDecoration(listItemBottomMargin));
 //
-//        mProductImageListAdapter = new ProductImageListAdapter(mProduct.getProductImages(), getActivity());
+//        mProductImageListAdapter = new ProductImageListAdapter(productImages, getActivity());
 //        mRvImage.setAdapter(mProductImageListAdapter);
 
         LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-        List<ProductImage> productImages = mProduct.getProductImages();
         for (int i = 0; i < productImages.size(); i++) {
             ProductImage productImage = productImages.get(i);
             CardView cardView = (CardView) layoutInflater.inflate(R.layout.item_detail_product_image_list, mLlDetailImageContainer, false);
@@ -123,15 +123,45 @@ public class SellerProductDetailFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.btn_sold_out_top, R.id.btn_sold_out_bottom})
-    public void onClickSoldout() {
-        ConfirmationDialogFragment dialog = ConfirmationDialogFragment.newInstance("상품 판매 표기", "해당 상품을 판매완료로 표기하시겠습니까?");
-        dialog.setCallback(new ConfirmationDialogFragment.Callback() {
+    private void initBtnSoldout(Product.Status status) {
+        if (status.name().equals(Product.Status.SELL.name())) {
+            mBtnSoldOutTop.setText("판매완료");
+            mBtnSoldOutBottom.setText("판매완료");
+        } else {
+            mBtnSoldOutTop.setText("판매완료 취소");
+            mBtnSoldOutBottom.setText("판매완료 취소");
+        }
+    }
+
+    @Override
+    public void initView(View rootView) {
+        mTvName.setText(mProduct.getName());
+        mTvProductBrandName.setText(mProduct.getBrandName());
+        mTvProductSize.setText(mProduct.getSize());
+        mTvProductPrice.setText(String.valueOf(mProduct.getPrice()));
+        mTvProductDescription.setText(mProduct.getDescription());
+
+        initBtnSoldout(mProduct.getStatus());
+        initDetailProductImageList(mProduct.getProductImages());
+    }
+
+    @OnClick({R.id.btn_product_status_update_top, R.id.btn_product_status_update_bottom})
+    public void onClickUpdateProductStatus() {
+        ConfirmationDialogFragment dlgConfirmation;
+        RequestProduct requestProduct = new RequestProduct();
+
+        if (mProduct.getStatus().name().equals(Product.Status.SELL.name())) {
+            dlgConfirmation = ConfirmationDialogFragment.newInstance("상품 판매 표기", "해당 상품을 판매완료로 표기하시겠습니까?");
+            requestProduct.setStatus(Product.Status.SOLD_OUT);
+        } else {
+            dlgConfirmation = ConfirmationDialogFragment.newInstance("상품 판매 표기", "해당 상품을 판매중으로 표기하시겠습니까?");
+            requestProduct.setStatus(Product.Status.SELL);
+        }
+
+        dlgConfirmation.setCallback(new ConfirmationDialogFragment.Callback() {
             @Override
             public void onClickOk() {
-                //Todo: api call. product sell -> sold out
-                RequestProduct requestProduct = new RequestProduct();
-                requestProduct.setStatus(Product.Status.SOLD_OUT);
+                //Todo: api call. product sell <-> sold out
                 BackendHelper.getInstance().updateProduct(mProduct.getId(), requestProduct, new ResultCallback() {
                     @Override
                     public void onSuccess(Object o) {
@@ -150,11 +180,12 @@ public class SellerProductDetailFragment extends BaseFragment {
 
             @Override
             public void onClickCancel() {
-                // do noting
+                // Do noting
             }
         });
-        dialog.setTargetFragment(SellerProductDetailFragment.this, 0);
-        dialog.show(getChildFragmentManager(), ConfirmationDialogFragment.TAG);
+
+        dlgConfirmation.setTargetFragment(SellerProductDetailFragment.this, 0);
+        dlgConfirmation.show(getChildFragmentManager(), ConfirmationDialogFragment.TAG);
     }
 
     @OnClick({R.id.btn_product_remove_top, R.id.btn_product_remove_bottom})

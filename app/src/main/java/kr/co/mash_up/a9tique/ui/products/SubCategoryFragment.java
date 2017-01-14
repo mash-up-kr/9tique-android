@@ -2,12 +2,11 @@ package kr.co.mash_up.a9tique.ui.products;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
@@ -17,13 +16,17 @@ import kr.co.mash_up.a9tique.data.remote.ResponseProduct;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
 import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
 import kr.co.mash_up.a9tique.ui.productdetail.SellerProductDetailActivity;
+import kr.co.mash_up.a9tique.ui.widget.RecyclerViewEmptySupport;
 
 public class SubCategoryFragment extends BaseFragment {
 
     public static final String TAG = SubCategoryFragment.class.getSimpleName();
 
     @BindView(R.id.rv_products)
-    RecyclerView mRvProducts;
+    RecyclerViewEmptySupport mRvProducts;
+
+    @BindView(R.id.ll_emptyView)
+    LinearLayout mEmptyView;
 
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -91,6 +94,7 @@ public class SubCategoryFragment extends BaseFragment {
             }
         });
         mRvProducts.setLayoutManager(glmProducts);
+        mRvProducts.setEmptyView(mEmptyView);
 
         mProductListAdapter = new ProductListAdapter(getActivity());
         mProductListAdapter.setOnItemClickListener((product, position) -> {
