@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         public void onSessionOpened() {
-            Log.e(TAG, "onSessionOpened");
+            Log.d(TAG, "onSessionOpened");
             redirectSignupActivity();
         }
 
@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
             if (exception != null) {
                 Logger.e(exception);
             }
+            Log.d(TAG, "onSessionOpenFailed");
             setContentView(R.layout.activity_login);
         }
     }

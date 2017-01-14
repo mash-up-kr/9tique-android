@@ -93,7 +93,7 @@ public class SubCategoryFragment extends BaseFragment {
         mRvProducts.setLayoutManager(glmProducts);
 
         mProductListAdapter = new ProductListAdapter(getActivity());
-        mProductListAdapter.setOnItemClickListener(product -> {
+        mProductListAdapter.setOnItemClickListener((product, position) -> {
             if (product.isSeller()){
                 Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
                 intent.putExtra("product", product);

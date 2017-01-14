@@ -3,23 +3,18 @@ package kr.co.mash_up.a9tique.ui.products;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rd.PageIndicatorView;
@@ -27,6 +22,7 @@ import com.rd.PageIndicatorView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import kr.co.mash_up.a9tique.R;
+import kr.co.mash_up.a9tique.ui.setting.SettingActivity;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
 import kr.co.mash_up.a9tique.data.MainCategory;
 import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
@@ -175,8 +171,7 @@ public class SellerProductListActivity extends BaseActivity {
         //noinspection SimplifiableIfStatement
         switch (id) {
             case android.R.id.home:
-                //Todo: open setting activity, remove toast
-                Toast.makeText(this, "open setting activity", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SellerProductListActivity.this, SettingActivity.class));
                 return true;
             case R.id.action_seller_products:
                 //Todo: open seller products activity, remove toast

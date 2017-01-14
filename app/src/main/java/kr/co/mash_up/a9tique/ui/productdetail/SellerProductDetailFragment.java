@@ -4,21 +4,15 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -31,9 +25,7 @@ import kr.co.mash_up.a9tique.data.ProductImage;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.RequestProduct;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
-import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductFragment;
 import kr.co.mash_up.a9tique.ui.addeditproduct.ConfirmationDialogFragment;
-import rx.Observable;
 
 
 public class SellerProductDetailFragment extends BaseFragment {
@@ -62,7 +54,7 @@ public class SellerProductDetailFragment extends BaseFragment {
     @BindView(R.id.ll_detail_image_container)
     LinearLayout mLlDetailImageContainer;
 
-    @BindDimen(R.dimen.list_item_bottom_margin)
+    @BindDimen(R.dimen.product_detail_image_list_item_bottom_margin)
     int listItemBottomMargin;
 
     private Product mProduct;

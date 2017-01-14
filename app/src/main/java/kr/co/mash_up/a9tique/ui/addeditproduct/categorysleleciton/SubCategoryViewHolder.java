@@ -38,7 +38,7 @@ public class SubCategoryViewHolder extends ChildViewHolder<SubCategory> {
 
         itemView.setOnClickListener(view -> {
             if (mOnItemClickListener != null) {
-                mOnItemClickListener.onClick(subCategory.getName());
+                mOnItemClickListener.onClick(subCategory.getName(), getAdapterPosition());
             }
         });
     }

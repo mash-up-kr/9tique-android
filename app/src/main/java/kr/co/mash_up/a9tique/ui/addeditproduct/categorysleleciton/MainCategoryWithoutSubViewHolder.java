@@ -50,7 +50,7 @@ public class MainCategoryWithoutSubViewHolder extends ParentViewHolder<MainCateg
 
         itemView.setOnClickListener(view -> {
             if (mOnItemClickListener != null) {
-                mOnItemClickListener.onClick(mainCategory.getName());
+                mOnItemClickListener.onClick(mainCategory.getName(), getAdapterPosition());
             }
         });
     }

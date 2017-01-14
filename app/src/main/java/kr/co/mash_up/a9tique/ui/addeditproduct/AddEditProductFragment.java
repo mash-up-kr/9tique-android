@@ -77,7 +77,7 @@ public class AddEditProductFragment extends BaseFragment implements Confirmation
     @BindView(R.id.et_detail_description)
     EditText mEtDetailDescription;
 
-    @BindDimen(R.dimen.product_image_list_margin)
+    @BindDimen(R.dimen.add_edit_product_image_list_item_margin)
     int itemSpacingSize;
 
     private ProductImageListAdapter mProductImageListAdapter;

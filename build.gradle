@@ -43,4 +43,8 @@ ext {
     daggerVersion = '2.8'
     rxjavaVersion = '1.2.3'
     rxandroidVersion = '1.2.1'
+
+    // app
+    versionCode = 1
+    versionName = "1.0"
 }

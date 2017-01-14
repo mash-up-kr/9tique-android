@@ -4,6 +4,7 @@ package kr.co.mash_up.a9tique.base.ui;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
@@ -33,6 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @LayoutRes
     public abstract int getLayoutId();
 
+    @UiThread
     public abstract void initView();
 
     public abstract void initFragment(Fragment fragment);

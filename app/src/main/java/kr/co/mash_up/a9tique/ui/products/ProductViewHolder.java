@@ -81,7 +81,7 @@ public class ProductViewHolder extends BaseViewHolder<Product> {
 
         itemView.setOnClickListener(view -> {
             if (mOnItemClickListener != null) {
-                mOnItemClickListener.onClick(product);
+                mOnItemClickListener.onClick(product, getAdapterPosition());
             }
         });
     }

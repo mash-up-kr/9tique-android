@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique.ui.addeditproduct;
+package kr.co.mash_up.a9tique;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -7,31 +7,37 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
+import kr.co.mash_up.a9tique.util.KeyboardUtils;
 
-public class ConfirmationDialogFragment extends DialogFragment {
+/**
+ * Created by CY on 2017. 1. 10..
+ */
 
-    public static final String TAG = ConfirmationDialogFragment.class.getSimpleName();
+public class SellerRegistrationDialogFragment extends DialogFragment {
+
+    public static final String TAG = SellerRegistrationDialogFragment.class.getSimpleName();
     public static final String PARAM_TITLE = "title";
     public static final String PARAM_MESSAGE = "message";
 
     @BindView(R.id.tv_title)
     TextView mTvTitle;
 
-    @BindView(R.id.tv_message)
-    TextView mTvMessage;
+    @BindView(R.id.et_authentication_code)
+    EditText mEtAuthenticationCode;
 
     Unbinder mUnbinder;
 
@@ -44,8 +50,8 @@ public class ConfirmationDialogFragment extends DialogFragment {
         this.callback = callback;
     }
 
-    public static ConfirmationDialogFragment newInstance(String title, String message) {
-        ConfirmationDialogFragment fragment = new ConfirmationDialogFragment();
+    public static SellerRegistrationDialogFragment newInstance(String title, String message) {
+        SellerRegistrationDialogFragment fragment = new SellerRegistrationDialogFragment();
         Bundle args = new Bundle();
         args.putString(PARAM_TITLE, title);
         args.putString(PARAM_MESSAGE, message);
@@ -96,7 +102,7 @@ public class ConfirmationDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_fragment_confirmation, container);
+        View view = inflater.inflate(R.layout.dialog_fragment_seller_registration, container);
         mUnbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -105,7 +111,17 @@ public class ConfirmationDialogFragment extends DialogFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTvTitle.setText(mTitle);
-        mTvMessage.setText(mMessage);
+        mEtAuthenticationCode.setHint(mMessage);
+        mEtAuthenticationCode.setOnKeyListener((view1, keyCode, keyEvent) -> {
+            if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+                switch (keyCode) {
+                    case KeyEvent.KEYCODE_ENTER:
+                        onClickOk(view1);
+                        return true;
+                }
+            }
+            return false;
+        });
     }
 
     @Override
@@ -120,10 +136,19 @@ public class ConfirmationDialogFragment extends DialogFragment {
 
         window.setLayout((int) (size.x * 0.95), WindowManager.LayoutParams.WRAP_CONTENT);
         window.setGravity(Gravity.CENTER);
+
+        KeyboardUtils.showKeyboard(getActivity(), getView());
     }
 
     @OnClick(R.id.btn_ok)
     void onClickOk(View view) {
+        KeyboardUtils.hideKeyboard(getActivity(), getView());
+
+        if (mEtAuthenticationCode.getText().length() == 0) {
+            //Todo: show error message
+            return;
+        }
+
         if (callback != null) {
             callback.onClickOk();
         }

@@ -6,9 +6,9 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:paddingBottom="8dp"
+    android:paddingLeft="24dp"
     android:paddingRight="8dp"
-    android:paddingTop="24dp"
-    android:paddingLeft="24dp">
+    android:paddingTop="24dp">
 
     <TextView
         android:id="@+id/tv_title"
@@ -20,13 +20,19 @@
         android:textSize="15sp"
         android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/tv_message"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/et_authentication_code"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
-        android:text="message"
-        android:textColor="@color/nero"
+        android:inputType="numberDecimal"
+        android:paddingBottom="5dp"
+        android:background="@drawable/bg_edittext"
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey"
+        android:textCursorDrawable="@drawable/gray_cursor"
         android:textSize="12sp"/>
 
     <LinearLayout
@@ -56,5 +62,4 @@
             android:textColor="@color/my_sin"
             android:textSize="12sp"/>
     </LinearLayout>
-
 </LinearLayout>

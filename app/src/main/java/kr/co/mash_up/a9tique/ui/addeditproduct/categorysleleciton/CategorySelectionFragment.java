@@ -99,7 +99,7 @@ public class CategorySelectionFragment extends BaseFragment {
         mCategoryListAdapter.setOnItemClickListener(new OnItemClickListener<String>() {
 
             @Override
-            public void onClick(String str) {
+            public void onClick(String str, int position) {
                 Intent intent = new Intent();
 
                 // sub 카테고리가 왔을 때 main 카테고리 채우기

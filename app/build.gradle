@@ -8,8 +8,8 @@ android {
         applicationId "kr.co.mash_up.a9tique"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary true  // ImageView에 vector drawable 사용하기 위해
     }
@@ -71,8 +71,10 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
     compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
     compile "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
-    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"  // HttpLoggingInterceptor
-    compile "com.squareup.okhttp3:okhttp-urlconnection:$rootProject.okhttpVersion"  // JavaNetCookieJar
+    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
+    // HttpLoggingInterceptor
+    compile "com.squareup.okhttp3:okhttp-urlconnection:$rootProject.okhttpVersion"
+    // JavaNetCookieJar
 
     // rx
     compile "io.reactivex:rxjava:$rootProject.rxjavaVersion"
