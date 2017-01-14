@@ -4,31 +4,28 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseViewHolder;
+import kr.co.mash_up.a9tique.data.Menu;
 import kr.co.mash_up.a9tique.ui.OnItemClickListener;
 
-public class SettingWithImageViewHolder extends BaseViewHolder<Menu> {
+public class MenuViewHolder extends BaseViewHolder<Menu> {
 
     @BindView(R.id.tv_title)
     TextView mTvTitle;
 
-    @BindView(R.id.iv_indicator)
-    ImageView mIvIndicator;
-
     private OnItemClickListener<Menu> mOnItemClickListener;
 
-    public static SettingWithImageViewHolder newInstance(@NonNull ViewGroup parent, OnItemClickListener<Menu> listener) {
+    public static MenuViewHolder newInstance(@NonNull ViewGroup parent, OnItemClickListener<Menu> listener) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_setting_with_img_list, parent, false);
-        return new SettingWithImageViewHolder(itemView, listener);
+                .inflate(R.layout.item_setting_normal_list, parent, false);
+        return new MenuViewHolder(itemView, listener);
     }
 
-    public SettingWithImageViewHolder(View itemView, OnItemClickListener<Menu> listener) {
+    public MenuViewHolder(View itemView, OnItemClickListener<Menu> listener) {
         super(itemView);
 
         mOnItemClickListener = listener;
@@ -40,6 +37,5 @@ public class SettingWithImageViewHolder extends BaseViewHolder<Menu> {
         itemView.setOnClickListener(view -> {
             mOnItemClickListener.onClick(menu, getAdapterPosition());
         });
-
     }
 }

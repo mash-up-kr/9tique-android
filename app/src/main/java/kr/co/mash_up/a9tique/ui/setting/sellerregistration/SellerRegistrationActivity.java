@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique.ui.setting;
+package kr.co.mash_up.a9tique.ui.setting.sellerregistration;
 
 import android.content.Intent;
 import android.os.Bundle;

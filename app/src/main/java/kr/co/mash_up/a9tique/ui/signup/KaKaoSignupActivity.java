@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique;
+package kr.co.mash_up.a9tique.ui.signup;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,12 +14,14 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.helper.log.Logger;
 
+import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.common.AccountManager;
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.remote.RequestUser;
 import kr.co.mash_up.a9tique.data.User;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
+import kr.co.mash_up.a9tique.ui.login.LoginActivity;
 import kr.co.mash_up.a9tique.ui.products.SellerProductListActivity;
 import kr.co.mash_up.a9tique.util.PreferencesUtils;
 

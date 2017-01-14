@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique;
+package kr.co.mash_up.a9tique.ui.setting.aboutus;
 
 import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import butterknife.BindView;
+import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
 
 public class About9tiqueActivity extends BaseActivity {
@@ -62,7 +63,7 @@ public class About9tiqueActivity extends BaseActivity {
 
     @Override
     public void initFragment(Fragment fragment) {
-        // Do noting
+        // Do nothing
     }
 
     /**

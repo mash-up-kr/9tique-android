@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique;
+package kr.co.mash_up.a9tique.ui.setting.sellerregistration;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
 import kr.co.mash_up.a9tique.util.KeyboardUtils;
 

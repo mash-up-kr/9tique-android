@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/whisper"
     android:fitsSystemWindows="true"
-    tools:context="kr.co.mash_up.a9tique.ui.setting.SellerRegistrationActivity">
+    tools:context="kr.co.mash_up.a9tique.ui.setting.sellerregistration.SellerRegistrationActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

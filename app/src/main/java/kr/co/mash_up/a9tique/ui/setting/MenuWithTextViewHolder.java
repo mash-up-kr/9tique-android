@@ -9,22 +9,26 @@ import android.widget.TextView;
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseViewHolder;
+import kr.co.mash_up.a9tique.data.Menu;
 import kr.co.mash_up.a9tique.ui.OnItemClickListener;
 
-public class SettingViewHolder extends BaseViewHolder<Menu> {
+public class MenuWithTextViewHolder extends BaseViewHolder<Menu> {
 
     @BindView(R.id.tv_title)
     TextView mTvTitle;
 
+    @BindView(R.id.tv_label)
+    TextView mTtvLabel;
+
     private OnItemClickListener<Menu> mOnItemClickListener;
 
-    public static SettingViewHolder newInstance(@NonNull ViewGroup parent, OnItemClickListener<Menu> listener) {
+    public static MenuWithTextViewHolder newInstance(@NonNull ViewGroup parent, OnItemClickListener<Menu> listener) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_setting_normal_list, parent, false);
-        return new SettingViewHolder(itemView, listener);
+                .inflate(R.layout.item_setting_with_text_list, parent, false);
+        return new MenuWithTextViewHolder(itemView, listener);
     }
 
-    public SettingViewHolder(View itemView, OnItemClickListener<Menu> listener) {
+    public MenuWithTextViewHolder(View itemView, OnItemClickListener<Menu> listener) {
         super(itemView);
 
         mOnItemClickListener = listener;
@@ -33,6 +37,7 @@ public class SettingViewHolder extends BaseViewHolder<Menu> {
     @Override
     public void bind(Menu menu) {
         mTvTitle.setText(menu.getTitle());
+        mTtvLabel.setText(menu.getLabel());
         itemView.setOnClickListener(view -> {
             mOnItemClickListener.onClick(menu, getAdapterPosition());
         });

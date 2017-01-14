@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique.ui.setting;
+package kr.co.mash_up.a9tique.data;
 
 /**
  * Created by CY on 2016. 11. 15..

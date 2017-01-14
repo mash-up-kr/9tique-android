@@ -29,7 +29,7 @@
         </activity>
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".KaKaoSignupActivity"
+            android:name=".ui.signup.KaKaoSignupActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
@@ -81,7 +81,7 @@
         </activity>
 
         <activity
-            android:name=".InquireActivity"
+            android:name=".ui.setting.inquire.InquireActivity"
             android:parentActivityName=".ui.setting.SettingActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -90,7 +90,7 @@
 
         </activity>
         <activity
-            android:name=".AgreementActivity"
+            android:name=".ui.setting.agreement.AgreementActivity"
             android:parentActivityName=".ui.setting.SettingActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -98,7 +98,7 @@
                 android:value="kr.co.mash_up.a9tique.ui.setting.SettingActivity"/>
         </activity>
         <activity
-            android:name=".LicenseActivity"
+            android:name=".ui.setting.license.LicenseActivity"
             android:parentActivityName=".ui.setting.SettingActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -106,7 +106,7 @@
                 android:value="kr.co.mash_up.a9tique.ui.setting.SettingActivity"/>
         </activity>
         <activity
-            android:name=".About9tiqueActivity"
+            android:name=".ui.setting.aboutus.About9tiqueActivity"
             android:parentActivityName=".ui.setting.SettingActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -114,7 +114,7 @@
                 android:value="kr.co.mash_up.a9tique.ui.setting.SettingActivity"/>
         </activity>
         <activity
-            android:name=".ui.setting.SellerRegistrationActivity"
+            android:name=".ui.setting.sellerregistration.SellerRegistrationActivity"
             android:parentActivityName=".ui.setting.SettingActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan">

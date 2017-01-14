@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique;
+package kr.co.mash_up.a9tique.ui.login;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +10,10 @@ import com.kakao.auth.Session;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
 
+import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.ui.products.SellerProductListActivity;
+import kr.co.mash_up.a9tique.ui.signup.KaKaoSignupActivity;
 import kr.co.mash_up.a9tique.util.PreferencesUtils;
 
 public class LoginActivity extends AppCompatActivity {

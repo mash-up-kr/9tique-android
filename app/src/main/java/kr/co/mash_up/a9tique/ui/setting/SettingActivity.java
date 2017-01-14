@@ -15,17 +15,19 @@ import java.util.ArrayList;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
-import kr.co.mash_up.a9tique.About9tiqueActivity;
-import kr.co.mash_up.a9tique.AgreementActivity;
 import kr.co.mash_up.a9tique.BuildConfig;
-import kr.co.mash_up.a9tique.InquireActivity;
-import kr.co.mash_up.a9tique.LicenseActivity;
-import kr.co.mash_up.a9tique.LoginActivity;
+import kr.co.mash_up.a9tique.data.Menu;
+import kr.co.mash_up.a9tique.ui.login.LoginActivity;
 import kr.co.mash_up.a9tique.R;
-import kr.co.mash_up.a9tique.SellerRegistrationDialogFragment;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
 import kr.co.mash_up.a9tique.ui.addeditproduct.ConfirmationDialogFragment;
 import kr.co.mash_up.a9tique.ui.addeditproduct.OrientationSpacingItemDecoration;
+import kr.co.mash_up.a9tique.ui.setting.aboutus.About9tiqueActivity;
+import kr.co.mash_up.a9tique.ui.setting.agreement.AgreementActivity;
+import kr.co.mash_up.a9tique.ui.setting.inquire.InquireActivity;
+import kr.co.mash_up.a9tique.ui.setting.license.LicenseActivity;
+import kr.co.mash_up.a9tique.ui.setting.sellerregistration.SellerRegistrationActivity;
+import kr.co.mash_up.a9tique.ui.setting.sellerregistration.SellerRegistrationDialogFragment;
 import kr.co.mash_up.a9tique.util.PreferencesUtils;
 
 public class SettingActivity extends BaseActivity {

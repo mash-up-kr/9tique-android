@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import kr.co.mash_up.a9tique.BuildConfig;
 import kr.co.mash_up.a9tique.base.ui.BaseViewHolder;
+import kr.co.mash_up.a9tique.data.Menu;
 import kr.co.mash_up.a9tique.ui.OnItemClickListener;
 
 /**
@@ -51,11 +51,11 @@ public class MenuListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case VIEW_TYPE_WITH_TEXT:
-                return SettingWithTextViewHolder.newInstance(parent, mOnItemClickListener);
+                return MenuWithTextViewHolder.newInstance(parent, mOnItemClickListener);
             case VIEW_TYPE_WITH_IMAGE:
-                return SettingWithImageViewHolder.newInstance(parent, mOnItemClickListener);
+                return MenuWithImageViewHolder.newInstance(parent, mOnItemClickListener);
             default:
-                return SettingViewHolder.newInstance(parent, mOnItemClickListener);
+                return MenuViewHolder.newInstance(parent, mOnItemClickListener);
         }
     }
 
