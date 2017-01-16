@@ -5,12 +5,6 @@
     android:orientation="vertical"
     android:background="#ffffff">
 
-    <ImageView
-        android:id="@+id/goodsImage"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +16,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/goodsTitle"
+            android:id="@+id/tv_goods_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -32,7 +26,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/goodsSubTitle"
+            android:id="@+id/tv_goods_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
@@ -40,7 +34,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/goodsSize"
+            android:id="@+id/tv_goods_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
@@ -48,7 +42,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/goodsPrice"
+            android:id="@+id/tv_goods_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
@@ -56,7 +50,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/goodsInfo"
+            android:id="@+id/tv_goods_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="11dp"
@@ -75,35 +69,6 @@
             android:textColor="#ffffff"/>
     </LinearLayout>
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="10dp">
-        <ImageView
-            android:id="@+id/detail_image_1"
-            android:src="@color/google_yellow"
-            android:layout_width="match_parent"
-            android:layout_height="360dp"/>
-
-        <ImageView
-            android:id="@+id/detail_image_2"
-            android:src="@color/gray"
-            android:layout_width="match_parent"
-            android:layout_height="360dp"/>
-
-        <ImageView
-            android:id="@+id/detail_image_3"
-            android:src="@color/google_green"
-            android:layout_width="match_parent"
-            android:layout_height="360dp"/>
-
-        <ImageView
-            android:id="@+id/detail_image_4"
-            android:src="@color/gray"
-            android:layout_width="match_parent"
-            android:layout_height="360dp"/>
-    </LinearLayout>
     
     <Button
         android:id="@+id/btn_inquire_long"

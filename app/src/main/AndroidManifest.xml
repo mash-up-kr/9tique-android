@@ -19,7 +19,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.splash.SplashActivity"
-            android:theme="@style/AppTheme.SplashTheme"></activity>
+            android:theme="@style/AppTheme.SplashTheme" />
         <activity android:name=".FacebookLogin" />
         <activity
             android:name=".ui.addeditproduct.AddEditProductActivity"
@@ -33,9 +33,7 @@
         <activity
             android:name=".ui.products.SellerProductListActivity"
             android:label="@string/title_activity_seller_product_list"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ui.addeditproduct.categorysleleciton.CategorySelectionActivity"
             android:label="@string/title_activity_category_selection"
@@ -45,14 +43,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.addeditproduct.AddEditProductActivity" />
         </activity>
-        <activity
-            android:name=".CustomerGoodsDetail">
+        <activity android:name=".CustomerGoodsDetailActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".DetailImagesActivity"></activity>
     </application>
 
 </manifest>
