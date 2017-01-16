@@ -33,7 +33,7 @@
         <activity
             android:name=".ui.products.SellerProductListActivity"
             android:label="@string/title_activity_seller_product_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.addeditproduct.categorysleleciton.CategorySelectionActivity"
             android:label="@string/title_activity_category_selection"
@@ -50,7 +50,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailImagesActivity"></activity>
+        <activity android:name=".DetailImagesActivity" />
+        <activity android:name=".InquireDialog"></activity>
     </application>
 
 </manifest>

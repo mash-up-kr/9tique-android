@@ -1,5 +1,6 @@
 package kr.co.mash_up.a9tique;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by CY on 2016. 12. 25..
@@ -18,6 +20,7 @@ import butterknife.ButterKnife;
 public class CustomerGoodsDetailAdapter extends RecyclerView.Adapter<CustomerGoodsDetailAdapter.ViewHolder> {
 
     private List<CustomerGoodsDetail> customerGoodsDetailList;
+    private Context mContext;
 
     public CustomerGoodsDetailAdapter(List<CustomerGoodsDetail> customerGoodsDetailList) {
         this.customerGoodsDetailList = customerGoodsDetailList;
@@ -37,7 +40,14 @@ public class CustomerGoodsDetailAdapter extends RecyclerView.Adapter<CustomerGoo
 
         public ViewHolder(View view) {
             super(view);
+            mContext = view.getContext();
             ButterKnife.bind(this, view);
+        }
+
+        @OnClick({R.id.btn_inquire, R.id.btn_inquire_long})
+        void btnInquireClick(View v) {
+            final InquireDialog dlgInquire = new InquireDialog(mContext);
+            dlgInquire.show();
         }
     }
 
