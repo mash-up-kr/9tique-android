@@ -15,13 +15,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.rd.PageIndicatorView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import kr.co.mash_up.a9tique.R;
+import kr.co.mash_up.a9tique.ui.sellproducts.SellProductsActivity;
 import kr.co.mash_up.a9tique.ui.setting.SettingActivity;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
 import kr.co.mash_up.a9tique.data.MainCategory;
@@ -174,8 +174,7 @@ public class SellerProductListActivity extends BaseActivity {
                 startActivity(new Intent(SellerProductListActivity.this, SettingActivity.class));
                 return true;
             case R.id.action_seller_products:
-                //Todo: open seller products activity, remove toast
-                Toast.makeText(this, "open seller products activity", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SellerProductListActivity.this, SellProductsActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);

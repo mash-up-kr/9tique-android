@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/refresh_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whisper"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="kr.co.mash_up.a9tique.ui.sellproducts.SellProductsActivity"
+    tools:showIn="@layout/activity_sell_products">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:textSize="12sp"
+            android:textColor="@color/nero"
+            android:id="@+id/tv_products_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:text="0개의 판매 등록한 상품이 있습니다."/>
+
+        <TextView
+            android:id="@+id/tv_product_remove_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="전체삭제"
+            android:textColor="@color/nero"
+            android:textSize="12sp"/>
+
+        <kr.co.mash_up.a9tique.ui.widget.RecyclerViewEmptySupport
+            android:layout_marginTop="7dp"
+            android:layout_below="@id/tv_products_count"
+            android:id="@+id/rv_products"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:id="@+id/ll_emptyView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_marginBottom="34dp"
+                app:srcCompat="@drawable/ic_gallery"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="판매 상품이 존재하지 않습니다."/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -22,12 +22,10 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-
         <activity
             android:name=".ui.splash.SplashActivity"
             android:theme="@style/AppTheme.FullScreen">
         </activity>
-
         <activity
             android:name=".ui.login.LoginActivity"
             android:theme="@style/AppTheme.FullScreen">
@@ -41,7 +39,6 @@
             android:name=".ui.signup.KaKaoSignupActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
         <activity
             android:name=".ui.setting.SettingActivity"
             android:parentActivityName=".ui.products.SellerProductListActivity"
@@ -50,7 +47,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kr.co.mash_up.a9tique.ui.products.SellerProductListActivity"/>
         </activity>
-
         <activity
             android:name=".ui.addeditproduct.AddEditProductActivity"
             android:parentActivityName=".ui.products.SellerProductListActivity"
@@ -79,7 +75,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kr.co.mash_up.a9tique.ui.products.SellerProductListActivity"/>
         </activity>
-
         <activity
             android:name=".ui.setting.inquire.InquireActivity"
             android:parentActivityName=".ui.setting.SettingActivity"
@@ -87,7 +82,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kr.co.mash_up.a9tique.ui.setting.SettingActivity"/>
-
         </activity>
         <activity
             android:name=".ui.setting.agreement.AgreementActivity"
@@ -121,6 +115,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kr.co.mash_up.a9tique.ui.setting.SettingActivity"/>
+        </activity>
+        <activity
+            android:name=".ui.sellproducts.SellProductsActivity"
+            android:parentActivityName=".ui.products.SellerProductListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kr.co.mash_up.a9tique.ui.products.SellerProductListActivity"/>
         </activity>
     </application>
 
