@@ -16,6 +16,7 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public static final int VIEW_TYPE_CONTENT = 0;
     public static final int VIEW_TYPE_FOOTER = 1;
+    public static final int VIEW_TYPE_HEADER = 2;
 
     public interface OnItemClickListener<T> {
         void onClick(T t, int position);
@@ -69,6 +70,8 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 return SellProductsViewHolder.newInstance(parent, mOnItemClickListener);
             case VIEW_TYPE_FOOTER:
                 return ProductFooterViewHolder.newInstance(parent);
+            case VIEW_TYPE_HEADER:
+                return SellProductsHeaderViewHolder.newInstance(parent, mOnItemClickListener);
             default:
                 return null;
         }
@@ -76,22 +79,32 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof SellProductsViewHolder) {
-            Product product = mProducts.get(position);
-            ((SellProductsViewHolder) holder).bind(product);
-        } else {
-            ((ProductFooterViewHolder) holder).bind(null);
+
+        switch (holder.getItemViewType()) {
+            case VIEW_TYPE_HEADER:
+                ((SellProductsHeaderViewHolder) holder).bind(getItemCount() - 1);
+                break;
+            case VIEW_TYPE_FOOTER:
+                ((ProductFooterViewHolder) holder).bind(null);
+                break;
+            case VIEW_TYPE_CONTENT:
+                Product product = mProducts.get(position - 1);
+                ((SellProductsViewHolder) holder).bind(product);
+                break;
         }
     }
 
     @Override
     public int getItemCount() {
-        return mProducts != null ? mProducts.size() : 0;
+        return mProducts != null ? mProducts.size() + 1 : 1;
     }
 
     @Override
     public int getItemViewType(int position) {
-        return mProducts.get(position) == null ? VIEW_TYPE_FOOTER : VIEW_TYPE_CONTENT;
+        if (position == 0) {
+            return VIEW_TYPE_HEADER;
+        }
+        return mProducts.get(position - 1) == null ? VIEW_TYPE_FOOTER : VIEW_TYPE_CONTENT;
     }
 
     public void addItem(Product product, int position) {
@@ -99,13 +112,13 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             position = 0;
         }
         mProducts.add(position, product);
-        notifyItemInserted(position);
+        notifyItemInserted(position + 1);
     }
 
     public void removeItem(int position) {
-        mProducts.remove(position);
+        mProducts.remove(position - 1);
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position, mProducts.size());
+        notifyItemRangeChanged(position, getItemCount());
     }
 
     public void setProducts(List<Product> products) {

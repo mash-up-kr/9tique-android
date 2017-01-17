@@ -9,7 +9,7 @@ import android.view.View;
  */
 public class OrientationSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
-    public enum Orientation{
+    public enum Orientation {
         RIGHT,
         LEFT,
         BOTTOM,
@@ -18,10 +18,18 @@ public class OrientationSpacingItemDecoration extends RecyclerView.ItemDecoratio
 
     private final int spacingSize;
     private Orientation mOrientation;
+    private boolean header;
+
+    public OrientationSpacingItemDecoration(int spacingSize, Orientation orientation, boolean header) {
+        this.spacingSize = spacingSize;
+        mOrientation = orientation;
+        this.header = header;
+    }
 
     public OrientationSpacingItemDecoration(int spacingSize, Orientation orientation) {
         this.spacingSize = spacingSize;
         this.mOrientation = orientation;
+        this.header = false;
     }
 
     @Override
@@ -31,19 +39,21 @@ public class OrientationSpacingItemDecoration extends RecyclerView.ItemDecoratio
                                RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
 
-        switch (mOrientation){
-            case RIGHT:
-                outRect.right = spacingSize;
-                break;
-            case LEFT:
-                outRect.left = spacingSize;
-                break;
-            case BOTTOM:
-                outRect.bottom = spacingSize;
-                break;
-            case TOP:
-                outRect.top = spacingSize;
-                break;
+        if (parent.getChildAdapterPosition(view) != 0 || !header) {
+            switch (mOrientation) {
+                case RIGHT:
+                    outRect.right = spacingSize;
+                    break;
+                case LEFT:
+                    outRect.left = spacingSize;
+                    break;
+                case BOTTOM:
+                    outRect.bottom = spacingSize;
+                    break;
+                case TOP:
+                    outRect.top = spacingSize;
+                    break;
+            }
         }
     }
 }
