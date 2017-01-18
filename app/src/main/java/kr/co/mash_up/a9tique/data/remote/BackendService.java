@@ -155,4 +155,17 @@ public interface BackendService {
      */
     @DELETE("api/zzim/product/{id}")
     Observable<JsonObject> deleteZzimProduct(@Path("id") long productId);
+
+
+    /**
+     * 판매자가 등록한 상품 목록 조회
+     * ex. products?pageNo=0&pageSize=2
+     *
+     * @param pageNo       이번에 요청할 page number
+     * @param pageSize     page에 담긴 아이템 수
+     * @return 판매자가 등록한 상품 목록
+     */
+    @GET("api/seller/products")
+    Observable<JsonObject> getSellProducts(@Query("pageNo") int pageNo,
+                                       @Query("pageSize") int pageSize);
 }

@@ -40,27 +40,6 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public SellProductListAdapter(@NonNull Context context) {
         this.mContext = context;
         mProducts = new ArrayList<>();
-
-        dummyData();
-    }
-
-    //Todo: remove
-    private void dummyData() {
-        Product product;
-        for (int i = 0; i < 30; i++) {
-            product = new Product();
-            product.setName("name " + i);
-            product.setBrandName("brand name " + i);
-            product.setPrice(10000);
-            product.setSize("size " + i);
-            product.setDescription("description " + i);
-            product.setMainCategory("main " + i);
-            product.setSubCategory("sub " + i);
-            product.setStatus(Product.Status.SELL);
-            product.setProductImages(new ArrayList<>());
-            product.setCreatedAt(new Date().getTime());
-            addItem(product, i);
-        }
     }
 
     @Override
@@ -116,6 +95,9 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public void removeItem(int position) {
+        if (position < 1) {
+            position = 1;
+        }
         mProducts.remove(position - 1);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, getItemCount());
@@ -126,9 +108,5 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mProducts.add(products.get(i));
         }
         notifyDataSetChanged();
-    }
-
-    public ArrayList<Product> getProducts() {
-        return mProducts;
     }
 }

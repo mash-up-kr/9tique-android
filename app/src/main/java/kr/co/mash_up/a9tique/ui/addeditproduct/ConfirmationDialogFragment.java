@@ -60,6 +60,7 @@ public class ConfirmationDialogFragment extends DialogFragment {
             mTitle = getArguments().getString(PARAM_TITLE);
             mMessage = getArguments().getString(PARAM_MESSAGE);
         }
+        setCancelable(false);
     }
 
     @Override
@@ -68,13 +69,9 @@ public class ConfirmationDialogFragment extends DialogFragment {
 
         if (callback == null) {
             try {
-                if (context instanceof BaseActivity) {
-                    callback = (Callback) context;
-                } else {
-                    callback = (Callback) getTargetFragment();
-                }
+                callback = (Callback) getTargetFragment();
             } catch (ClassCastException e) {
-                throw new ClassCastException(context.toString() + "must implement DialogListener");
+                throw new ClassCastException(context.toString() + " must implement DialogListener");
             }
         }
     }

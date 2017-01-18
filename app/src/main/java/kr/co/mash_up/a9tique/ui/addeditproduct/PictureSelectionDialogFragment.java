@@ -54,6 +54,7 @@ public class PictureSelectionDialogFragment extends DialogFragment {
         if (getArguments() != null) {
             mTitle = getArguments().getString(PARAM_TITLE);
         }
+        setCancelable(false);
     }
 
     @Override
