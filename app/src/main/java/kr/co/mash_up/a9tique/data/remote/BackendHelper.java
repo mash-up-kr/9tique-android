@@ -271,4 +271,23 @@ public class BackendHelper {
                     callback.onFailure();
                 });
     }
+
+    public void deleteSellProducts(List<Product> products, ResultCallback callback) {
+        Observable<JsonObject> call = service.deleteSellProducts(new RequestDeleteProduct(products));
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    int statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if (statusCode / 100 == 2) {
+                        callback.onSuccess(null);
+                    } else {
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "deleteSellProductsAll " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
 }

@@ -12,6 +12,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -95,9 +96,9 @@ public interface BackendService {
      */
     @GET("api/product")
     Observable<JsonObject> getProducts(@Query("pageNo") int pageNo,
-                                      @Query("pageSize") int pageSize,
-                                      @Query("mainCategory") String mainCategory,
-                                      @Query("subCategory") String subCategory);
+                                       @Query("pageSize") int pageSize,
+                                       @Query("mainCategory") String mainCategory,
+                                       @Query("subCategory") String subCategory);
 
     /**
      * 상품 상세정보 조회
@@ -120,6 +121,7 @@ public interface BackendService {
 
     /**
      * 판매자 권한 획득
+     *
      * @return access token, user level
      */
     @PUT("api/user")
@@ -161,11 +163,20 @@ public interface BackendService {
      * 판매자가 등록한 상품 목록 조회
      * ex. products?pageNo=0&pageSize=2
      *
-     * @param pageNo       이번에 요청할 page number
-     * @param pageSize     page에 담긴 아이템 수
+     * @param pageNo   이번에 요청할 page number
+     * @param pageSize page에 담긴 아이템 수
      * @return 판매자가 등록한 상품 목록
      */
     @GET("api/seller/products")
     Observable<JsonObject> getSellProducts(@Query("pageNo") int pageNo,
-                                       @Query("pageSize") int pageSize);
+                                           @Query("pageSize") int pageSize);
+
+    /**
+     * 판매자가 등록한 상품 선택삭제
+     * DELETE method에 Body를 넣는건 Http Spec을 준수하는 Retrofit에서 지원하지 않아 트릭을 사용
+     *
+     * @return 성공 or 실패
+     */
+    @HTTP(path = "api/seller/products", method = "DELETE", hasBody = true)
+    Observable<JsonObject> deleteSellProducts(@Body RequestDeleteProduct product);
 }

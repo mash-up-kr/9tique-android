@@ -9,6 +9,9 @@ import okhttp3.MultipartBody;
 
 public class RequestProduct {
 
+    @SerializedName("id")
+    Long id;
+
     @SerializedName("name")
     String name;
 
@@ -35,6 +38,21 @@ public class RequestProduct {
 
     @SerializedName("files")
     List<MultipartBody.Part> files;
+
+    public RequestProduct() {
+    }
+
+    public RequestProduct(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

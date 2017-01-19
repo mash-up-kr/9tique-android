@@ -89,6 +89,7 @@ public class SellProductsFragment extends BaseFragment {
         mRvProducts.setLayoutManager(llmProducts);
         mRvProducts.addItemDecoration(new OrientationSpacingItemDecoration(itemSpacingSize, OrientationSpacingItemDecoration.Orientation.BOTTOM, true));
         mRvProducts.setEmptyView(mEmptyView);
+        mRvProducts.setHeader(true);
 
         mSellProductListAdapter = new SellProductListAdapter(getActivity());
         mSellProductListAdapter.setOnItemClickListener(new SellProductListAdapter.OnItemClickListener<Product>() {
@@ -222,10 +223,18 @@ public class SellProductsFragment extends BaseFragment {
         dlgRemoveAllConfirmaation.setCallback(new ConfirmationDialogFragment.Callback() {
             @Override
             public void onClickOk() {
-                //Todo: api call -> remove product all
-                //Todo: move in callback
-                SnackbarUtil.showMessage(getActivity(), getView(), "전체 상품삭제 성공", "", null);
-                SnackbarUtil.showMessage(getActivity(), getView(), "전체 상품삭제 실패", "", null);
+                BackendHelper.getInstance().deleteSellProducts(mSellProductListAdapter.getProducts(), new ResultCallback() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        SnackbarUtil.showMessage(getActivity(), getView(), "전체 상품삭제 성공", "", null);
+                        //Todo: reloading
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        SnackbarUtil.showMessage(getActivity(), getView(), "전체 상품삭제 실패", "", null);
+                    }
+                });
             }
 
             @Override

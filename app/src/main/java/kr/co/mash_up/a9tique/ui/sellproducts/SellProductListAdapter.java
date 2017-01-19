@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import kr.co.mash_up.a9tique.data.Product;
@@ -108,5 +107,9 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mProducts.add(products.get(i));
         }
         notifyDataSetChanged();
+    }
+
+    public ArrayList<Product> getProducts() {
+        return mProducts;
     }
 }
