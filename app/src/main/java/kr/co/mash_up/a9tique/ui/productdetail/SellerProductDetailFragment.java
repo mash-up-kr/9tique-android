@@ -128,8 +128,8 @@ public class SellerProductDetailFragment extends BaseFragment {
             mBtnSoldOutTop.setText("판매완료");
             mBtnSoldOutBottom.setText("판매완료");
         } else {
-            mBtnSoldOutTop.setText("판매완료 취소");
-            mBtnSoldOutBottom.setText("판매완료 취소");
+            mBtnSoldOutTop.setText("판매중");
+            mBtnSoldOutBottom.setText("판매중");
         }
     }
 

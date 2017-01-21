@@ -158,6 +158,7 @@ public class SellerRegistrationDialogFragment extends DialogFragment {
 
     @OnClick(R.id.btn_cancel)
     void onClickCancel(View view) {
+        KeyboardUtils.hideKeyboard(getActivity(), getView());
         dismiss();
     }
 
