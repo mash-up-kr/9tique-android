@@ -1,5 +1,6 @@
 package kr.co.mash_up.a9tique.ui.sellproducts;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,23 +10,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import java.util.List;
+
 import butterknife.BindDimen;
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.data.Product;
-import kr.co.mash_up.a9tique.data.remote.BackendHelper;
-import kr.co.mash_up.a9tique.data.remote.RequestProduct;
-import kr.co.mash_up.a9tique.data.remote.ResponseProduct;
-import kr.co.mash_up.a9tique.data.remote.ResultCallback;
 import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
 import kr.co.mash_up.a9tique.ui.addeditproduct.ConfirmationDialogFragment;
 import kr.co.mash_up.a9tique.ui.addeditproduct.OrientationSpacingItemDecoration;
 import kr.co.mash_up.a9tique.ui.productdetail.SellerProductDetailActivity;
 import kr.co.mash_up.a9tique.ui.widget.RecyclerViewEmptySupport;
+import kr.co.mash_up.a9tique.util.CheckNonNullUtil;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
-public class SellProductsFragment extends BaseFragment {
+public class SellProductsFragment extends BaseFragment implements SellProductsContract.View {
 
     public static final String TAG = SellProductsFragment.class.getSimpleName();
 
@@ -41,16 +41,18 @@ public class SellProductsFragment extends BaseFragment {
     @BindDimen(R.dimen.sell_product_list_item_bottom_margin)
     int itemSpacingSize;
 
+    ProgressDialog mPprogressDialog;
+
     private SellProductListAdapter mSellProductListAdapter;
 
-    private static final String ARG_PARAM_CURRENT_PAGE_NO = "currentPageNo";
-    private static final String ARG_PARAM_PAGE_TOTAL = "pageTotal";
-    private static final String ARG_PARAM_FIRST_LOADING = "first_load";
+    private SellProductsContract.Presenter mPresenter;
 
-    private int mParamCurrentPageNo;
-    private int mParamPageTotal;
+//    private static final String ARG_PARAM_CURRENT_PAGE_NO = "currentPageNo";
+//    private static final String ARG_PARAM_PAGE_TOTAL = "pageTotal";
+//    private static final String ARG_PARAM_FIRST_LOADING = "first_load";
+
     private int mLoadingItemPosition;  //로딩 푸터 추가한 위치
-    private boolean mFirstLoad;
+//    private boolean mFirstLoad;
 
     public SellProductsFragment() {
         // Required empty public constructor
@@ -59,9 +61,9 @@ public class SellProductsFragment extends BaseFragment {
     public static SellProductsFragment newInstance() {
         SellProductsFragment fragment = new SellProductsFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM_CURRENT_PAGE_NO, 0);
-        args.putInt(ARG_PARAM_PAGE_TOTAL, 0);
-        args.putBoolean(ARG_PARAM_FIRST_LOADING, true);
+//        args.putInt(ARG_PARAM_CURRENT_PAGE_NO, 0);
+//        args.putInt(ARG_PARAM_PAGE_TOTAL, 0);
+//        args.putBoolean(ARG_PARAM_FIRST_LOADING, true);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,9 +73,9 @@ public class SellProductsFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         if (getArguments() != null) {
-            mParamCurrentPageNo = getArguments().getInt(ARG_PARAM_CURRENT_PAGE_NO);
-            mParamPageTotal = getArguments().getInt(ARG_PARAM_PAGE_TOTAL);
-            mFirstLoad = getArguments().getBoolean(ARG_PARAM_FIRST_LOADING);
+//            mParamCurrentPageNo = getArguments().getInt(ARG_PARAM_CURRENT_PAGE_NO);
+//            mParamPageTotal = getArguments().getInt(ARG_PARAM_PAGE_TOTAL);
+//            mFirstLoad = getArguments().getBoolean(ARG_PARAM_FIRST_LOADING);
         }
     }
 
@@ -98,14 +100,9 @@ public class SellProductsFragment extends BaseFragment {
                 if (position == 0) {
                     productRemoveAll();
                 } else if (product.isSeller()) {
-                    Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
-                    intent.putExtra("product", product);
-                    startActivityForResult(intent, SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
+                    mPresenter.detailProductSeller(product);
                 } else {
-                    //Todo: show customer product detail activity
-                    Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
-                    intent.putExtra("product", product);
-                    startActivityForResult(intent, SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
+                    mPresenter.detailProductCustomer(product);
                 }
             }
 
@@ -116,21 +113,7 @@ public class SellProductsFragment extends BaseFragment {
                 dlgRemoveConfirmaation.setCallback(new ConfirmationDialogFragment.Callback() {
                     @Override
                     public void onClickOk() {
-                        //Todo: show progress bar
-
-                        //Todo: api call -> remove product
-                        BackendHelper.getInstance().deleteProduct(product.getId(), new ResultCallback() {
-                            @Override
-                            public void onSuccess(Object o) {
-                                //Todo: reloading
-                                SnackbarUtil.showMessage(getActivity(), getView(), "상품 삭제 성공", "", null);
-                            }
-
-                            @Override
-                            public void onFailure() {
-                                SnackbarUtil.showMessage(getActivity(), getView(), "상품 삭제 실패", "", null);
-                            }
-                        });
+                        mPresenter.removeProduct(product);
                     }
 
                     @Override
@@ -145,15 +128,13 @@ public class SellProductsFragment extends BaseFragment {
             @Override
             public void onUpdate(Product product, int position) {
                 //Todo: show detail activity. update mode
+//                mPresenter.editProduct();
             }
 
             @Override
             public void onStatusUpdate(Product product, int position) {
-                RequestProduct requestProduct = new RequestProduct();
-                requestProduct.setStatus(product.getStatus());
-
                 ConfirmationDialogFragment dlgStatusUpdateConfirmaation;
-                if (requestProduct.getStatus().name().equals(Product.Status.SELL.name())) {
+                if (product.getStatus().name().equals(Product.Status.SELL.name())) {
                     dlgStatusUpdateConfirmaation
                             = ConfirmationDialogFragment.newInstance("상품 판매 표기", "해당 상품을 판매중으로 표기하시겠습니까?");
                 } else {
@@ -164,21 +145,7 @@ public class SellProductsFragment extends BaseFragment {
                 dlgStatusUpdateConfirmaation.setCallback(new ConfirmationDialogFragment.Callback() {
                     @Override
                     public void onClickOk() {
-                        //Todo: show progress bar
-
-                        BackendHelper.getInstance().updateProduct(product.getId(), requestProduct, new ResultCallback() {
-                            @Override
-                            public void onSuccess(Object o) {
-                                //Todo: reloading??
-                                mSellProductListAdapter.notifyItemChanged(position);
-                                SnackbarUtil.showMessage(getActivity(), getView(), "상품 판매 상태 변경 성공", "", null);
-                            }
-
-                            @Override
-                            public void onFailure() {
-                                SnackbarUtil.showMessage(getActivity(), getView(), "상품 판매 상태 변경 실페", "", null);
-                            }
-                        });
+                        mPresenter.updateProductStatus(product, position);
                     }
 
                     @Override
@@ -192,7 +159,6 @@ public class SellProductsFragment extends BaseFragment {
         });
         mRvProducts.setAdapter(mSellProductListAdapter);
 
-        //Todo: 무한 스크롤
         mRvProducts.addOnScrollListener(new EndlessRecyclerViewScrollListener(llmProducts) {
             @Override
             public int getFooterViewType(int defaultNoFooterViewType) {
@@ -201,20 +167,16 @@ public class SellProductsFragment extends BaseFragment {
 
             @Override
             public void onLoadMore(int page, int totalItemCount) {
-                Log.d(TAG, "page: " + page + "totalItemCount: " + totalItemCount);
-                mLoadingItemPosition = totalItemCount;  //로딩 푸터 추가한 위치 저장
-                sellProductsLoadMoreDataFromApi(mParamCurrentPageNo + 1);
+                Log.d(TAG, "page: " + page + " totalItemCount: " + totalItemCount);
+                mPresenter.loadMoreProducts(totalItemCount - 1);  // 로딩 푸터 추가할 위치 전달. 헤더 때문에 -1
             }
         });
 
         mSwipeRefreshLayout.setColorSchemeResources(R.color.my_sin, R.color.nero);
-        mSwipeRefreshLayout.setOnRefreshListener(this::refresh);
-    }
+        mSwipeRefreshLayout.setOnRefreshListener(this::refreshProducts);
 
-    private void refresh() {
-        mSwipeRefreshLayout.setRefreshing(true);
-        sellProductsLoadMoreDataFromApi(mParamCurrentPageNo + 1);
-        mRvProducts.scrollToPosition(0);
+        mPprogressDialog = new ProgressDialog(getActivity(), ProgressDialog.STYLE_SPINNER);
+        mPprogressDialog.setCancelable(false);
     }
 
     public void productRemoveAll() {
@@ -223,18 +185,7 @@ public class SellProductsFragment extends BaseFragment {
         dlgRemoveAllConfirmaation.setCallback(new ConfirmationDialogFragment.Callback() {
             @Override
             public void onClickOk() {
-                BackendHelper.getInstance().deleteSellProducts(mSellProductListAdapter.getProducts(), new ResultCallback() {
-                    @Override
-                    public void onSuccess(Object o) {
-                        SnackbarUtil.showMessage(getActivity(), getView(), "전체 상품삭제 성공", "", null);
-                        //Todo: reloading
-                    }
-
-                    @Override
-                    public void onFailure() {
-                        SnackbarUtil.showMessage(getActivity(), getView(), "전체 상품삭제 실패", "", null);
-                    }
-                });
+                mPresenter.removeProductAll(mSellProductListAdapter.getProducts());
             }
 
             @Override
@@ -246,50 +197,119 @@ public class SellProductsFragment extends BaseFragment {
         dlgRemoveAllConfirmaation.show(getChildFragmentManager(), ConfirmationDialogFragment.TAG);
     }
 
-    private void sellProductsLoadMoreDataFromApi(int currentPageNo) {
-        if (mFirstLoad) {
-            currentPageNo--;
-        }
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
+    }
 
-         /*Todo: 아래로 안들어가서 화면이 안보이는 것
-         1. mFirstLoad, currentPageNo, mParamPageTotal 초기화해서 이부분에 들어가게 해야한다.
-         2. 데이터를 보존시켜서 재로딩안하게 - life cycle안에서 store, restore한다.
-        */
-        if (mFirstLoad || currentPageNo < mParamPageTotal) {
-            Log.e(TAG, " " + mLoadingItemPosition);
-            mSellProductListAdapter.addItem(null, mLoadingItemPosition);
+    @Override
+    public void setLodingIndicator(boolean active) {
+        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(active));
+    }
 
-            BackendHelper.getInstance().getSellProducts(currentPageNo,
-                    new ResultCallback<ResponseProduct>() {
-                        @Override
-                        public void onSuccess(ResponseProduct responseProduct) {
-                            if (!mFirstLoad) {
-                                Log.e(TAG, " " + mLoadingItemPosition);
-                                mSellProductListAdapter.removeItem(mLoadingItemPosition);  // 로딩 푸터 제거
-                            }
-
-                            mParamCurrentPageNo = responseProduct.getCurrentPageNo();
-                            mParamPageTotal = responseProduct.getPageTotal();
-                            Log.e(TAG, "mParamCurrentPageNo " + mParamCurrentPageNo + " " + mParamPageTotal);
-
-                            mSellProductListAdapter.setProducts(responseProduct.getProducts());
-                        }
-
-                        @Override
-                        public void onFailure() {
-                            SnackbarUtil.showMessage(getActivity(), getView(), "상품로딩 실패", "", null);
-                        }
-                    });
-        }
-        mFirstLoad = false;
-        if (mSwipeRefreshLayout.isRefreshing()) {
-            mSwipeRefreshLayout.setRefreshing(false);
+    @Override
+    public void setProgressbar(boolean active) {
+        if (active) {
+            mPprogressDialog.show();
+        } else {
+            mPprogressDialog.dismiss();
         }
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        sellProductsLoadMoreDataFromApi(mParamCurrentPageNo + 1);
+    public void setFooterView(boolean active, int position) {
+        if (active) {
+            mSellProductListAdapter.addFooterView(position);
+        } else {
+            mSellProductListAdapter.removeFooterView(position);
+        }
+    }
+
+    @Override
+    public void showProducts(List<Product> products) {
+        //Todo: 화면 번쩍임 있음 수정 요망
+        mSellProductListAdapter.addProducts(products);
+    }
+
+    @Override
+    public void showLoadingProductsError() {
+        SnackbarUtil.showMessage(getActivity(), getView(), "상품로딩 실패", "", null);
+    }
+
+    @Override
+    public void showNoProducts() {
+        // Do nothong
+    }
+
+    @Override
+    public void showProductDetailForSeller(Product product) {
+        Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
+        intent.putExtra("product", product);
+        startActivityForResult(intent, SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
+    }
+
+    @Override
+    public void showProductDetailForCustomer(Product product) {
+        //Todo: change customer product detail activity
+        Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
+        intent.putExtra("product", product);
+        startActivityForResult(intent, SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
+    }
+
+    @Override
+    public void showEditProduct() {
+
+    }
+
+    @Override
+    public boolean isActive() {
+        return isAdded();  // fragment가 acitivity에 의해 hosting 여부
+    }
+
+    @Override
+    public void setPresenter(SellProductsContract.Presenter presenter) {
+        mPresenter = CheckNonNullUtil.checkNotNull(presenter);
+    }
+
+    @Override
+    public void showSuccessfullyRemovedMessage() {
+        SnackbarUtil.showMessage(getActivity(), getView(), "상품 삭제 성공", "", null);
+    }
+
+    @Override
+    public void showFailureRemovedMessage() {
+        SnackbarUtil.showMessage(getActivity(), getView(), "상품 삭제 실패", "", null);
+    }
+
+    @Override
+    public void showSuccessfullyRemovedAllMessage() {
+        SnackbarUtil.showMessage(getActivity(), getView(), "전체 상품삭제 성공", "", null);
+    }
+
+    @Override
+    public void showFailureRemovedAllMessage() {
+        SnackbarUtil.showMessage(getActivity(), getView(), "전체 상품삭제 실패", "", null);
+    }
+
+    @Override
+    public void showSuccessfullyUpdatedStatusMessage() {
+        SnackbarUtil.showMessage(getActivity(), getView(), "상품 판매 상태 변경 성공", "", null);
+    }
+
+    @Override
+    public void showFailureUpdatedStatusMessage() {
+        SnackbarUtil.showMessage(getActivity(), getView(), "상품 판매 상태 변경 실페", "", null);
+    }
+
+    @Override
+    public void updateProductStatus(int position) {
+        mSellProductListAdapter.notifyItemChanged(position);
+    }
+
+    @Override
+    public void refreshProducts() {
+        mSellProductListAdapter.clearProducts();  //Todo: 화면 번쩍임 있음... 수정해야함
+        mPresenter.loadProducts(true);
     }
 }

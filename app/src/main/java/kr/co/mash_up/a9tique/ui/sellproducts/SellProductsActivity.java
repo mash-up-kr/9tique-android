@@ -19,6 +19,8 @@ public class SellProductsActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView mTvTitle;
 
+    private SellProductsContract.Presenter mPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +34,8 @@ public class SellProductsActivity extends BaseActivity {
             initFragment(sellProductsFragment);
         }
 
-        //Todo: Create the presenter
+        // Create the presenter
+        mPresenter = new SellProductsPresenter(sellProductsFragment);
     }
 
     @Override

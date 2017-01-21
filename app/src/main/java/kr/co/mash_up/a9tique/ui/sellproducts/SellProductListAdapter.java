@@ -103,13 +103,36 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public void setProducts(List<Product> products) {
-        for (int i = 0; i < products.size(); i++) {
-            mProducts.add(products.get(i));
-        }
+        int currentSize = mProducts.size();
+        mProducts.clear();
+        mProducts.addAll(products);
+        notifyItemRangeRemoved(0, currentSize);
+        notifyItemRangeInserted(0, mProducts.size());
+    }
+
+    public void clearProducts() {
+//        int currentSize = mProducts.size();
+        mProducts.clear();
         notifyDataSetChanged();
+//        notifyItemRangeRemoved(0, currentSize);
+    }
+
+    public void addProducts(List<Product> products) {
+        for (int i = 0; i < products.size(); i++) {
+            addItem(products.get(i), mProducts.size());
+        }
+        notifyItemChanged(0);  // 헤더 리프래쉬
     }
 
     public ArrayList<Product> getProducts() {
         return mProducts;
+    }
+
+    public void addFooterView(int position) {
+        addItem(null, position);
+    }
+
+    public void removeFooterView(int position) {
+        removeItem(position);
     }
 }
