@@ -1,7 +1,6 @@
 package kr.co.mash_up.a9tique.ui.sellproducts;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.util.List;
 
@@ -20,60 +19,51 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
 
     public static final String TAG = SellProductsPresenter.class.getSimpleName();
 
-    //Todo: add Model
+    //Todo: add Model Layer
 
-    @NonNull
-    private final SellProductsContract.View mView;  // View
+    //Todo: WeakReference 적용
+//    private WeakReference<SellProductsContract.View> mWeakView;  // View Layer
+    private SellProductsContract.View mView;  // View Layer
 
     private boolean mFirstLoad = true;
     private int mCurrentPageNo = -1;
     private int mPageTotal = 0;
 
-    public SellProductsPresenter( /*Todo: add Model */
-                                  @NonNull SellProductsContract.View view) {
-        //Todo: add Model
-        mView = CheckNonNullUtil.checkNotNull(view, "sellProduct view cannot be null!!");
+//    @UiThread
+//    @Nullable
+//    class SellerProductPresenter<V extends BaseView> implements SellProductsContract.Presenter<V>{
+//
+//    }
+//    public V getView()
+//    public SellProductsContract.View getView() {
+//        return mWeakView == null ? null : mWeakView.get();
+//    }
+//
+//    @UiThread
+//    public boolean isViewAttached() {
+//        return mWeakView != null && mWeakView.get() != null;
+//    }
+//
+//    public void detachView() {
+//        if (mWeakView != null) {
+//            mWeakView.clear();
+//            mWeakView = null;
+//        }
+//    }
 
+    public SellProductsPresenter( /*Todo: add Model Layer */
+                                  @NonNull SellProductsContract.View view) {
+        //Todo: add Model Layer
+//        mWeakView = new WeakReference<>(CheckNonNullUtil.checkNotNull(view, " sellProduct view cannot be null!"));
+//        mWeakView.get().setPresenter(this);
+
+        mView = CheckNonNullUtil.checkNotNull(view, " sellProduct view cannot be null!");
         mView.setPresenter(this);
     }
 
     @Override
     public void result(int requestCode, int resultCode) {
-
-    }
-
-    @Override
-    public void loadMoreProducts(int loadingFooterPosition) {
-        if (mCurrentPageNo + 1 < mPageTotal) {
-            mView.setFooterView(true, loadingFooterPosition);
-
-            BackendHelper.getInstance().getSellProducts(mCurrentPageNo + 1,
-                    new ResultCallback<ResponseProduct>() {
-                        @Override
-                        public void onSuccess(ResponseProduct responseProduct) {
-                            if (!mView.isActive()) {
-                                return;
-                            }
-                            mView.setFooterView(false, loadingFooterPosition);
-
-                            Log.e(TAG, "before mCurrentPageNo " + mCurrentPageNo + " mPageTotal " + mPageTotal);
-                            mCurrentPageNo = responseProduct.getCurrentPageNo();
-                            mPageTotal = responseProduct.getPageTotal();
-                            Log.e(TAG, "after mCurrentPageNo " + mCurrentPageNo + " mPageTotal " + mPageTotal);
-
-                            processProducts(responseProduct.getProducts());
-                        }
-
-                        @Override
-                        public void onFailure() {
-                            if (!mView.isActive()) {
-                                return;
-                            }
-                            mView.setFooterView(false, loadingFooterPosition);
-                            mView.showLoadingProductsError();
-                        }
-                    });
-        }
+        //Todo: receive result and show succesfully or failure
     }
 
     @Override
@@ -82,6 +72,12 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
         mFirstLoad = false;
     }
 
+    /**
+     * 데이터를 처음 불러오거나 Refresh할 때 호출
+     *
+     * @param forceUpdate   업데이트 여부
+     * @param showLoadingUI Loading UI 표시 여부
+     */
     private void loadProducts(boolean forceUpdate, final boolean showLoadingUI) {
         if (showLoadingUI) {
             mView.setLodingIndicator(true);  // 로딩 인디케이터 표시
@@ -89,7 +85,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
         if (forceUpdate) {
             mCurrentPageNo = -1;
             mPageTotal = 0;
-            //Todo: 강제 업데이트
+            //Todo: Model Layer Cache clear
         }
 
         BackendHelper.getInstance().getSellProducts(mCurrentPageNo + 1,
@@ -103,12 +99,10 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                             mView.setLodingIndicator(false);
                         }
 
-                        Log.e(TAG, "before mCurrentPageNo " + mCurrentPageNo + " mPageTotal " + mPageTotal);
                         mCurrentPageNo = responseProduct.getCurrentPageNo();
                         mPageTotal = responseProduct.getPageTotal();
-                        Log.e(TAG, "after mCurrentPageNo " + mCurrentPageNo + " mPageTotal " + mPageTotal);
 
-                        processProducts(responseProduct.getProducts());
+                        mView.showProducts(responseProduct.getProducts(), responseProduct.getElementsTotal());
                     }
 
                     @Override
@@ -124,17 +118,46 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                 });
     }
 
-    private void processProducts(List<Product> products) {
-//        if (products.isEmpty()) {
-//            mView.showNoProducts();
-//        } else {
-        mView.showProducts(products);
-//        }
+    /**
+     * 무한 스크롤로 데이터를 더 불러올 때 호출
+     *
+     * @param loadingFooterPosition Loading FootView를 추가할 리스트 포지션
+     */
+    @Override
+    public void loadMoreProducts(int loadingFooterPosition) {
+        if (mCurrentPageNo + 1 < mPageTotal) {
+            mView.setFooterView(true, loadingFooterPosition);
+
+            BackendHelper.getInstance().getSellProducts(mCurrentPageNo + 1,
+                    new ResultCallback<ResponseProduct>() {
+                        @Override
+                        public void onSuccess(ResponseProduct responseProduct) {
+                            if (!mView.isActive()) {
+                                return;
+                            }
+                            mView.setFooterView(false, loadingFooterPosition);
+
+                            mCurrentPageNo = responseProduct.getCurrentPageNo();
+                            mPageTotal = responseProduct.getPageTotal();
+
+                            mView.showAddProducts(responseProduct.getProducts());
+                        }
+
+                        @Override
+                        public void onFailure() {
+                            if (!mView.isActive()) {
+                                return;
+                            }
+                            mView.setFooterView(false, loadingFooterPosition);
+                            mView.showLoadingProductsError();
+                        }
+                    });
+        }
     }
 
     @Override
-    public void editProduct() {
-        mView.showEditProduct();
+    public void editProduct(Product product) {
+        mView.showEditProduct(product);
     }
 
     @Override
@@ -148,20 +171,25 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
     }
 
     @Override
-    public void removeProduct(Product product) {
+    public void removeProduct(Product product, int position) {
         mView.setProgressbar(true);
 
         BackendHelper.getInstance().deleteProduct(product.getId(), new ResultCallback() {
             @Override
             public void onSuccess(Object o) {
+                if (!mView.isActive()) {
+                    return;
+                }
                 mView.setProgressbar(false);
                 mView.showSuccessfullyRemovedMessage();
-                //Todo: reloading
-                mView.refreshProducts();
+                mView.removeProduct(position);
             }
 
             @Override
             public void onFailure() {
+                if (!mView.isActive()) {
+                    return;
+                }
                 mView.setProgressbar(false);
                 mView.showFailureRemovedMessage();
             }
@@ -175,14 +203,19 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
         BackendHelper.getInstance().deleteSellProducts(products, new ResultCallback() {
             @Override
             public void onSuccess(Object o) {
+                if (!mView.isActive()) {
+                    return;
+                }
                 mView.setProgressbar(false);
                 mView.showSuccessfullyRemovedAllMessage();
-                //Todo: reloading
                 mView.refreshProducts();
             }
 
             @Override
             public void onFailure() {
+                if (!mView.isActive()) {
+                    return;
+                }
                 mView.setProgressbar(false);
                 mView.showFailureRemovedAllMessage();
             }
@@ -199,14 +232,19 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
         BackendHelper.getInstance().updateProduct(product.getId(), requestProduct, new ResultCallback() {
             @Override
             public void onSuccess(Object o) {
+                if (!mView.isActive()) {
+                    return;
+                }
                 mView.setProgressbar(false);
                 mView.showSuccessfullyUpdatedStatusMessage();
-                //Todo: reloading??
                 mView.updateProductStatus(position);
             }
 
             @Override
             public void onFailure() {
+                if (!mView.isActive()) {
+                    return;
+                }
                 mView.setProgressbar(false);
                 mView.showFailureUpdatedStatusMessage();
             }
@@ -215,6 +253,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
 
     @Override
     public void start() {
-        loadProducts(false);
+//        loadProducts(false);  //Todo: Model Layer 추가하고 이걸로 사용하기
+        loadProducts(true);
     }
 }

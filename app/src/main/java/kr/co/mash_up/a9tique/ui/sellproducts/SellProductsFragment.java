@@ -18,6 +18,7 @@ import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
+import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
 import kr.co.mash_up.a9tique.ui.addeditproduct.ConfirmationDialogFragment;
 import kr.co.mash_up.a9tique.ui.addeditproduct.OrientationSpacingItemDecoration;
 import kr.co.mash_up.a9tique.ui.productdetail.SellerProductDetailActivity;
@@ -51,7 +52,7 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
 //    private static final String ARG_PARAM_PAGE_TOTAL = "pageTotal";
 //    private static final String ARG_PARAM_FIRST_LOADING = "first_load";
 
-    private int mLoadingItemPosition;  //로딩 푸터 추가한 위치
+//    private int mLoadingItemPosition;  //로딩 푸터 추가한 위치
 //    private boolean mFirstLoad;
 
     public SellProductsFragment() {
@@ -113,7 +114,7 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
                 dlgRemoveConfirmaation.setCallback(new ConfirmationDialogFragment.Callback() {
                     @Override
                     public void onClickOk() {
-                        mPresenter.removeProduct(product);
+                        mPresenter.removeProduct(product, position);
                     }
 
                     @Override
@@ -127,8 +128,7 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
 
             @Override
             public void onUpdate(Product product, int position) {
-                //Todo: show detail activity. update mode
-//                mPresenter.editProduct();
+                mPresenter.editProduct(product);
             }
 
             @Override
@@ -179,6 +179,11 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
         mPprogressDialog.setCancelable(false);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mPresenter.result(requestCode, resultCode);
+    }
+
     public void productRemoveAll() {
         ConfirmationDialogFragment dlgRemoveAllConfirmaation
                 = ConfirmationDialogFragment.newInstance("판매중인 상품 전체삭제", "선택하신 상품을 전체삭제 하시겠습니까?");
@@ -227,8 +232,12 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
     }
 
     @Override
-    public void showProducts(List<Product> products) {
-        //Todo: 화면 번쩍임 있음 수정 요망
+    public void showProducts(List<Product> products, int elementsTotal) {
+        mSellProductListAdapter.setElementsTotal(elementsTotal);
+        mSellProductListAdapter.setProducts(products);
+    }
+
+    public void showAddProducts(List<Product> products){
         mSellProductListAdapter.addProducts(products);
     }
 
@@ -258,8 +267,11 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
     }
 
     @Override
-    public void showEditProduct() {
-
+    public void showEditProduct(Product product) {
+        Intent intent = new Intent(getActivity(), AddEditProductActivity.class);
+        intent.putExtra("productId", product.getId());
+        intent.putExtra("product", product);
+        startActivityForResult(intent, AddEditProductActivity.REQUEST_CODE_EDIT_PRODUCT);
     }
 
     @Override
@@ -308,8 +320,13 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
     }
 
     @Override
+    public void removeProduct(int position) {
+        mSellProductListAdapter.setElementsTotal(mSellProductListAdapter.getElementsTotal() - 1);
+        mSellProductListAdapter.removeItem(position - 1);
+    }
+
+    @Override
     public void refreshProducts() {
-        mSellProductListAdapter.clearProducts();  //Todo: 화면 번쩍임 있음... 수정해야함
         mPresenter.loadProducts(true);
     }
 }

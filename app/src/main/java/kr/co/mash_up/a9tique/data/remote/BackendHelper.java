@@ -252,6 +252,7 @@ public class BackendHelper {
                     if (statusCode / 100 == 2) {
                         int currentPageNo = jsonObject.get("page_no").getAsInt();
                         int pageTotal = jsonObject.get("page_total").getAsInt();
+                        int elementsTotal = jsonObject.get("total").getAsInt();
 
                         List<Product> products = new ArrayList<Product>();
                         JsonArray jsonArray = jsonObject.getAsJsonArray("list");
@@ -261,7 +262,7 @@ public class BackendHelper {
                             Log.d(TAG, "product: " + product.toString());
                             products.add(product);
                         }
-                        callback.onSuccess(new ResponseProduct(products, currentPageNo, pageTotal));
+                        callback.onSuccess(new ResponseProduct(products, currentPageNo, pageTotal, elementsTotal));
                     } else {
                         callback.onFailure();
                     }

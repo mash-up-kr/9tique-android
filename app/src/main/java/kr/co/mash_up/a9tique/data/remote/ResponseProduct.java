@@ -13,10 +13,19 @@ public class ResponseProduct {
 
     private int pageTotal;   // 전체 페이지 수. 이거보다 -1해서 요청해야 한다.
 
+    private int elementsTotal;
+
     public ResponseProduct(List<Product> products, int currentPageNo, int pageTotal) {
         mProducts = products;
         this.currentPageNo = currentPageNo;
         this.pageTotal = pageTotal;
+    }
+
+    public ResponseProduct(List<Product> products, int currentPageNo, int pageTotal, int elementsTotal) {
+        mProducts = products;
+        this.currentPageNo = currentPageNo;
+        this.pageTotal = pageTotal;
+        this.elementsTotal = elementsTotal;
     }
 
     public List<Product> getProducts() {
@@ -41,5 +50,13 @@ public class ResponseProduct {
 
     public void setPageTotal(int pageTotal) {
         this.pageTotal = pageTotal;
+    }
+
+    public int getElementsTotal() {
+        return elementsTotal;
+    }
+
+    public void setElementsTotal(int elementsTotal) {
+        this.elementsTotal = elementsTotal;
     }
 }

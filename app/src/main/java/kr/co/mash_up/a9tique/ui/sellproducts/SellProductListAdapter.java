@@ -32,6 +32,8 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private OnItemClickListener<Product> mOnItemClickListener;
 
+    private int mElementsTotal;
+
     public void setOnItemClickListener(OnItemClickListener<Product> onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
     }
@@ -39,6 +41,7 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public SellProductListAdapter(@NonNull Context context) {
         this.mContext = context;
         mProducts = new ArrayList<>();
+        mElementsTotal = 0;
     }
 
     @Override
@@ -60,7 +63,7 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_HEADER:
-                ((SellProductsHeaderViewHolder) holder).bind(getItemCount() - 1);
+                ((SellProductsHeaderViewHolder) holder).bind(mElementsTotal);
                 break;
             case VIEW_TYPE_FOOTER:
                 ((ProductFooterViewHolder) holder).bind(null);
@@ -97,31 +100,24 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         if (position < 1) {
             position = 1;
         }
-        mProducts.remove(position - 1);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, getItemCount());
+        mProducts.remove(position);
+        notifyItemRemoved(position +1);
+        notifyItemRangeChanged(0, mProducts.size() + 1);  // 헤더부분 refresh때문에 0부터
     }
 
     public void setProducts(List<Product> products) {
-        int currentSize = mProducts.size();
         mProducts.clear();
         mProducts.addAll(products);
-        notifyItemRangeRemoved(0, currentSize);
-        notifyItemRangeInserted(0, mProducts.size());
-    }
-
-    public void clearProducts() {
-//        int currentSize = mProducts.size();
-        mProducts.clear();
         notifyDataSetChanged();
-//        notifyItemRangeRemoved(0, currentSize);
     }
 
     public void addProducts(List<Product> products) {
+        int currentSize = mProducts.size();
         for (int i = 0; i < products.size(); i++) {
-            addItem(products.get(i), mProducts.size());
+            mProducts.add(products.get(i));
         }
-        notifyItemChanged(0);  // 헤더 리프래쉬
+        notifyItemRangeInserted(currentSize, products.size());
+//        notifyDataSetChanged();
     }
 
     public ArrayList<Product> getProducts() {
@@ -134,5 +130,13 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public void removeFooterView(int position) {
         removeItem(position);
+    }
+
+    public void setElementsTotal(int elementsTotal) {
+        mElementsTotal = elementsTotal;
+    }
+
+    public int getElementsTotal() {
+        return mElementsTotal;
     }
 }

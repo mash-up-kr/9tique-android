@@ -22,13 +22,13 @@ public interface SellProductsContract {
 
         void loadMoreProducts(int loadingFooterPosition);
 
-        void editProduct();
+        void editProduct(Product product);
 
         void detailProductSeller(Product product);
 
         void detailProductCustomer(Product product);
 
-        void removeProduct(Product product);
+        void removeProduct(Product product, int position);
 
         void removeProductAll(List<Product> products);
 
@@ -46,7 +46,9 @@ public interface SellProductsContract {
 
         void setFooterView(boolean active, int position);
 
-        void showProducts(List<Product> products);
+        void showProducts(List<Product> products, int elementsTotal);
+
+        void showAddProducts(List<Product> products);
 
         void showLoadingProductsError();
 
@@ -58,9 +60,11 @@ public interface SellProductsContract {
 
         void showProductDetailForCustomer(Product product);
 
+        void removeProduct(int position);
+
         void updateProductStatus(int position);
 
-        void showEditProduct();
+        void showEditProduct(Product product);
 
         void showSuccessfullyRemovedMessage();
 
