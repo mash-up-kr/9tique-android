@@ -1,21 +1,25 @@
 package kr.co.mash_up.a9tique.ui.addeditproduct;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 
 import java.io.File;
 
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseViewHolder;
+import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.ProductImage;
-import  kr.co.mash_up.a9tique.ui.addeditproduct.ProductImageListAdapter.OnItemClickListener;
+import kr.co.mash_up.a9tique.ui.addeditproduct.ProductImageListAdapter.OnItemClickListener;
 
 
 public class ProductImageNormalViewHolder extends BaseViewHolder<ProductImage> {
@@ -26,6 +30,7 @@ public class ProductImageNormalViewHolder extends BaseViewHolder<ProductImage> {
     @BindView(R.id.iv_product_image_remove)
     ImageView ivProductImageRemove;
 
+    private RequestManager mRequestManager;
     private OnItemClickListener mOnItemClickListener;
 
     public static ProductImageNormalViewHolder newInstance(@NonNull ViewGroup parent, @NonNull OnItemClickListener listener) {
@@ -37,13 +42,23 @@ public class ProductImageNormalViewHolder extends BaseViewHolder<ProductImage> {
     public ProductImageNormalViewHolder(View itemView, @NonNull OnItemClickListener listener) {
         super(itemView);
 
+        mRequestManager = Glide.with(itemView.getContext());
         mOnItemClickListener = listener;
     }
 
     @Override
     public void bind(ProductImage productImage) {
-        Glide.with(itemView.getContext())
-                .load(new File(productImage.getImagePath()))
+        DrawableTypeRequest<String> request;
+
+        if (TextUtils.isEmpty(productImage.getImageUrl())) {
+            request = mRequestManager
+                    .load(productImage.getImagePath());
+        } else {
+            request = mRequestManager
+                    .load(Constants.END_POINT + productImage.getImageUrl());
+        }
+
+        request
                 .fitCenter()
                 .centerCrop()
                 .into(ivProductImage);

@@ -1,5 +1,6 @@
 package kr.co.mash_up.a9tique.ui.products;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,12 +12,14 @@ import android.widget.LinearLayout;
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
+import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.ResponseProduct;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
 import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
 import kr.co.mash_up.a9tique.ui.productdetail.SellerProductDetailActivity;
 import kr.co.mash_up.a9tique.ui.widget.RecyclerViewEmptySupport;
+import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 public class SubCategoryFragment extends BaseFragment {
 
@@ -98,14 +101,14 @@ public class SubCategoryFragment extends BaseFragment {
 
         mProductListAdapter = new ProductListAdapter(getActivity());
         mProductListAdapter.setOnItemClickListener((product, position) -> {
-            if (product.isSeller()){
+            if (product.isSeller()) {
                 Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
-                intent.putExtra("product", product);
+                intent.putExtra(Constants.PRODUCT, product);
                 startActivityForResult(intent, SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
-            }else{
+            } else {
                 //Todo: show customer product detail activity
                 Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
-                intent.putExtra("product", product);
+                intent.putExtra(Constants.PRODUCT, product);
                 startActivityForResult(intent, SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
             }
         });
@@ -184,5 +187,33 @@ public class SubCategoryFragment extends BaseFragment {
         Log.e(TAG, "onResume " + mParamMainCategory + " " + mParamSubCategory);
         Log.e(TAG, mParamCurrentPageNo + " " + mParamPageTotal);
         productsLoadMoreDataFromApi(mParamCurrentPageNo + 1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT:
+                if (resultCode == Activity.RESULT_OK) {
+                    int result = data.getIntExtra(Constants.API_RESULT, 0);
+                    switch (result) {
+                        case Constants.PRODUCT_UPDATE_STATUS_SUCCESS:
+                            SnackbarUtil.showMessage(getActivity(), getView(), "상품 판매상태 수정 완료", "", null);
+                            //Todo: reloading
+                            break;
+                        case Constants.PRODUCT_UPDATE_STATUS_FAILURE:
+                            SnackbarUtil.showMessage(getActivity(), getView(), "상품 판매상태 수정 실패", "", null);
+                            break;
+                        case Constants.PRODUCT_DELETE_SUCCESS:
+                            SnackbarUtil.showMessage(getActivity(), getView(), "상품 삭제 완료", "", null);
+                            //Todo: reloading
+                            break;
+                        case Constants.PRODUCT_DELETE_FAILURE:
+                            SnackbarUtil.showMessage(getActivity(), getView(), "상품 삭제 실패", "", null);
+                            break;
+                    }
+                }
+        }
     }
 }

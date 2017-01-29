@@ -22,10 +22,10 @@ import com.rd.PageIndicatorView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import kr.co.mash_up.a9tique.R;
-import kr.co.mash_up.a9tique.ui.setting.SettingActivity;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
 import kr.co.mash_up.a9tique.data.MainCategory;
 import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
+import kr.co.mash_up.a9tique.ui.setting.SettingActivity;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 //Todo: EventPage 무한 스크롤
@@ -185,7 +185,7 @@ public class SellerProductListActivity extends BaseActivity {
     @OnClick(R.id.fab_add_product)
     public void addProduct(View view) {
         Intent intent = new Intent(SellerProductListActivity.this, AddEditProductActivity.class);
-        startActivityForResult(intent, AddEditProductActivity.REQUEST_CODE_ADD_EDIT_RPODUCT);
+        startActivityForResult(intent, AddEditProductActivity.REQUEST_CODE_ADD_RPODUCT);
     }
 
     @Override
@@ -193,7 +193,7 @@ public class SellerProductListActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case AddEditProductActivity.REQUEST_CODE_ADD_EDIT_RPODUCT:
+            case AddEditProductActivity.REQUEST_CODE_ADD_RPODUCT:
                 if (resultCode == Activity.RESULT_OK) {
                     SnackbarUtil.showMessage(SellerProductListActivity.this, mClRoot, "상품 등록 완료", "", null);
                     //Todo: reloading
@@ -201,7 +201,7 @@ public class SellerProductListActivity extends BaseActivity {
                 } else {
                     SnackbarUtil.showMessage(SellerProductListActivity.this, mClRoot, "상품 등록 실패. 다시 등록해주세요", "RETRY", view -> {
                         Intent intent = new Intent(SellerProductListActivity.this, AddEditProductActivity.class);
-                        startActivityForResult(intent, AddEditProductActivity.REQUEST_CODE_ADD_EDIT_RPODUCT);
+                        startActivityForResult(intent, AddEditProductActivity.REQUEST_CODE_ADD_RPODUCT);
                     });
                 }
                 break;

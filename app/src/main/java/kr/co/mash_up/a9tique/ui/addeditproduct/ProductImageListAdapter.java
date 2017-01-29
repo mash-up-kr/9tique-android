@@ -20,13 +20,13 @@ public class ProductImageListAdapter extends RecyclerView.Adapter<RecyclerView.V
         void onRemove(int position);
     }
 
-    private List<ProductImage> mProductImageList;
+    private List<ProductImage> mProductImages;
     private Context mContext;
 
     private OnItemClickListener mOnItemClickListener;
 
-    public List<ProductImage> getProductImageList() {
-        return mProductImageList;
+    public List<ProductImage> getProductImages() {
+        return mProductImages;
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -35,12 +35,12 @@ public class ProductImageListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public ProductImageListAdapter(@NonNull Context context) {
         this.mContext = context;
-        mProductImageList = new ArrayList<>();
+        mProductImages = new ArrayList<>();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return position == mProductImageList.size() ? VIEW_TYPE_FOOTER : VIEW_TYPE_NORMAL;
+        return position == mProductImages.size() ? VIEW_TYPE_FOOTER : VIEW_TYPE_NORMAL;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ProductImageListAdapter extends RecyclerView.Adapter<RecyclerView.V
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if (holder instanceof ProductImageNormalViewHolder) {
-            ProductImage productImage = mProductImageList.get(position);
+            ProductImage productImage = mProductImages.get(position);
             ((ProductImageNormalViewHolder) holder).bind(productImage);
         } else if (holder instanceof ProductImageFooterViewHolder) {
             ((ProductImageFooterViewHolder) holder).bind("");
@@ -64,26 +64,32 @@ public class ProductImageListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemCount() {
-        return mProductImageList.size() + 1;
+        return mProductImages.size() + 1;
     }
 
     public void addItem(int position, ProductImage productImage) {
-        mProductImageList.add(position - 1, productImage);
+        mProductImages.add(position - 1, productImage);
         notifyItemInserted(position);
     }
 
     public void removeItem(int position) {
-        mProductImageList.remove(position);
+        mProductImages.remove(position);
         notifyItemRemoved(position);
-//        notifyItemRangeChanged(position, mProductImageList.size());
+//        notifyItemRangeChanged(position, mProductImages.size());
     }
 
     public void setData(List<String> pathList) {
-        mProductImageList.clear();
+        mProductImages.clear();
 
         for (String path : pathList) {
-            mProductImageList.add(new ProductImage(path));
+            mProductImages.add(new ProductImage(path));
         }
+        notifyDataSetChanged();
+    }
+
+    public void setProductImages(List<ProductImage> productImageList) {
+        mProductImages.clear();
+        mProductImages = productImageList;
         notifyDataSetChanged();
     }
 }

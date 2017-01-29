@@ -5,36 +5,36 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import kr.co.mash_up.a9tique.data.Product;
-import okhttp3.MultipartBody;
+import kr.co.mash_up.a9tique.data.ProductImage;
 
 public class RequestProduct {
 
     @SerializedName("name")
-    String name;
+    private String name;
 
     @SerializedName("brand_name")
-    String brandName;
+    private String brandName;
 
     @SerializedName("size")
-    String size;
+    private String size;
 
     @SerializedName("price")
-    Integer price;
+    private Integer price;
 
     @SerializedName("description")
-    String description;
+    private String description;
 
     @SerializedName("status")
-    Product.Status status;
+    private Product.Status status;
 
     @SerializedName("main_category")
-    String mainCategory;
+    private String mainCategory;
 
     @SerializedName("sub_category")
-    String subCategory;
+    private String subCategory;
 
-    @SerializedName("files")
-    List<MultipartBody.Part> files;
+    @SerializedName("product_images")
+    private List<ProductImage> productImages;
 
     public String getName() {
         return name;
@@ -100,11 +100,11 @@ public class RequestProduct {
         this.subCategory = subCategory;
     }
 
-    public List<MultipartBody.Part> getFiles() {
-        return files;
+    public List<ProductImage> getProductImages() {
+        return productImages;
     }
 
-    public void setFiles(List<MultipartBody.Part> files) {
-        this.files = files;
+    public void setProductImages(List<ProductImage> productImages) {
+        this.productImages = productImages;
     }
 }

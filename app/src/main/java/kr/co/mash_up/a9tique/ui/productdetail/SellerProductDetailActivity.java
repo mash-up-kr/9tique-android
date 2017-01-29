@@ -2,27 +2,18 @@ package kr.co.mash_up.a9tique.ui.productdetail;
 
 import android.os.Bundle;
 import android.support.annotation.UiThread;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
-import kr.co.mash_up.a9tique.ui.products.SellerProductListActivity;
 
 /**
  * data load
@@ -86,7 +77,7 @@ public class SellerProductDetailActivity extends BaseActivity {
             actionBar.setDisplayShowTitleEnabled(false);
         }
 
-        mProduct = getIntent().getParcelableExtra("product");
+        mProduct = getIntent().getParcelableExtra(Constants.PRODUCT);
 
         Glide.with(SellerProductDetailActivity.this)
                 .load(Constants.END_POINT + mProduct.getProductImages().get(0).getImageUrl())
@@ -108,24 +99,5 @@ public class SellerProductDetailActivity extends BaseActivity {
         // Todo: 전환 애니메이션 구현
 //        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         return true;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_seller_product_detail, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.action_seller_product_modify:
-                //Todo: open seller product edit activity
-                Toast.makeText(this, "open seller product edit activity", Toast.LENGTH_SHORT).show();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

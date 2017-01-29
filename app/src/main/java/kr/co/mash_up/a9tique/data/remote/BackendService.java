@@ -51,6 +51,14 @@ public interface BackendService {
     @GET("api/category")
     Observable<JsonObject> getCategories();
 
+    /******************
+     * Product Image
+     ********************/
+
+    @Multipart
+    @POST("api/product_image")
+    Observable<JsonObject> addProductImage(@Part List<MultipartBody.Part> imageFiles);
+
     /****************** Product ********************/
     /**
      * 상품 정보 추가
@@ -58,10 +66,8 @@ public interface BackendService {
      * @param requestProduct 추가할 상품 정보
      * @return 성공 or 실패
      */
-    @Multipart
     @POST("api/product")
-    Observable<JsonObject> addProduct(@PartMap Map<String, RequestBody> requestProduct,
-                                      @Part List<MultipartBody.Part> imageFiles);
+    Observable<JsonObject> addProduct(@Body RequestProduct requestProduct);
 
     /**
      * 상품 정보 삭제
@@ -95,9 +101,9 @@ public interface BackendService {
      */
     @GET("api/product")
     Observable<JsonObject> getProducts(@Query("pageNo") int pageNo,
-                                      @Query("pageSize") int pageSize,
-                                      @Query("mainCategory") String mainCategory,
-                                      @Query("subCategory") String subCategory);
+                                       @Query("pageSize") int pageSize,
+                                       @Query("mainCategory") String mainCategory,
+                                       @Query("subCategory") String subCategory);
 
     /**
      * 상품 상세정보 조회
@@ -120,6 +126,7 @@ public interface BackendService {
 
     /**
      * 판매자 권한 획득
+     *
      * @return access token, user level
      */
     @PUT("api/user")

@@ -9,16 +9,15 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import kr.co.mash_up.a9tique.BuildConfig;
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
+import kr.co.mash_up.a9tique.data.ProductImage;
 import kr.co.mash_up.a9tique.data.User;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -161,31 +160,33 @@ public class BackendHelper {
                     Log.d(TAG, "status code: " + statusCode);
 
                     if (statusCode / 100 == 2) {
-                        int currentPageNo = jsonObject.get("page_no").getAsInt();
-                        int pageTotal = jsonObject.get("page_total").getAsInt();
+//                        int currentPageNo = jsonObject.get("page_no").getAsInt();
+//                        int pageTotal = jsonObject.get("page_total").getAsInt();
+//
+//                        List<Product> products = new ArrayList<Product>();
+//                        JsonArray jsonArray = jsonObject.getAsJsonArray("list");
+//                        Product product;
+//                        for (int i = 0; i < jsonArray.size(); i++) {
+//                            product = new Gson().fromJson(jsonArray.get(i).getAsJsonObject(), Product.class);
+//                            Log.d(TAG, "product: " + product.toString());
+//                            products.add(product);
+//                        }
+//                        callback.onSuccess(new ResponseProduct(products, currentPageNo, pageTotal));
 
-                        List<Product> products = new ArrayList<Product>();
-                        JsonArray jsonArray = jsonObject.getAsJsonArray("list");
-                        Product product;
-                        for (int i = 0; i < jsonArray.size(); i++) {
-                            product = new Gson().fromJson(jsonArray.get(i).getAsJsonObject(), Product.class);
-                            Log.d(TAG, "product: " + product.toString());
-                            products.add(product);
-                        }
-
-                        callback.onSuccess(new ResponseProduct(products, currentPageNo, pageTotal));
+                        // Gson을 이용해 아래 code로 축약
+                        ResponseProduct responseProduct = new Gson().fromJson(jsonObject, ResponseProduct.class);
+                        callback.onSuccess(responseProduct);
                     } else {
                         callback.onFailure();
                     }
-
                 }, throwable -> {
                     Log.e(TAG, "getProducts " + throwable.getMessage());
                     callback.onFailure();
                 });
     }
 
-    public void addProduct(Map<String, RequestBody> requestProduct, List<MultipartBody.Part> imageFiles, ResultCallback callback) {
-        Observable<JsonObject> call = service.addProduct(requestProduct, imageFiles);
+    public void addProduct(RequestProduct requestProduct, ResultCallback callback) {
+        Observable<JsonObject> call = service.addProduct(requestProduct);
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(jsonObject -> {
@@ -237,6 +238,35 @@ public class BackendHelper {
                     }
                 }, throwable -> {
                     Log.e(TAG, "deleteProduct " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
+
+    public void addProductImage(List<MultipartBody.Part> imageFiles, ResultCallback<List<ProductImage>> callback) {
+        Observable<JsonObject> call = service.addProductImage(imageFiles);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    int statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if (statusCode / 100 == 2) {
+
+                        List<ProductImage> productImages = new ArrayList<ProductImage>();
+                        JsonArray jsonArray = jsonObject.getAsJsonArray("list");
+                        ProductImage productImage;
+                        for (int i = 0; i < jsonArray.size(); i++) {
+                            productImage = new Gson().fromJson(jsonArray.get(i).getAsJsonObject(), ProductImage.class);
+                            Log.d(TAG, "productImage: " + productImage.toString());
+                            productImages.add(productImage);
+                        }
+
+                        callback.onSuccess(productImages);
+                    } else {
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "addProductImage " + throwable.getMessage());
                     callback.onFailure();
                 });
     }

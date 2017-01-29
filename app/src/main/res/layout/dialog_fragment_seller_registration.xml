@@ -29,7 +29,7 @@
         android:layout_marginBottom="32dp"
         android:inputType="numberDecimal"
         android:paddingBottom="5dp"
-        android:background="@drawable/bg_edittext"
+        android:background="@drawable/bg_seller_registration_edittext"
         android:textColor="@color/black"
         android:textColorHint="@color/grey"
         android:textCursorDrawable="@drawable/gray_cursor"

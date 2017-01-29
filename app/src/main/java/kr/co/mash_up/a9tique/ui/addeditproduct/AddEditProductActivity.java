@@ -11,10 +11,12 @@ import android.widget.TextView;
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
+import kr.co.mash_up.a9tique.data.Product;
 
 public class AddEditProductActivity extends BaseActivity {
 
-    public static final int REQUEST_CODE_ADD_EDIT_RPODUCT = 10;
+    public static final int REQUEST_CODE_ADD_RPODUCT = 10;
+    public static final int REQUEST_CODE_EDIT_PRODUCT = 11;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -22,25 +24,30 @@ public class AddEditProductActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView mTvTitle;
 
+    Long mProductId = null;
+    Product mProduct = null;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if (getIntent().hasExtra(AddEditProductFragment.PARAM_PRODUCT_ID)) {
+            mProductId = getIntent().getLongExtra(AddEditProductFragment.PARAM_PRODUCT_ID, 0);
+            mProduct = getIntent().getParcelableExtra("product");
+        }
         super.onCreate(savedInstanceState);
-
-        Integer productId = null;
 
         AddEditProductFragment addEditProductFragment =
                 (AddEditProductFragment) getSupportFragmentManager().findFragmentByTag(AddEditProductFragment.TAG);
 
-        if(null == addEditProductFragment){
+        if (null == addEditProductFragment) {
             addEditProductFragment = AddEditProductFragment.newInstance();
 
-            if(getIntent().hasExtra(AddEditProductFragment.PARAM_PRODUCT_ID)){
+            if (mProductId != null && mProductId > 0) {
                 // 상품정보 수정
-                productId = getIntent().getIntExtra(AddEditProductFragment.PARAM_PRODUCT_ID, 0);
                 Bundle bundle = new Bundle();
-                bundle.putInt(AddEditProductFragment.PARAM_PRODUCT_ID, productId);
+                bundle.putLong(AddEditProductFragment.PARAM_PRODUCT_ID, mProductId);
+                bundle.putParcelable(AddEditProductFragment.PARAM_PRODUCT, mProduct);
                 addEditProductFragment.setArguments(bundle);
-            }else{
+            } else {
                 // 상품정보 등록
             }
             initFragment(addEditProductFragment);
@@ -77,12 +84,16 @@ public class AddEditProductActivity extends BaseActivity {
             actionBar.setDisplayShowTitleEnabled(false);
         }
 
-        mTvTitle.setText("상품 판매 등록");
-        //Todo: toolbar title toggle, mTvTitle.setText("상품 판매 수정");
+        if (mProductId != null && mProductId > 0) {
+            mTvTitle.setText("상품 판매 수정");
+        } else {
+            mTvTitle.setText("상품 판매 등록");
+        }
     }
 
     /**
      * 뒤로가기 네비게이션 버튼 클릭시 호출되는 콜백 메소드
+     *
      * @return 이벤트 처리 여부
      */
     @Override

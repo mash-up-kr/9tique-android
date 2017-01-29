@@ -1,10 +1,14 @@
 package kr.co.mash_up.a9tique.ui.productdetail;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,7 +30,11 @@ import kr.co.mash_up.a9tique.data.ProductImage;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.RequestProduct;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
+import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
 import kr.co.mash_up.a9tique.ui.addeditproduct.ConfirmationDialogFragment;
+import kr.co.mash_up.a9tique.util.SnackbarUtil;
+
+import static kr.co.mash_up.a9tique.common.Constants.PRODUCT_ID;
 
 
 public class SellerProductDetailFragment extends BaseFragment {
@@ -87,6 +95,7 @@ public class SellerProductDetailFragment extends BaseFragment {
             mProduct = getArguments().getParcelable(ARG_PARAM_PRODUCT);
         }
         setRetainInstance(true);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -161,18 +170,21 @@ public class SellerProductDetailFragment extends BaseFragment {
         dlgConfirmation.setCallback(new ConfirmationDialogFragment.Callback() {
             @Override
             public void onClickOk() {
-                //Todo: api call. product sell <-> sold out
+                // api call. product sell <-> sold out
                 BackendHelper.getInstance().updateProduct(mProduct.getId(), requestProduct, new ResultCallback() {
                     @Override
                     public void onSuccess(Object o) {
-                        getActivity().setResult(Activity.RESULT_OK);
-                        //Todo: show update success message
+                        Intent receiveIntent = getActivity().getIntent();
+                        receiveIntent.putExtra(Constants.API_RESULT, Constants.PRODUCT_UPDATE_STATUS_SUCCESS);
+                        getActivity().setResult(Activity.RESULT_OK, receiveIntent);
                         getActivity().finish();
                     }
 
                     @Override
                     public void onFailure() {
-                        //Todo: show update fail message
+                        Intent receiveIntent = getActivity().getIntent();
+                        receiveIntent.putExtra(Constants.API_RESULT, Constants.PRODUCT_UPDATE_STATUS_FAILURE);
+                        getActivity().setResult(Activity.RESULT_OK, receiveIntent);
                         getActivity().finish();
                     }
                 });
@@ -194,18 +206,21 @@ public class SellerProductDetailFragment extends BaseFragment {
         dialog.setCallback(new ConfirmationDialogFragment.Callback() {
             @Override
             public void onClickOk() {
-                //Todo: api call. product delete
+                // api call. product delete
                 BackendHelper.getInstance().deleteProduct(mProduct.getId(), new ResultCallback() {
                     @Override
                     public void onSuccess(Object o) {
-                        getActivity().setResult(Activity.RESULT_OK);
+                        Intent receiveIntent = getActivity().getIntent();
+                        receiveIntent.putExtra(Constants.API_RESULT, Constants.PRODUCT_DELETE_SUCCESS);
+                        getActivity().setResult(Activity.RESULT_OK, receiveIntent);
                         getActivity().finish();
-                        //Todo: show delete success message
                     }
 
                     @Override
                     public void onFailure() {
-                        //Todo: show delete fail message
+                        Intent receiveIntent = getActivity().getIntent();
+                        receiveIntent.putExtra(Constants.API_RESULT, Constants.PRODUCT_DELETE_FAILURE);
+                        getActivity().setResult(Activity.RESULT_OK, receiveIntent);
                         getActivity().finish();
                     }
                 });
@@ -218,5 +233,47 @@ public class SellerProductDetailFragment extends BaseFragment {
         });
         dialog.setTargetFragment(SellerProductDetailFragment.this, 0);
         dialog.show(getChildFragmentManager(), ConfirmationDialogFragment.TAG);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // destroy all menu and re-call onCreateOptionsMenu
+        getActivity().invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_seller_product_detail, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_seller_product_modify:
+                // open seller product edit activity
+                Intent intent = new Intent(getActivity(), AddEditProductActivity.class);
+                intent.putExtra(Constants.PRODUCT_ID, mProduct.getId());
+                intent.putExtra(Constants.PRODUCT, mProduct);
+                startActivityForResult(intent, AddEditProductActivity.REQUEST_CODE_EDIT_PRODUCT);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case AddEditProductActivity.REQUEST_CODE_EDIT_PRODUCT:
+                if (resultCode == Activity.RESULT_OK) {
+                    SnackbarUtil.showMessage(getActivity(), getView(), "상품 수정 완료", "", null);
+                    //Todo: reloading
+                } else {
+                    SnackbarUtil.showMessage(getActivity(), getView(), "상품 수정 실패", "", null);
+                }
+                break;
+        }
     }
 }
