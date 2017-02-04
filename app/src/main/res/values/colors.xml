@@ -4,15 +4,17 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <!--color name - http://chir.ag/projects/name-that-color/#E7E7E7 -->
     <!-- App color -->
     <color name="black">#000000</color>
     <color name="black_alpha_99">#99000000</color>
-    <color name="nero">#262626</color>
+    <color name="mine_shaft">#262626</color>
     <color name="white">#ffffff</color>
-    <color name="grey">#7d7d7d</color>
-    <color name="very_light_grey">#c9c9c9</color>
-    <color name="whisper">#e7e7e7</color>
-    <color name="my_sin">#f0ac41</color>
+    <color name="boulder">#7d7d7d</color>
+    <color name="silver">#c9c9c9</color>
+    <color name="mercury">#e7e7e7</color>
+    <color name="tulip_tree">#f0ac41</color>
+    <color name="gray">#919191</color>
 
 
 </resources>

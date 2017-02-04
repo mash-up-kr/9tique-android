@@ -15,7 +15,6 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public static final int VIEW_TYPE_CONTENT = 0;
     public static final int VIEW_TYPE_FOOTER = 1;
-    public static final int VIEW_TYPE_HEADER = 2;
 
     public interface OnItemClickListener<T> {
         void onClick(T t, int position);
@@ -27,21 +26,18 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         void onStatusUpdate(T t, int position);
     }
 
-    private ArrayList<Product> mProducts;
+    private ArrayList<SellProduct> mSellProducts;
     private final Context mContext;
 
-    private OnItemClickListener<Product> mOnItemClickListener;
+    private OnItemClickListener<SellProduct> mOnItemClickListener;
 
-    private int mElementsTotal;
-
-    public void setOnItemClickListener(OnItemClickListener<Product> onItemClickListener) {
+    public void setOnItemClickListener(OnItemClickListener<SellProduct> onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
     }
 
     public SellProductListAdapter(@NonNull Context context) {
         this.mContext = context;
-        mProducts = new ArrayList<>();
-        mElementsTotal = 0;
+        mSellProducts = new ArrayList<>();
     }
 
     @Override
@@ -51,8 +47,6 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 return SellProductsViewHolder.newInstance(parent, mOnItemClickListener);
             case VIEW_TYPE_FOOTER:
                 return ProductFooterViewHolder.newInstance(parent);
-            case VIEW_TYPE_HEADER:
-                return SellProductsHeaderViewHolder.newInstance(parent, mOnItemClickListener);
             default:
                 return null;
         }
@@ -60,83 +54,105 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
         switch (holder.getItemViewType()) {
-            case VIEW_TYPE_HEADER:
-                ((SellProductsHeaderViewHolder) holder).bind(mElementsTotal);
-                break;
             case VIEW_TYPE_FOOTER:
                 ((ProductFooterViewHolder) holder).bind(null);
                 break;
             case VIEW_TYPE_CONTENT:
-                Product product = mProducts.get(position - 1);
-                ((SellProductsViewHolder) holder).bind(product);
+                SellProduct sellProduct = mSellProducts.get(position);
+                ((SellProductsViewHolder) holder).bind(sellProduct);
                 break;
         }
     }
 
     @Override
     public int getItemCount() {
-        return mProducts != null ? mProducts.size() + 1 : 1;
+        return mSellProducts != null ? mSellProducts.size() : 0;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
-            return VIEW_TYPE_HEADER;
-        }
-        return mProducts.get(position - 1) == null ? VIEW_TYPE_FOOTER : VIEW_TYPE_CONTENT;
+        return mSellProducts.get(position).getViewType();
     }
 
     public void addItem(Product product, int position) {
         if (position < 0) {
             position = 0;
         }
-        mProducts.add(position, product);
-        notifyItemInserted(position + 1);
+        mSellProducts.add(position, new SellProduct(product));
+        notifyItemInserted(position);
     }
 
     public void removeItem(int position) {
         if (position < 1) {
             position = 1;
         }
-        mProducts.remove(position);
-        notifyItemRemoved(position +1);
-        notifyItemRangeChanged(0, mProducts.size() + 1);  // 헤더부분 refresh때문에 0부터
+        mSellProducts.remove(position);
+        notifyItemRemoved(position);
+//        notifyItemRangeChanged(0, mSellProducts.size() + 1);  // 헤더부분 refresh때문에 0부터
     }
 
-    public void setProducts(List<Product> products) {
-        mProducts.clear();
-        mProducts.addAll(products);
+    public void setSellProducts(List<Product> products) {
+        mSellProducts.clear();
+        for (Product product : products) {
+            product.setViewType(VIEW_TYPE_CONTENT);
+            mSellProducts.add(new SellProduct(product));
+        }
         notifyDataSetChanged();
     }
 
     public void addProducts(List<Product> products) {
-        int currentSize = mProducts.size();
-        for (int i = 0; i < products.size(); i++) {
-            mProducts.add(products.get(i));
+        int currentSize = mSellProducts.size();
+        for (Product product : products) {
+            product.setViewType(VIEW_TYPE_CONTENT);
+            mSellProducts.add(new SellProduct(product));
         }
         notifyItemRangeInserted(currentSize, products.size());
 //        notifyDataSetChanged();
     }
 
-    public ArrayList<Product> getProducts() {
-        return mProducts;
+    public ArrayList<SellProduct> getSellProducts() {
+        return mSellProducts;
     }
 
     public void addFooterView(int position) {
-        addItem(null, position);
+        addItem(new Product(VIEW_TYPE_FOOTER), position);
     }
 
     public void removeFooterView(int position) {
         removeItem(position);
     }
 
-    public void setElementsTotal(int elementsTotal) {
-        mElementsTotal = elementsTotal;
+    public void setSellProductsChecked(boolean checked) {
+        for (SellProduct sellProduct : mSellProducts) {
+            sellProduct.setChecked(checked);
+        }
+        notifyDataSetChanged();
     }
 
-    public int getElementsTotal() {
-        return mElementsTotal;
+    /**
+     * @return check box가 check된 상품들
+     */
+    public ArrayList<Product> getSellProductIsSelected() {
+        ArrayList<Product> products = new ArrayList<>();
+        for (SellProduct sellProduct : mSellProducts) {
+            if (sellProduct.isChecked()) {
+                products.add(sellProduct);
+            }
+        }
+        return products;
+    }
+
+    /**
+     * @return check box가 check된 상품 수
+     */
+    public int getSellProductSelectedCount() {
+        int selectedCount = 0;
+        for (SellProduct sellProduct : mSellProducts) {
+            if (sellProduct.isChecked()) {
+                selectedCount += 1;
+            }
+        }
+        return selectedCount;
     }
 }

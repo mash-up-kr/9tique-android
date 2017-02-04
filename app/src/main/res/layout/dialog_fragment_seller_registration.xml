@@ -31,7 +31,7 @@
         android:paddingBottom="5dp"
         android:background="@drawable/bg_edittext"
         android:textColor="@color/black"
-        android:textColorHint="@color/grey"
+        android:textColorHint="@color/boulder"
         android:textCursorDrawable="@drawable/gray_cursor"
         android:textSize="12sp"/>
 
@@ -49,7 +49,7 @@
             android:background="@android:color/transparent"
             android:foreground="?attr/selectableItemBackground"
             android:text="Cancel"
-            android:textColor="@color/my_sin"
+            android:textColor="@color/tulip_tree"
             android:textSize="12sp"/>
 
         <Button
@@ -59,7 +59,7 @@
             android:background="@android:color/transparent"
             android:foreground="?attr/selectableItemBackground"
             android:text="AGREE"
-            android:textColor="@color/my_sin"
+            android:textColor="@color/tulip_tree"
             android:textSize="12sp"/>
     </LinearLayout>
 </LinearLayout>

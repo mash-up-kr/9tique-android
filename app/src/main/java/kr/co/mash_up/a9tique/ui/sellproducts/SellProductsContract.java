@@ -30,7 +30,7 @@ public interface SellProductsContract {
 
         void removeProduct(Product product, int position);
 
-        void removeProductAll(List<Product> products);
+        void removeProductSelected(List<Product> products);
 
         void updateProductStatus(Product product, int position);
     }
@@ -54,7 +54,7 @@ public interface SellProductsContract {
 
         void refreshProducts();
 
-        void showNoProducts();  // recyclerview empty support로 필요없는 메소드가되버림
+        void showNoProducts();
 
         void showProductDetailForSeller(Product product);
 
@@ -77,6 +77,8 @@ public interface SellProductsContract {
         void showSuccessfullyUpdatedStatusMessage();
 
         void showFailureUpdatedStatusMessage();
+
+        void showRemoveProductSelectedErrorMessage();
 
         boolean isActive();
     }

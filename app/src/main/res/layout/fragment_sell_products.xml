@@ -1,46 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
-    android:id="@+id/refresh_layout"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whisper"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="kr.co.mash_up.a9tique.ui.sellproducts.SellProductsActivity"
-    tools:showIn="@layout/activity_sell_products">
+    android:background="@color/mercury"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <RelativeLayout
+        android:id="@+id/rl_products_header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@color/mercury"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp">
 
-        <kr.co.mash_up.a9tique.ui.widget.RecyclerViewEmptySupport
+        <CheckBox
+            android:id="@+id/cb_check_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:button="@drawable/selector_cb_product"/>
+
+        <TextView
+            android:id="@+id/tv_products_select_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:layout_marginStart="14dp"
+            android:layout_toEndOf="@id/cb_check_all"
+            android:layout_toRightOf="@id/cb_check_all"
+            android:text="전체선택"
+            android:textColor="@color/mine_shaft"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tv_products_selected_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/tv_products_select_all"
+            android:layout_toRightOf="@id/tv_products_select_all"
+            android:text="1/3"
+            android:textColor="@color/boulder"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tv_product_checked_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="선택삭제"
+            android:textColor="@color/mine_shaft"
+            android:textSize="12sp"/>
+
+    </RelativeLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_products_header"
+        android:background="@color/mercury">
+
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_products"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:visibility="gone"/>
+            android:scrollbars="vertical"/>
 
-        <LinearLayout
-            android:id="@+id/ll_emptyView"
-            android:layout_width="match_parent"
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="34dp"
+            app:srcCompat="@drawable/ic_nodata"/>
+
+        <TextView
+            android:lineSpacingExtra="4dp"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:textColor="@color/boulder"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:layout_marginBottom="34dp"
-                app:srcCompat="@drawable/ic_gallery"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="판매 상품이 존재하지 않습니다."/>
-        </LinearLayout>
-
-    </RelativeLayout>
-</android.support.v4.widget.SwipeRefreshLayout>
+            android:text="판매 상품이 존재하지 않습니다.\n메인화면에서 +버튼을 눌러\n판매 할 상품을 등록해주세요!"/>
+    </LinearLayout>
+</RelativeLayout>

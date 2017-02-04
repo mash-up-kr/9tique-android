@@ -27,7 +27,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:text="label"
-        android:textColor="@color/grey"
+        android:textColor="@color/boulder"
         android:textSize="12sp"/>
 
 </RelativeLayout>

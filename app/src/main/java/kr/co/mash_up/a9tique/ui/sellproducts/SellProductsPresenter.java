@@ -113,6 +113,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                         if (showLoadingUI) {
                             mView.setLodingIndicator(false);
                         }
+                        mView.showNoProducts();
                         mView.showLoadingProductsError();
                     }
                 });
@@ -197,7 +198,11 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
     }
 
     @Override
-    public void removeProductAll(List<Product> products) {
+    public void removeProductSelected(List<Product> products) {
+        if (products.size() == 0) {
+            mView.showRemoveProductSelectedErrorMessage();
+            return;
+        }
         mView.setProgressbar(true);
 
         BackendHelper.getInstance().deleteSellProducts(products, new ResultCallback() {

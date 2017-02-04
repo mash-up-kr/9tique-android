@@ -3,6 +3,7 @@ package kr.co.mash_up.a9tique.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -12,48 +13,79 @@ import java.util.List;
  */
 public class Product implements Parcelable {
 
+    @Expose
+    @SerializedName("id")
     private Long id;
 
+    @Expose
+    @SerializedName("name")
     private String name;
 
+    @Expose
     @SerializedName("brand_name")
     private String brandName;
 
+    @Expose
+    @SerializedName("size")
     private String size;
 
+    @Expose
+    @SerializedName("price")
     private int price;
 
+    @Expose
+    @SerializedName("description")
     private String description;
 
+    @Expose
     @SerializedName("main_category")
     private String mainCategory;
 
+    @Expose
     @SerializedName("sub_category")
     private String subCategory;
 
+    @Expose
     @SerializedName("product_images")
     private List<ProductImage> productImages;
 
+    @Expose
+    @SerializedName("status")
     private Status status;
 
+    @Expose(serialize = false)
     @SerializedName("zzim_status")
     private boolean zzimStatus;
 
+    @Expose(serialize = false)
     @SerializedName("shop")
     private Shop shop;
 
+    @Expose(serialize = false)
     @SerializedName("created_at")
     private long createdAt;
 
+    @Expose(serialize = false)
     @SerializedName("updated_at")
     private long updatedAt;
 
+    @Expose(serialize = false)
     @SerializedName("seller")
     private boolean seller;
 
     public enum Status {
         SELL,  // 판매중
         SOLD_OUT  // 판매완료
+    }
+
+    private int viewType;
+
+    public int getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
     }
 
     public Long getId() {
@@ -198,6 +230,28 @@ public class Product implements Parcelable {
     }
 
     public Product() {
+    }
+
+    public Product(int viewType) {
+        this.viewType = viewType;
+    }
+
+    public Product(Long id, String name, String brandName, String size, int price, String description, String mainCategory, String subCategory, List<ProductImage> productImages, Status status, boolean zzimStatus, Shop shop, long createdAt, long updatedAt, boolean seller) {
+        this.id = id;
+        this.name = name;
+        this.brandName = brandName;
+        this.size = size;
+        this.price = price;
+        this.description = description;
+        this.mainCategory = mainCategory;
+        this.subCategory = subCategory;
+        this.productImages = productImages;
+        this.status = status;
+        this.zzimStatus = zzimStatus;
+        this.shop = shop;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.seller = seller;
     }
 
     protected Product(Parcel in) {

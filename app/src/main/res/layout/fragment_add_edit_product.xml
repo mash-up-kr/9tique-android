@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whisper"
+    android:background="@color/mercury"
     android:orientation="vertical"
     tools:context=".ui.addeditproduct.AddEditProductFragment">
 
@@ -89,7 +89,7 @@
                 android:background="@android:color/transparent"
                 android:hint="브렌드 명을 입력해주세요."
                 android:inputType="text"
-                android:textColorHint="@color/grey"
+                android:textColorHint="@color/boulder"
                 android:textSize="12sp"/>
 
         </RelativeLayout>
@@ -125,7 +125,7 @@
                 android:background="@android:color/transparent"
                 android:hint="상품명을 입력해주세요."
                 android:inputType="text"
-                android:textColorHint="@color/grey"
+                android:textColorHint="@color/boulder"
                 android:textSize="12sp"/>
 
         </RelativeLayout>
@@ -161,7 +161,7 @@
                 android:background="@android:color/transparent"
                 android:hint="사이즈를 입력해주세요."
                 android:inputType="text"
-                android:textColorHint="@color/grey"
+                android:textColorHint="@color/boulder"
                 android:textSize="12sp"/>
 
         </RelativeLayout>
@@ -212,12 +212,12 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="4dp"
                 android:layout_toLeftOf="@id/tv_price_unit"
-                android:background="@color/very_light_grey"
+                android:background="@color/silver"
                 android:gravity="right|center_vertical"
                 android:hint="0"
                 android:inputType="numberDecimal"
                 android:paddingRight="16dp"
-                android:textColorHint="@color/grey"
+                android:textColorHint="@color/boulder"
                 android:textSize="12sp"/>
 
         </RelativeLayout>
@@ -251,7 +251,7 @@
                 android:layout_below="@id/tv_category_title"
                 android:layout_marginTop="4dp"
                 android:text="상품에 맞는 카테고리를 선택하세요."
-                android:textColor="@color/grey"
+                android:textColor="@color/boulder"
                 android:textSize="12sp"/>
 
             <ImageView
@@ -297,7 +297,7 @@
                 android:background="@android:color/transparent"
                 android:hint="상품에 대한 상세한 설명을 입력해주세요."
                 android:inputType="textMultiLine"
-                android:textColorHint="@color/grey"
+                android:textColorHint="@color/boulder"
                 android:textSize="12sp"/>
 
         </RelativeLayout>
@@ -309,7 +309,7 @@
         android:layout_height="60dp"
         android:layout_marginBottom="10dp"
         android:foreground="?attr/selectableItemBackground"
-        android:background="@color/my_sin"
+        android:background="@color/tulip_tree"
         android:text="등록 완료"
         android:textColor="@color/white"
         android:textStyle="bold"/>

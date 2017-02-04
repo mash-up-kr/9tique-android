@@ -179,7 +179,7 @@ public class BackendHelper {
                     }
 
                 }, throwable -> {
-                    Log.e(TAG, "getProducts " + throwable.getMessage());
+                    Log.e(TAG, "getSellProducts " + throwable.getMessage());
                     callback.onFailure();
                 });
     }

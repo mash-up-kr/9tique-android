@@ -126,7 +126,7 @@ public class SubCategoryFragment extends BaseFragment {
             }
         });
 
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.my_sin, R.color.nero);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.tulip_tree, R.color.mine_shaft);
         mSwipeRefreshLayout.setOnRefreshListener(this::refresh);
         Log.e(TAG, "initView " + mParamMainCategory + " " + mParamSubCategory);
     }

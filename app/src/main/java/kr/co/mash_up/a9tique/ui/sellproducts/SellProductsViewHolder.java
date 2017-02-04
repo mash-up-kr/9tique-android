@@ -5,6 +5,8 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,7 +27,10 @@ import kr.co.mash_up.a9tique.ui.sellproducts.SellProductListAdapter.OnItemClickL
  * Created by Dong on 2017-01-16.
  */
 
-public class SellProductsViewHolder extends BaseViewHolder<Product> {
+public class SellProductsViewHolder extends BaseViewHolder<SellProduct> {
+
+    @BindView(R.id.cb_product)
+    CheckBox mCbProduct;
 
     @BindView(R.id.iv_product_thumbnail)
     ImageView mIvProductThumbnail;
@@ -45,11 +50,11 @@ public class SellProductsViewHolder extends BaseViewHolder<Product> {
     @BindView(R.id.tv_product_price)
     TextView mTvProductPrice;
 
-    @BindView(R.id.tv_product_remove)
-    TextView mTvProductRemove;
+    @BindView(R.id.btn_product_remove)
+    Button mBtnProductRemove;
 
-    @BindView(R.id.tv_product_modify)
-    TextView mTvProductModify;
+    @BindView(R.id.btn_product_modify)
+    Button mBtnProductModify;
 
     @BindView(R.id.tv_product_status)
     TextView mTvProductStatus;
@@ -57,41 +62,41 @@ public class SellProductsViewHolder extends BaseViewHolder<Product> {
     @BindView(R.id.switch_product_status_update)
     SwitchCompat mSwitchProductStatusUpdate;
 
-    private OnItemClickListener<Product> mOnItemClickListener;
+    private OnItemClickListener<SellProduct> mOnItemClickListener;
 
-    public static SellProductsViewHolder newInstance(@NonNull ViewGroup parent, OnItemClickListener<Product> listener) {
+    public static SellProductsViewHolder newInstance(@NonNull ViewGroup parent, OnItemClickListener<SellProduct> listener) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_content_sell_product_list, parent, false);
         return new SellProductsViewHolder(itemView, listener);
     }
 
-    public SellProductsViewHolder(View itemView, OnItemClickListener<Product> listener) {
+    public SellProductsViewHolder(View itemView, OnItemClickListener<SellProduct> listener) {
         super(itemView);
 
         mOnItemClickListener = listener;
     }
 
     @Override
-    public void bind(Product product) {
-        mTvProductName.setText(product.getName());
-        mTvProductBrandName.setText(product.getBrandName());
-        mTvProductSize.setText(product.getSize());
-        mTvProductPrice.setText(String.format("￦ %s", NumberFormat.getInstance(Locale.KOREA).format(product.getPrice())));
+    public void bind(SellProduct sellProduct) {
+        mTvProductName.setText(sellProduct.getName());
+        mTvProductBrandName.setText(sellProduct.getBrandName());
+        mTvProductSize.setText(sellProduct.getSize());
+        mTvProductPrice.setText(String.format("￦ %s", NumberFormat.getInstance(Locale.KOREA).format(sellProduct.getPrice())));
 
-        if (product.getProductImages().size() > 0) {  //Todo: remove
+        if (sellProduct.getProductImages().size() > 0) {  //Todo: remove
             Glide.with(itemView.getContext())
-                    .load(Constants.END_POINT + product.getProductImages().get(0).getImageUrl())
+                    .load(Constants.END_POINT + sellProduct.getProductImages().get(0).getImageUrl())
                     .fitCenter()
                     .centerCrop()
                     .into(mIvProductThumbnail);
         }
 
-        itemView.setOnClickListener(view -> mOnItemClickListener.onClick(product, getAdapterPosition()));
-        mTvProductRemove.setOnClickListener(view -> mOnItemClickListener.onRemove(product, getAdapterPosition()));
-        mTvProductModify.setOnClickListener(view -> mOnItemClickListener.onUpdate(product, getAdapterPosition()));
+        itemView.setOnClickListener(view -> mOnItemClickListener.onClick(sellProduct, getAdapterPosition()));
+        mBtnProductRemove.setOnClickListener(view -> mOnItemClickListener.onRemove(sellProduct, getAdapterPosition()));
+        mBtnProductModify.setOnClickListener(view -> mOnItemClickListener.onUpdate(sellProduct, getAdapterPosition()));
 
         mSwitchProductStatusUpdate.setOnCheckedChangeListener(null);
-        if (product.getStatus().equals(Product.Status.SELL)) {
+        if (sellProduct.getStatus().equals(Product.Status.SELL)) {
             mRlSoldoutFilter.setVisibility(View.GONE);
             mTvProductStatus.setText("판매중");
             mSwitchProductStatusUpdate.setChecked(true);
@@ -103,11 +108,15 @@ public class SellProductsViewHolder extends BaseViewHolder<Product> {
 
         mSwitchProductStatusUpdate.setOnCheckedChangeListener((compoundButton, checked) -> {
             if (checked) {
-                product.setStatus(Product.Status.SELL);
+                sellProduct.setStatus(Product.Status.SELL);
             } else {
-                product.setStatus(Product.Status.SOLD_OUT);
+                sellProduct.setStatus(Product.Status.SOLD_OUT);
             }
-            mOnItemClickListener.onStatusUpdate(product, getAdapterPosition());
+            mOnItemClickListener.onStatusUpdate(sellProduct, getAdapterPosition());
         });
+
+        mCbProduct.setOnCheckedChangeListener(null);
+        mCbProduct.setChecked(sellProduct.isChecked());
+        mCbProduct.setOnCheckedChangeListener((compoundButton, b) -> sellProduct.setChecked(b));
     }
 }

@@ -14,7 +14,8 @@ import kr.co.mash_up.a9tique.base.ui.BaseActivity;
 
 public class AddEditProductActivity extends BaseActivity {
 
-    public static final int REQUEST_CODE_ADD_EDIT_RPODUCT = 10;
+    public static final int REQUEST_CODE_ADD_RPODUCT = 10;
+    public static final int REQUEST_CODE_EDIT_PRODUCT = 11;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
