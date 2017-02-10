@@ -3,10 +3,8 @@ package kr.co.mash_up.a9tique.data.remote;
 import com.google.gson.JsonObject;
 
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -16,7 +14,6 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
-import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -48,7 +45,7 @@ public interface BackendService {
      *
      * @return 카테고리 목록
      */
-    @GET("api/category")
+    @GET("api/categories")
     Observable<JsonObject> getCategories();
 
     /******************
@@ -56,7 +53,7 @@ public interface BackendService {
      ********************/
 
     @Multipart
-    @POST("api/product_image")
+    @POST("api/product_images")
     Observable<JsonObject> addProductImage(@Part List<MultipartBody.Part> imageFiles);
 
     /****************** Product ********************/
@@ -66,7 +63,7 @@ public interface BackendService {
      * @param requestProduct 추가할 상품 정보
      * @return 성공 or 실패
      */
-    @POST("api/product")
+    @POST("api/products")
     Observable<JsonObject> addProduct(@Body RequestProduct requestProduct);
 
     /**
@@ -75,7 +72,7 @@ public interface BackendService {
      * @param productId 삭제할 상품 id
      * @return 성공 or 실패
      */
-    @DELETE("api/product/{id}")
+    @DELETE("api/products/{id}")
     Observable<JsonObject> deleteProduct(@Path("id") long productId);
 
     /**
@@ -85,7 +82,7 @@ public interface BackendService {
      * @param requestProduct 수정할 상품 정보
      * @return 성공 or 실패
      */
-    @PUT("api/product/{id}")
+    @PUT("api/products/{id}")
     Observable<JsonObject> updateProduct(@Path("id") long productId,
                                          @Body RequestProduct requestProduct);
 
@@ -99,7 +96,7 @@ public interface BackendService {
      * @param subCategory  서브 카테고리
      * @return 카테고리별 상품 목록
      */
-    @GET("api/product")
+    @GET("api/products")
     Observable<JsonObject> getProducts(@Query("pageNo") int pageNo,
                                        @Query("pageSize") int pageSize,
                                        @Query("mainCategory") String mainCategory,
@@ -111,7 +108,7 @@ public interface BackendService {
      * @param productId 상세정보를 볼 상품 id
      * @return 상세정보
      */
-    @GET("api/product/{id}")
+    @GET("api/products/{id}")
     Observable<JsonObject> getProductDetail(@Path("id") long productId);
 
     /****************** User ********************/
@@ -121,7 +118,7 @@ public interface BackendService {
      * @param user oauth token, type 정보
      * @return access token, user level
      */
-    @POST("login")
+    @POST("api/users/login")
     Observable<JsonObject> login(@Body RequestUser user);
 
     /**
@@ -129,7 +126,7 @@ public interface BackendService {
      *
      * @return access token, user level
      */
-    @PUT("api/user")
+    @PUT("api/users/register/seller")
     Observable<JsonObject> registerSeller();
 
     /****************** Zzim ********************/
@@ -140,7 +137,7 @@ public interface BackendService {
      * @return 성공 or 실패
      */
     @FormUrlEncoded
-    @POST("api/zzim")
+    @POST("api/zzims")
     Observable<JsonObject> addZzimProduct(@Field("product_id") long productId);
 
     /**
@@ -150,7 +147,7 @@ public interface BackendService {
      * @param pageSize page에 담긴 아이템 수
      * @return status code, data
      */
-    @GET("api/zzim")
+    @GET("api/zzims")
     Observable<JsonObject> getZzimProducts(@Query("pageNo") int pageNo,
                                            @Query("pageSize") int pageSize);
 
@@ -160,6 +157,6 @@ public interface BackendService {
      * @param productId 삭제할 상품 id
      * @return 성공 or 실패
      */
-    @DELETE("api/zzim/product/{id}")
+    @DELETE("api/zzims/product/{id}")
     Observable<JsonObject> deleteZzimProduct(@Path("id") long productId);
 }

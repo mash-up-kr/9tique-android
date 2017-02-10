@@ -11,7 +11,8 @@ import kr.co.mash_up.a9tique.data.SubCategory;
 public class TranslationUtil {
 
     private static TranslationUtil instance;
-    private HashMap<String, String> translationMap;
+    private HashMap<String, String> koreanToEnglishTranslationMap;
+    private HashMap<String, String> englishToKoreanTranslationMap;
 
     public static TranslationUtil getInstance() {
         if (instance == null) {
@@ -25,32 +26,60 @@ public class TranslationUtil {
     }
 
     private TranslationUtil() {
-        translationMap = new HashMap<>();
-        translationMap.put("아우터", MainCategory.List.OUTER.name());
-        translationMap.put("상의", MainCategory.List.TOP.name());
-        translationMap.put("하의", MainCategory.List.BOTTOM.name());
-        translationMap.put("신발", MainCategory.List.SHOSE.name());
-        translationMap.put("모자", MainCategory.List.CAP.name());
-        translationMap.put("자켓", SubCategory.List.JACKET.name());
-        translationMap.put("코트", SubCategory.List.COATS.name());
-        translationMap.put("점퍼", SubCategory.List.JUMPER.name());
-        translationMap.put("후드집업", SubCategory.List.HOODS_ZIPUP.name());
-        translationMap.put("패딩점퍼", SubCategory.List.PADDING_JUMPER.name());
-        translationMap.put("베스트", SubCategory.List.VEST.name());
-        translationMap.put("티셔츠", SubCategory.List.TSHIRT.name());
-        translationMap.put("후드티셔츠", SubCategory.List.HOODS_TSHIRT.name());
-        translationMap.put("슬리브리스", SubCategory.List.SLEEVELESS.name());
-        translationMap.put("셔츠", SubCategory.List.SHIRT.name());
-        translationMap.put("니트", SubCategory.List.KNIT.name());
-        translationMap.put("블라우스", SubCategory.List.BLOUSE.name());
-        translationMap.put("원피스", SubCategory.List.ONE_PIECE.name());
-        translationMap.put("데님팬츠", SubCategory.List.DENIM_PANTS.name());
-        translationMap.put("팬츠", SubCategory.List.PANTS.name());
-        translationMap.put("쇼츠", SubCategory.List.SHORTS.name());
-        translationMap.put("스커트", SubCategory.List.SKIRT.name());
+        koreanToEnglishTranslationMap = new HashMap<>();
+        koreanToEnglishTranslationMap.put("아우터", MainCategory.List.OUTER.name());
+        koreanToEnglishTranslationMap.put("상의", MainCategory.List.TOP.name());
+        koreanToEnglishTranslationMap.put("하의", MainCategory.List.BOTTOM.name());
+        koreanToEnglishTranslationMap.put("신발", MainCategory.List.SHOSE.name());
+        koreanToEnglishTranslationMap.put("모자", MainCategory.List.CAP.name());
+        koreanToEnglishTranslationMap.put("자켓", SubCategory.List.JACKET.name());
+        koreanToEnglishTranslationMap.put("코트", SubCategory.List.COATS.name());
+        koreanToEnglishTranslationMap.put("점퍼", SubCategory.List.JUMPER.name());
+        koreanToEnglishTranslationMap.put("후드집업", SubCategory.List.HOODS_ZIPUP.name());
+        koreanToEnglishTranslationMap.put("패딩점퍼", SubCategory.List.PADDING_JUMPER.name());
+        koreanToEnglishTranslationMap.put("베스트", SubCategory.List.VEST.name());
+        koreanToEnglishTranslationMap.put("티셔츠", SubCategory.List.TSHIRT.name());
+        koreanToEnglishTranslationMap.put("후드티셔츠", SubCategory.List.HOODS_TSHIRT.name());
+        koreanToEnglishTranslationMap.put("슬리브리스", SubCategory.List.SLEEVELESS.name());
+        koreanToEnglishTranslationMap.put("셔츠", SubCategory.List.SHIRT.name());
+        koreanToEnglishTranslationMap.put("니트", SubCategory.List.KNIT.name());
+        koreanToEnglishTranslationMap.put("블라우스", SubCategory.List.BLOUSE.name());
+        koreanToEnglishTranslationMap.put("원피스", SubCategory.List.ONE_PIECE.name());
+        koreanToEnglishTranslationMap.put("데님팬츠", SubCategory.List.DENIM_PANTS.name());
+        koreanToEnglishTranslationMap.put("팬츠", SubCategory.List.PANTS.name());
+        koreanToEnglishTranslationMap.put("쇼츠", SubCategory.List.SHORTS.name());
+        koreanToEnglishTranslationMap.put("스커트", SubCategory.List.SKIRT.name());
+
+        englishToKoreanTranslationMap = new HashMap<>();
+        englishToKoreanTranslationMap.put(MainCategory.List.OUTER.name(), "아우터");
+        englishToKoreanTranslationMap.put(MainCategory.List.TOP.name(), "상의");
+        englishToKoreanTranslationMap.put(MainCategory.List.BOTTOM.name(), "하의");
+        englishToKoreanTranslationMap.put(MainCategory.List.SHOSE.name(), "신발");
+        englishToKoreanTranslationMap.put(MainCategory.List.CAP.name(), "모자");
+        englishToKoreanTranslationMap.put(SubCategory.List.JACKET.name(), "자켓");
+        englishToKoreanTranslationMap.put(SubCategory.List.COATS.name(), "코트");
+        englishToKoreanTranslationMap.put(SubCategory.List.JUMPER.name(), "점퍼");
+        englishToKoreanTranslationMap.put(SubCategory.List.HOODS_ZIPUP.name(), "후드집업");
+        englishToKoreanTranslationMap.put(SubCategory.List.PADDING_JUMPER.name(), "패딩점퍼");
+        englishToKoreanTranslationMap.put(SubCategory.List.VEST.name(), "베스트");
+        englishToKoreanTranslationMap.put(SubCategory.List.TSHIRT.name(), "티셔츠");
+        englishToKoreanTranslationMap.put(SubCategory.List.HOODS_TSHIRT.name(), "후드티셔츠");
+        englishToKoreanTranslationMap.put(SubCategory.List.SLEEVELESS.name(), "슬리브리스");
+        englishToKoreanTranslationMap.put(SubCategory.List.SHIRT.name(), "셔츠");
+        englishToKoreanTranslationMap.put(SubCategory.List.KNIT.name(), "니트");
+        englishToKoreanTranslationMap.put(SubCategory.List.BLOUSE.name(), "블라우스");
+        englishToKoreanTranslationMap.put(SubCategory.List.ONE_PIECE.name(), "원피스");
+        englishToKoreanTranslationMap.put(SubCategory.List.DENIM_PANTS.name(), "데님팬츠");
+        englishToKoreanTranslationMap.put(SubCategory.List.PANTS.name(), "팬츠");
+        englishToKoreanTranslationMap.put(SubCategory.List.SHORTS.name(), "쇼츠");
+        englishToKoreanTranslationMap.put(SubCategory.List.SKIRT.name(), "스커트");
     }
 
-    public String koreanToEnglish(String korean){
-        return translationMap.get(korean);
+    public String englishToKorean(String english) {
+        return englishToKoreanTranslationMap.get(english);
+    }
+
+    public String koreanToEnglish(String korean) {
+        return koreanToEnglishTranslationMap.get(korean);
     }
 }

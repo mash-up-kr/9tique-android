@@ -29,8 +29,8 @@ public class AddEditProductActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        if (getIntent().hasExtra(AddEditProductFragment.PARAM_PRODUCT_ID)) {
-            mProductId = getIntent().getLongExtra(AddEditProductFragment.PARAM_PRODUCT_ID, 0);
+        if (getIntent().hasExtra(AddEditProductFragment.ARG_PARAM_PRODUCT_ID)) {
+            mProductId = getIntent().getLongExtra(AddEditProductFragment.ARG_PARAM_PRODUCT_ID, 0);
             mProduct = getIntent().getParcelableExtra("product");
         }
         super.onCreate(savedInstanceState);
@@ -44,8 +44,8 @@ public class AddEditProductActivity extends BaseActivity {
             if (mProductId != null && mProductId > 0) {
                 // 상품정보 수정
                 Bundle bundle = new Bundle();
-                bundle.putLong(AddEditProductFragment.PARAM_PRODUCT_ID, mProductId);
-                bundle.putParcelable(AddEditProductFragment.PARAM_PRODUCT, mProduct);
+                bundle.putLong(AddEditProductFragment.ARG_PARAM_PRODUCT_ID, mProductId);
+                bundle.putParcelable(AddEditProductFragment.ARG_PARAM_PRODUCT, mProduct);
                 addEditProductFragment.setArguments(bundle);
             } else {
                 // 상품정보 등록

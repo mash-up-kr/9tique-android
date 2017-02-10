@@ -147,7 +147,7 @@ public class AddEditProductFragment extends BaseFragment implements Confirmation
             mEtNameDescription.setText(mProduct.getName());
             mEtSizeDescription.setText(mProduct.getSize());
             mEtPriceDescription.setText(String.valueOf(mProduct.getPrice()));
-            setCategoryData(mProduct.getMainCategory(), mProduct.getSubCategory());
+            setCategoryData(mProduct.getMainCategory(), mProduct.getSubCategory());  // 영어로 온다
             mEtDetailDescription.setText(mProduct.getDescription());
             mBtnComplete.setText("수정 완료");
         } else {
@@ -195,12 +195,13 @@ public class AddEditProductFragment extends BaseFragment implements Confirmation
      * @param subCategory  서브 카테고리
      */
     private void setCategoryData(String mainCategory, String subCategory) {
+        TranslationUtil translationUtil = TranslationUtil.getInstance();
         if (!TextUtils.isEmpty(subCategory)) {
-            mTvCategoryDescription.setText(mainCategory + " > " + subCategory);
+            mTvCategoryDescription.setText(translationUtil.englishToKorean(mainCategory) + " > " + translationUtil.englishToKorean(subCategory));
             mMainCategory = mainCategory;
             mSubCategory = subCategory;
         } else {
-            mTvCategoryDescription.setText(mainCategory);
+            mTvCategoryDescription.setText(translationUtil.englishToKorean(mainCategory));
             mMainCategory = mainCategory;
             mSubCategory = "";
         }
@@ -212,7 +213,8 @@ public class AddEditProductFragment extends BaseFragment implements Confirmation
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_CATEGORY_SELECTION:
-                    setCategoryData(data.getStringExtra("mainCategory"), data.getStringExtra("subCategory"));
+                    TranslationUtil translationUtil = TranslationUtil.getInstance();
+                    setCategoryData(translationUtil.koreanToEnglish(data.getStringExtra("mainCategory")), translationUtil.koreanToEnglish(data.getStringExtra("subCategory")));  // 한국어로 오니까 영어로 변환
                     break;
                 case Define.ALBUM_REQUEST_CODE:  // gallery result receive
                     ArrayList<String> path = data.getStringArrayListExtra(Define.INTENT_PATH);
@@ -278,17 +280,16 @@ public class AddEditProductFragment extends BaseFragment implements Confirmation
 
         List<MultipartBody.Part> imageMultiparts = makeMultiparts(productImageList);
 
-        TranslationUtil translationUtil = TranslationUtil.getInstance();
         RequestProduct requestProduct = new RequestProduct();
         requestProduct.setName(mEtNameDescription.getText().toString());
         requestProduct.setBrandName(mEtBrandDescription.getText().toString());
         requestProduct.setSize(mEtSizeDescription.getText().toString());
         requestProduct.setPrice(Integer.valueOf(mEtPriceDescription.getText().toString()));
         requestProduct.setDescription(mEtDetailDescription.getText().toString());
-        requestProduct.setMainCategory(translationUtil.koreanToEnglish(mMainCategory));
+        requestProduct.setMainCategory(mMainCategory);
 
         if (!"".equals(mSubCategory)) {
-            requestProduct.setSubCategory(translationUtil.koreanToEnglish(mSubCategory));
+            requestProduct.setSubCategory(mSubCategory);
         } else {
             requestProduct.setSubCategory(mSubCategory);
         }
