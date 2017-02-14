@@ -14,15 +14,13 @@ import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Seller;
-import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.RequestSeller;
-import kr.co.mash_up.a9tique.data.remote.ResultCallback;
 import kr.co.mash_up.a9tique.util.KeyboardUtils;
 import kr.co.mash_up.a9tique.util.ProgressUtil;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 
-public class SellerInformationEditFragment extends BaseFragment {
+public class SellerInformationEditFragment extends BaseFragment implements SellerInformationEditContract.View {
 
     public static final String TAG = SellerInformationEditFragment.class.getSimpleName();
 
@@ -39,6 +37,7 @@ public class SellerInformationEditFragment extends BaseFragment {
     EditText mEtShopPhone;
 
     private Seller mSeller;
+    private SellerInformationEditContract.Presenter mPresenter;
 
     public SellerInformationEditFragment() {
         // Required empty public constructor
@@ -102,29 +101,45 @@ public class SellerInformationEditFragment extends BaseFragment {
                     return true;
                 }
 
-                ProgressUtil.showProgressDialog(getActivity());
                 String sellerName = mEtSellerName.getText().toString();
                 String shopName = mEtShopName.getText().toString();
                 String shopInfo = mEtShopInfo.getText().toString();
                 String sellerPhone = mEtShopPhone.getText().toString();
 
                 RequestSeller requestSeller = new RequestSeller(sellerName, shopName, shopInfo, sellerPhone);
-                BackendHelper.getInstance().updateSellerInfo(requestSeller, new ResultCallback() {
-                    @Override
-                    public void onSuccess(@Nullable Object o) {
-                        ProgressUtil.hideProgressDialog();
-                        getActivity().setResult(Activity.RESULT_OK);
-                        getActivity().finish();
-                    }
-
-                    @Override
-                    public void onFailure() {
-                        ProgressUtil.hideProgressDialog();
-                        getActivity().finish();
-                    }
-                });
+                mPresenter.updateSellerInformation(requestSeller);
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showProgressbar(boolean active) {
+        if (active) {
+            ProgressUtil.showProgressDialog(getActivity());
+        } else {
+            ProgressUtil.hideProgressDialog();
+        }
+    }
+
+    @Override
+    public void successfullySellerInformationUpdate() {
+        getActivity().setResult(Activity.RESULT_OK);
+        getActivity().finish();
+    }
+
+    @Override
+    public void failureSellerInformationUpdate() {
+        getActivity().finish();
+    }
+
+    @Override
+    public boolean isActive() {
+        return isAdded();
+    }
+
+    @Override
+    public void setPresenter(SellerInformationEditContract.Presenter presenter) {
+        mPresenter = presenter;
     }
 }

@@ -14,8 +14,6 @@ import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.User;
-import kr.co.mash_up.a9tique.data.remote.BackendHelper;
-import kr.co.mash_up.a9tique.data.remote.ResultCallback;
 import kr.co.mash_up.a9tique.ui.addeditproduct.ConfirmationDialogFragment;
 import kr.co.mash_up.a9tique.ui.login.LoginActivity;
 import kr.co.mash_up.a9tique.ui.setting.aboutus.About9tiqueActivity;
@@ -27,7 +25,7 @@ import kr.co.mash_up.a9tique.util.PreferencesUtils;
 import kr.co.mash_up.a9tique.util.ProgressUtil;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
-public class SettingFragment extends BaseFragment {
+public class SettingFragment extends BaseFragment implements SettingContract.View {
 
     public static final String TAG = SettingFragment.class.getSimpleName();
 
@@ -39,6 +37,8 @@ public class SettingFragment extends BaseFragment {
 
     @BindView(R.id.rl_seller_information)
     RelativeLayout mRlSellerInformation;
+
+    private SettingContract.Presenter mPresenter;
 
     public SettingFragment() {
         // Required empty public constructor
@@ -75,25 +75,7 @@ public class SettingFragment extends BaseFragment {
         dlgSellerRegistratio.setCallback(new SellerRegistrationDialogFragment.Callback() {
             @Override
             public void onClickOk(String authenticationCode) {
-                ProgressUtil.showProgressDialog(getActivity());
-
-                BackendHelper.getInstance().registerSeller(authenticationCode, new ResultCallback<User>() {
-                    @Override
-                    public void onSuccess(User user) {
-                        PreferencesUtils.putString(getActivity(), Constants.PREF_ACCESS_TOKEN, user.getAccessToken());
-                        PreferencesUtils.putString(getActivity(), Constants.PREF_USER_LEVEL, user.getUserLevel());
-
-                        ProgressUtil.hideProgressDialog();
-                        SnackbarUtil.showMessage(getActivity(), getView(), "판매자 등록 성공", "", null);
-                        redirectLoginActivity();
-                    }
-
-                    @Override
-                    public void onFailure() {
-                        ProgressUtil.hideProgressDialog();
-                        SnackbarUtil.showMessage(getActivity(), getView(), "판매자 등록 실패", "", null);
-                    }
-                });
+                mPresenter.authenticateSeller(authenticationCode);
             }
 
             @Override
@@ -106,7 +88,8 @@ public class SettingFragment extends BaseFragment {
 
     @OnClick(R.id.rl_seller_information)
     public void showSellerInformation() {
-        showSellerInfoActivity();
+        Intent intent = new Intent(getActivity(), SellerInformationActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.rl_inquire)
@@ -139,9 +122,7 @@ public class SettingFragment extends BaseFragment {
         dlgLogout.setCallback(new ConfirmationDialogFragment.Callback() {
             @Override
             public void onClickOk() {
-                Session.getCurrentSession().close();
-                PreferencesUtils.clear(getActivity());
-                redirectLoginActivity();
+                mPresenter.logout();
             }
 
             @Override
@@ -160,14 +141,51 @@ public class SettingFragment extends BaseFragment {
         return false;
     }
 
-    private void showSellerInfoActivity() {
-        Intent intent = new Intent(getActivity(), SellerInformationActivity.class);
-        startActivity(intent);
-    }
-
-    private void redirectLoginActivity() {
+    @Override
+    public void redirectLoginActivity() {
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    public void showFailureSellerRegisterMessage() {
+        SnackbarUtil.showMessage(getActivity(), getView(), "판매자 등록 실패", "", null);
+    }
+
+    @Override
+    public void showSuccessfullySellerRegisterMessage() {
+        SnackbarUtil.showMessage(getActivity(), getView(), "판매자 등록 성공", "", null);
+    }
+
+    @Override
+    public void saveUserAccount(User user) {
+        PreferencesUtils.putString(getActivity(), Constants.PREF_ACCESS_TOKEN, user.getAccessToken());
+        PreferencesUtils.putString(getActivity(), Constants.PREF_USER_LEVEL, user.getUserLevel());
+    }
+
+    @Override
+    public void clearUserAccount() {
+        Session.getCurrentSession().close();
+        PreferencesUtils.clear(getActivity());
+    }
+
+    @Override
+    public boolean isActive() {
+        return isAdded();
+    }
+
+    @Override
+    public void showProgressbar(boolean active) {
+        if (active) {
+            ProgressUtil.showProgressDialog(getActivity());
+        } else {
+            ProgressUtil.hideProgressDialog();
+        }
+    }
+
+    @Override
+    public void setPresenter(SettingContract.Presenter presenter) {
+        mPresenter = presenter;
     }
 }

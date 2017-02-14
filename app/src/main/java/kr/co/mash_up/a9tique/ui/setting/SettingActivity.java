@@ -1,7 +1,5 @@
 package kr.co.mash_up.a9tique.ui.setting;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -20,6 +18,8 @@ public class SettingActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView mTvTitle;
 
+    private SettingContract.Presenter mPresenter;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_setting;
@@ -28,18 +28,16 @@ public class SettingActivity extends BaseActivity {
     @Override
     public void initView() {
         setupToolbar();
-    }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(SettingFragment.TAG);
-        if (null == fragment) {
-            initFragment(SettingFragment.newInstance());
+        SettingFragment settingFragment =
+                (SettingFragment) getSupportFragmentManager().findFragmentByTag(SettingFragment.TAG);
+        if (null == settingFragment) {
+            settingFragment = SettingFragment.newInstance();
+            initFragment(settingFragment);
         }
 
-        //Todo: Create the presenter
+        // Create the presenter
+        mPresenter = new SettingPresenter(settingFragment);
     }
 
     @Override

@@ -23,13 +23,14 @@ public class SellerInformationEditActivity extends BaseActivity {
 
     private Seller mSeller;
 
+    private SellerInformationEditContract.Presenter mPresenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         if (getIntent().hasExtra(Constants.SELLER)) {
             mSeller = getIntent().getParcelableExtra(Constants.SELLER);
         }
         super.onCreate(savedInstanceState);
-        //Todo: Create Presenter
     }
 
     @Override
@@ -40,10 +41,15 @@ public class SellerInformationEditActivity extends BaseActivity {
     @Override
     public void initView() {
         setupToolbar();
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fl_fragment_seller_info_edit);
+        SellerInformationEditFragment fragment =
+                (SellerInformationEditFragment) getSupportFragmentManager().findFragmentById(R.id.fl_fragment_seller_info_edit);
         if (null == fragment) {
-            initFragment(SellerInformationEditFragment.newInstance(mSeller));
+            fragment = SellerInformationEditFragment.newInstance(mSeller);
+            initFragment(fragment);
         }
+
+        // Create the Presenter
+        mPresenter = new SellerInformationEditPresenter(fragment);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package kr.co.mash_up.a9tique.ui.setting.sellerinformation;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -20,11 +18,7 @@ public class SellerInformationActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView mTvToolbarTitle;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //Todo: Create Presenter
-    }
+    private SellerInformationContract.Presenter mPresenter;
 
     @Override
     public int getLayoutId() {
@@ -34,10 +28,15 @@ public class SellerInformationActivity extends BaseActivity {
     @Override
     public void initView() {
         setupToolbar();
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fl_fragment_seller_info);
-        if (null == fragment) {
-            initFragment(SellerInformationFragment.newInstance());
+        SellerInformationFragment sellerInformationFragment =
+                (SellerInformationFragment) getSupportFragmentManager().findFragmentById(R.id.fl_fragment_seller_info);
+        if (null == sellerInformationFragment) {
+            sellerInformationFragment = SellerInformationFragment.newInstance();
+            initFragment(sellerInformationFragment);
         }
+
+        // Create the presenter
+        mPresenter = new SellerInformationPresenter(sellerInformationFragment);
     }
 
     @Override
