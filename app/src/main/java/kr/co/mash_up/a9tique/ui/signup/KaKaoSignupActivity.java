@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.kakao.auth.ErrorCode;
+import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.MeResponseCallback;
@@ -17,9 +18,9 @@ import com.kakao.util.helper.log.Logger;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.common.AccountManager;
 import kr.co.mash_up.a9tique.common.Constants;
-import kr.co.mash_up.a9tique.data.remote.RequestUser;
 import kr.co.mash_up.a9tique.data.User;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
+import kr.co.mash_up.a9tique.data.remote.RequestUser;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
 import kr.co.mash_up.a9tique.ui.login.LoginActivity;
 import kr.co.mash_up.a9tique.ui.products.SellerProductListActivity;
@@ -33,7 +34,7 @@ public class KaKaoSignupActivity extends AppCompatActivity {
 
     public static final String TAG = KaKaoSignupActivity.class.getSimpleName();
 
-    AccountManager mAccountManager;
+    private AccountManager mAccountManager;
 
     /**
      * Main으로 넘길지 가입 페이지를 그릴지 판단하기 위해 me를 호출한다.
@@ -80,13 +81,14 @@ public class KaKaoSignupActivity extends AppCompatActivity {
             public void onNotSignedUp() {
                 Toast.makeText(KaKaoSignupActivity.this, "카카오톡 회원가입이 필요합니다", Toast.LENGTH_SHORT).show();
 //                showSignup();
+                finish();
                 Log.d(TAG, "onNotSignedUp");
             }
 
             //Todo: 유저 정보로 이메일을 사용하려면 따로 입력받아서 보내야 한다.
+            // userProfile: 앱연결과정에서 발급하는 고유아이디
             @Override
             public void onSuccess(UserProfile userProfile) {
-                // 앱연결과정에서 발급하는 고유아이디
                 Logger.d("UserProfile: " + userProfile);
                 //Todo: AccountManager 사용하는 로직으로 변경
                 mAccountManager.setKakaoId(String.valueOf(userProfile.getId()));
@@ -102,12 +104,12 @@ public class KaKaoSignupActivity extends AppCompatActivity {
                     public void onSuccess(User user) {
                         PreferencesUtils.putString(KaKaoSignupActivity.this, Constants.PREF_ACCESS_TOKEN, user.getAccessToken());
                         PreferencesUtils.putString(KaKaoSignupActivity.this, Constants.PREF_USER_LEVEL, user.getUserLevel());
-
                         redirectProductListActivity(user.getUserLevel());
                     }
 
                     @Override
                     public void onFailure() {
+                        Session.getCurrentSession().close();
                         redirectLoginActivity();
                     }
                 });
@@ -115,8 +117,8 @@ public class KaKaoSignupActivity extends AppCompatActivity {
         });
     }
 
-    protected void redirectLoginActivity() {
-        final Intent intent = new Intent(this, LoginActivity.class);
+    private void redirectLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
         finish();
@@ -126,7 +128,7 @@ public class KaKaoSignupActivity extends AppCompatActivity {
      * 판매자, 유저인지 확인하고 분기 시킨다.
      */
     private void redirectProductListActivity(String userLevel) {
-        switch (userLevel){
+        switch (userLevel) {
             case "USER":
                 //Todo: start user product list activity
                 startActivity(new Intent(this, SellerProductListActivity.class));

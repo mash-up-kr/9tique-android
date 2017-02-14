@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique.ui.setting.sellerinformation;
+package kr.co.mash_up.a9tique.ui.setting.sellerinformation.edit;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,9 +10,10 @@ import android.widget.TextView;
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
+import kr.co.mash_up.a9tique.common.Constants;
+import kr.co.mash_up.a9tique.data.Seller;
 
-
-public class SellerInformationActivity extends BaseActivity {
+public class SellerInformationEditActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -20,30 +21,35 @@ public class SellerInformationActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView mTvToolbarTitle;
 
+    private Seller mSeller;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if (getIntent().hasExtra(Constants.SELLER)) {
+            mSeller = getIntent().getParcelableExtra(Constants.SELLER);
+        }
         super.onCreate(savedInstanceState);
         //Todo: Create Presenter
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_seller_information;
+        return R.layout.activity_seller_information_edit;
     }
 
     @Override
     public void initView() {
         setupToolbar();
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fl_fragment_seller_info);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fl_fragment_seller_info_edit);
         if (null == fragment) {
-            initFragment(SellerInformationFragment.newInstance());
+            initFragment(SellerInformationEditFragment.newInstance(mSeller));
         }
     }
 
     @Override
     public void initFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fl_fragment_seller_info, fragment, SellerInformationFragment.TAG)
+                .add(R.id.fl_fragment_seller_info_edit, fragment, SellerInformationEditFragment.TAG)
                 .commit();
     }
 
@@ -55,7 +61,7 @@ public class SellerInformationActivity extends BaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
         }
-        mTvToolbarTitle.setText("판매자 정보 확인");
+        mTvToolbarTitle.setText("판매자 정보 수정");
     }
 
     /**

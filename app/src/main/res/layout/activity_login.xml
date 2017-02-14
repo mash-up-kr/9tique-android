@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/ll_root"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -32,12 +33,12 @@
         android:paddingTop="174dp">
 
         <!--<ImageButton-->
-            <!--android:layout_width="250dp"-->
-            <!--android:layout_height="55dp"-->
-            <!--android:background="@android:color/transparent"-->
-            <!--android:padding="0sp"-->
-            <!--android:scaleType="centerCrop"-->
-            <!--android:src="@drawable/btn_login_fb"/>-->
+        <!--android:layout_width="250dp"-->
+        <!--android:layout_height="55dp"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:padding="0sp"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:src="@drawable/btn_login_fb"/>-->
 
         <com.kakao.usermgmt.LoginButton
             android:id="@+id/btn_login_kakao"
@@ -45,13 +46,13 @@
             android:layout_height="55dp"/>
 
         <!--<com.kakao.usermgmt.LoginButton-->
-            <!--android:id="@+id/com_kakao_login"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="bottom"-->
-            <!--android:layout_marginBottom="30dp"-->
-            <!--android:layout_marginLeft="20dp"-->
-            <!--android:layout_marginRight="20dp"/>-->
+        <!--android:id="@+id/com_kakao_login"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:layout_marginBottom="30dp"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginRight="20dp"/>-->
     </LinearLayout>
 
 </LinearLayout>

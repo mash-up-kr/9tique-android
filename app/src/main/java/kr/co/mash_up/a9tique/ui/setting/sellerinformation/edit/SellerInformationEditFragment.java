@@ -1,5 +1,6 @@
-package kr.co.mash_up.a9tique.ui.setting.sellerinformation;
+package kr.co.mash_up.a9tique.ui.setting.sellerinformation.edit;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Menu;
@@ -16,12 +17,14 @@ import kr.co.mash_up.a9tique.data.Seller;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.RequestSeller;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
+import kr.co.mash_up.a9tique.util.KeyboardUtils;
+import kr.co.mash_up.a9tique.util.ProgressUtil;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 
-public class SellerInfoEditFragment extends BaseFragment {
+public class SellerInformationEditFragment extends BaseFragment {
 
-    public static final String TAG = SellerInfoEditFragment.class.getSimpleName();
+    public static final String TAG = SellerInformationEditFragment.class.getSimpleName();
 
     @BindView(R.id.et_seller_name)
     EditText mEtSellerName;
@@ -37,12 +40,12 @@ public class SellerInfoEditFragment extends BaseFragment {
 
     private Seller mSeller;
 
-    public SellerInfoEditFragment() {
+    public SellerInformationEditFragment() {
         // Required empty public constructor
     }
 
-    public static SellerInfoEditFragment newInstance(Seller seller) {
-        SellerInfoEditFragment fragment = new SellerInfoEditFragment();
+    public static SellerInformationEditFragment newInstance(Seller seller) {
+        SellerInformationEditFragment fragment = new SellerInformationEditFragment();
         Bundle args = new Bundle();
         args.putParcelable(Constants.SELLER, seller);
         fragment.setArguments(args);
@@ -81,6 +84,7 @@ public class SellerInfoEditFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_complete:
+                KeyboardUtils.hideKeyboard(getActivity(), getView());
                 if (mEtSellerName.getText().toString().length() == 0) {
                     SnackbarUtil.showMessage(getActivity(), getView(), getString(R.string.seller_info_seller_name_hint), "", null);
                     return true;
@@ -97,6 +101,8 @@ public class SellerInfoEditFragment extends BaseFragment {
                     SnackbarUtil.showMessage(getActivity(), getView(), getString(R.string.seller_info_shop_phone_hint), "", null);
                     return true;
                 }
+
+                ProgressUtil.showProgressDialog(getActivity());
                 String sellerName = mEtSellerName.getText().toString();
                 String shopName = mEtShopName.getText().toString();
                 String shopInfo = mEtShopInfo.getText().toString();
@@ -106,13 +112,14 @@ public class SellerInfoEditFragment extends BaseFragment {
                 BackendHelper.getInstance().updateSellerInfo(requestSeller, new ResultCallback() {
                     @Override
                     public void onSuccess(@Nullable Object o) {
-                        //Todo: show success message
+                        ProgressUtil.hideProgressDialog();
+                        getActivity().setResult(Activity.RESULT_OK);
                         getActivity().finish();
                     }
 
                     @Override
                     public void onFailure() {
-                        //Todo: show failure message
+                        ProgressUtil.hideProgressDialog();
                         getActivity().finish();
                     }
                 });

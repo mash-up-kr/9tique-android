@@ -1,7 +1,6 @@
 package kr.co.mash_up.a9tique.ui.setting;
 
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,7 +13,6 @@ import kr.co.mash_up.a9tique.BuildConfig;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.common.Constants;
-import kr.co.mash_up.a9tique.data.Seller;
 import kr.co.mash_up.a9tique.data.User;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
@@ -26,6 +24,7 @@ import kr.co.mash_up.a9tique.ui.setting.inquire.InquireActivity;
 import kr.co.mash_up.a9tique.ui.setting.license.LicenseActivity;
 import kr.co.mash_up.a9tique.ui.setting.sellerinformation.SellerInformationActivity;
 import kr.co.mash_up.a9tique.util.PreferencesUtils;
+import kr.co.mash_up.a9tique.util.ProgressUtil;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 public class SettingFragment extends BaseFragment {
@@ -76,20 +75,22 @@ public class SettingFragment extends BaseFragment {
         dlgSellerRegistratio.setCallback(new SellerRegistrationDialogFragment.Callback() {
             @Override
             public void onClickOk(String authenticationCode) {
+                ProgressUtil.showProgressDialog(getActivity());
+
                 BackendHelper.getInstance().registerSeller(authenticationCode, new ResultCallback<User>() {
                     @Override
                     public void onSuccess(User user) {
                         PreferencesUtils.putString(getActivity(), Constants.PREF_ACCESS_TOKEN, user.getAccessToken());
                         PreferencesUtils.putString(getActivity(), Constants.PREF_USER_LEVEL, user.getUserLevel());
 
+                        ProgressUtil.hideProgressDialog();
                         SnackbarUtil.showMessage(getActivity(), getView(), "판매자 등록 성공", "", null);
-
-                        //Todo: 상품 리스트 화면으로 이동
-                        showSellerInfoActivity();
+                        redirectLoginActivity();
                     }
 
                     @Override
                     public void onFailure() {
+                        ProgressUtil.hideProgressDialog();
                         SnackbarUtil.showMessage(getActivity(), getView(), "판매자 등록 실패", "", null);
                     }
                 });
@@ -140,9 +141,7 @@ public class SettingFragment extends BaseFragment {
             public void onClickOk() {
                 Session.getCurrentSession().close();
                 PreferencesUtils.clear(getActivity());
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                redirectLoginActivity();
             }
 
             @Override
@@ -162,18 +161,13 @@ public class SettingFragment extends BaseFragment {
     }
 
     private void showSellerInfoActivity() {
-        BackendHelper.getInstance().getSellerInfo(new ResultCallback<Seller>() {
-            @Override
-            public void onSuccess(@Nullable Seller seller) {
-                Intent intent = new Intent(getActivity(), SellerInformationActivity.class);
-                intent.putExtra(Constants.SELLER, seller);
-                startActivity(intent);
-            }
+        Intent intent = new Intent(getActivity(), SellerInformationActivity.class);
+        startActivity(intent);
+    }
 
-            @Override
-            public void onFailure() {
-                //Todo; ...?
-            }
-        });
+    private void redirectLoginActivity() {
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }

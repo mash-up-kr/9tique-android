@@ -115,8 +115,7 @@ public class BackendHelper {
                     Log.d(TAG, "status code: " + statusCode);
 
                     if (statusCode / 100 == 2) {
-                        User resUser = new Gson().fromJson(jsonObject, User.class);
-
+                        User resUser = new Gson().fromJson(jsonObject.get("item"), User.class);
                         Log.d(TAG, resUser.getAccessToken() + " " + resUser.getUserLevel());
 
                         callback.onSuccess(resUser);
@@ -303,7 +302,6 @@ public class BackendHelper {
                     Log.d(TAG, "status code: " + statusCode);
 
                     if (statusCode / 100 == 2) {
-
                         callback.onSuccess(null);
                     } else {
                         callback.onFailure();

@@ -27,5 +27,6 @@
     <string name="seller_info_shop_name_hint">등록하시는 매장명을 입력해주세요</string>
     <string name="seller_info_shop_info_hint">매장에 대한 정보를 입력해 주세요</string>
     <string name="seller_info_shop_phone_hint">상품 문의가 가능한 연락처를 남겨 주세요</string>
+    <string name="title_activity_seller_information_edit">SellerInformationEditActivity</string>
 
 </resources>

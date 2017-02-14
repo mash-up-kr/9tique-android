@@ -1,9 +1,11 @@
 package kr.co.mash_up.a9tique.ui.login;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
@@ -15,6 +17,7 @@ import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.ui.products.SellerProductListActivity;
 import kr.co.mash_up.a9tique.ui.signup.KaKaoSignupActivity;
 import kr.co.mash_up.a9tique.util.PreferencesUtils;
+import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -52,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
         if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
             return;
         }
-
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -82,6 +84,9 @@ public class LoginActivity extends AppCompatActivity {
             }
             Log.d(TAG, "onSessionOpenFailed");
             setContentView(R.layout.activity_login);
+
+            // 로그아웃시에도 나오는지 확인 -> 로그아웃시에는 안나온다.
+            Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
         }
     }
 
