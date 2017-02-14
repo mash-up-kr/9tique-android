@@ -6,9 +6,12 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 /**
- *  판매점 정보
+ * 판매점 정보
  */
 public class Shop implements Parcelable {
+
+    @SerializedName("id")
+    private Long id;
 
     @SerializedName("name")
     private String name;
@@ -16,7 +19,16 @@ public class Shop implements Parcelable {
     @SerializedName("info")
     private String info;
 
+    @SerializedName("phone")
     private String phone;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -42,30 +54,17 @@ public class Shop implements Parcelable {
         this.phone = phone;
     }
 
-    public Shop(){}
-
-    @Override
-    public String toString() {
-        return "Shop{" +
-                "name='" + name + '\'' +
-                ", info='" + info + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
+    public Shop() {
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(name);
-        parcel.writeString(info);
-        parcel.writeString(phone);
+    public Shop(String name, String info, String phone) {
+        this.name = name;
+        this.info = info;
+        this.phone = phone;
     }
 
     protected Shop(Parcel in) {
+        id = in.readLong();
         name = in.readString();
         info = in.readString();
         phone = in.readString();
@@ -82,4 +81,27 @@ public class Shop implements Parcelable {
             return new Shop[size];
         }
     };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(name);
+        parcel.writeString(info);
+        parcel.writeString(phone);
+    }
+
+    @Override
+    public String toString() {
+        return "Shop{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", info='" + info + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
 }

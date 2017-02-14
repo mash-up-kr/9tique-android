@@ -114,7 +114,7 @@
                 android:value="kr.co.mash_up.a9tique.ui.setting.SettingActivity"/>
         </activity>
         <activity
-            android:name=".ui.setting.sellerregistration.SellerRegistrationActivity"
+            android:name=".ui.setting.sellerinformation.SellerInformationActivity"
             android:parentActivityName=".ui.setting.SettingActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan">

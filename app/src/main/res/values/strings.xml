@@ -13,8 +13,19 @@
     <string name="title_activity_gallery">GalleryActivity</string>
     <string name="title_activity_seller_product_list">SellerProductListActivity</string>
 
-
+    <string name="action_seller_information_modify">Seller Information Modify</string>
+    <string name="action_complete">완료</string>
 
     <string name="error_message_for_service_unavailable">서비스 연결상태가 좋지 않습니다.\n\n잠시 후 다시 시도해 주세요.</string>
+
+    <!--seller info-->
+    <string name="seller_info_seller_name_title">판매자 이름</string>
+    <string name="seller_info_shop_name_title">매장명</string>
+    <string name="seller_info_shop_info_title">매장 정보</string>
+    <string name="seller_info_shop_phone_title">연락처</string>
+    <string name="seller_info_seller_name_hint">판매자 성함을 입력해주세요</string>
+    <string name="seller_info_shop_name_hint">등록하시는 매장명을 입력해주세요</string>
+    <string name="seller_info_shop_info_hint">매장에 대한 정보를 입력해 주세요</string>
+    <string name="seller_info_shop_phone_hint">상품 문의가 가능한 연락처를 남겨 주세요</string>
 
 </resources>

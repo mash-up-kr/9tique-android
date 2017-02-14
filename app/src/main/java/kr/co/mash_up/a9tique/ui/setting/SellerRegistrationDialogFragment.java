@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique.ui.setting.sellerregistration;
+package kr.co.mash_up.a9tique.ui.setting;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -15,14 +15,15 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import kr.co.mash_up.a9tique.R;
-import kr.co.mash_up.a9tique.base.ui.BaseActivity;
 import kr.co.mash_up.a9tique.util.KeyboardUtils;
+import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 /**
  * Created by CY on 2017. 1. 10..
@@ -141,13 +142,20 @@ public class SellerRegistrationDialogFragment extends DialogFragment {
     void onClickOk(View view) {
         KeyboardUtils.hideKeyboard(getActivity(), getView());
 
-        if (mEtAuthenticationCode.getText().length() == 0) {
-            //Todo: show error message
+        // 길이 체크. ex) 589d4c2f-qa&Hu
+        String authenticationCode = mEtAuthenticationCode.getText().toString();
+        if (authenticationCode.length() < 14) {
+            Toast.makeText(getContext(), "인증코드가 너무 짧아요", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(authenticationCode.length() > 14){
+            Toast.makeText(getContext(), "인증코드가 너무 길어요", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (callback != null) {
-            callback.onClickOk();
+            callback.onClickOk(authenticationCode);
         }
         dismiss();
     }
@@ -159,7 +167,7 @@ public class SellerRegistrationDialogFragment extends DialogFragment {
     }
 
     public interface Callback {
-        void onClickOk();
+        void onClickOk(String authenticationCode);
 
         void onClickCancel();
     }

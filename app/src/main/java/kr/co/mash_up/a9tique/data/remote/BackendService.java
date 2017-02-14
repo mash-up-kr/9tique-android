@@ -126,8 +126,8 @@ public interface BackendService {
      *
      * @return access token, user level
      */
-    @PUT("api/users/register/seller")
-    Observable<JsonObject> registerSeller();
+    @PUT("api/sellers/register")
+    Observable<JsonObject> registerSeller(@Body RequestAuthenticationCode authenticationCode);
 
     /****************** Zzim ********************/
     /**
@@ -159,4 +159,10 @@ public interface BackendService {
      */
     @DELETE("api/zzims/product/{id}")
     Observable<JsonObject> deleteZzimProduct(@Path("id") long productId);
+
+    @GET("api/sellers/info")
+    Observable<JsonObject> getSellerInfo();
+
+    @PUT("api/sellers")
+    Observable<JsonObject> updateSellerInfo(@Body RequestSeller requestSeller);
 }

@@ -103,22 +103,6 @@ public class KaKaoSignupActivity extends AppCompatActivity {
                         PreferencesUtils.putString(KaKaoSignupActivity.this, Constants.PREF_ACCESS_TOKEN, user.getAccessToken());
                         PreferencesUtils.putString(KaKaoSignupActivity.this, Constants.PREF_USER_LEVEL, user.getUserLevel());
 
-                        //Todo: 셋팅화면으로 옮겨야함
-                        BackendHelper.getInstance().registerSeller(new ResultCallback<User>() {
-                            @Override
-                            public void onSuccess(User user) {
-                                PreferencesUtils.putString(KaKaoSignupActivity.this, Constants.PREF_ACCESS_TOKEN, user.getAccessToken());
-                                PreferencesUtils.putString(KaKaoSignupActivity.this, Constants.PREF_USER_LEVEL, user.getUserLevel());
-
-                                //Todo: redirect
-                            }
-
-                            @Override
-                            public void onFailure() {
-                                //Todo: redirect, 어쩌지...?
-                            }
-                        });
-
                         redirectProductListActivity(user.getUserLevel());
                     }
 

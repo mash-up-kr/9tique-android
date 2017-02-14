@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/whisper"
     android:fitsSystemWindows="true"
-    tools:context="kr.co.mash_up.a9tique.ui.setting.SettingActivity">
+    tools:context="kr.co.mash_up.a9tique.ui.setting.sellerinformation.SellerInformationActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,16 +21,14 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <FrameLayout
-            android:layout_marginTop="10dp"
-            android:id="@+id/fl_fragment_setting"
+            android:id="@+id/fl_fragment_seller_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
     </android.support.v4.widget.NestedScrollView>
-
 </android.support.design.widget.CoordinatorLayout>

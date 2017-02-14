@@ -13,8 +13,9 @@ import java.util.concurrent.TimeUnit;
 
 import kr.co.mash_up.a9tique.BuildConfig;
 import kr.co.mash_up.a9tique.common.Constants;
-import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.data.ProductImage;
+import kr.co.mash_up.a9tique.data.Seller;
+import kr.co.mash_up.a9tique.data.Shop;
 import kr.co.mash_up.a9tique.data.User;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -128,8 +129,8 @@ public class BackendHelper {
                 });
     }
 
-    public void registerSeller(ResultCallback<User> callback) {
-        Observable<JsonObject> call = service.registerSeller();
+    public void registerSeller(String authenticationCode, ResultCallback<User> callback) {
+        Observable<JsonObject> call = service.registerSeller(new RequestAuthenticationCode(authenticationCode));
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(jsonObject -> {
@@ -267,6 +268,48 @@ public class BackendHelper {
                     }
                 }, throwable -> {
                     Log.e(TAG, "addProductImage " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
+
+    public void getSellerInfo(ResultCallback<Seller> callback) {
+        Observable<JsonObject> call = service.getSellerInfo();
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    int statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if (statusCode / 100 == 2) {
+                        Seller seller = new Gson().fromJson(jsonObject.get("item"), Seller.class);
+                        Log.d(TAG, "seller: " + seller);
+
+                        callback.onSuccess(seller);
+                    } else {
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "getSellerInfo " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
+
+    public void updateSellerInfo(RequestSeller requestSeller, ResultCallback callback) {
+        Observable<JsonObject> call = service.updateSellerInfo(requestSeller);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    int statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if (statusCode / 100 == 2) {
+
+                        callback.onSuccess(null);
+                    } else {
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "updateSellerInfo " + throwable.getMessage());
                     callback.onFailure();
                 });
     }

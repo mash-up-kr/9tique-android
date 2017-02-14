@@ -7,7 +7,7 @@ package kr.co.mash_up.a9tique.common;
 public final class Constants {
 
     // network
-    public static final String END_POINT = "http://ec2-52-79-98-105.ap-northeast-2.compute.amazonaws.com/";
+    public static final String END_POINT = "http://192.168.0.4:8080/";
     public static final int CONNECT_TIMEOUT = 10;
     public static final int READ_TIMEOUT = 10;
     public static final int WRITE_TIMEOUT = 10;
@@ -33,4 +33,6 @@ public final class Constants {
     // Product
     public static final String PRODUCT = "product";
     public static final String PRODUCT_ID = "productId";
+
+    public static final String SELLER = "seller";
 }
