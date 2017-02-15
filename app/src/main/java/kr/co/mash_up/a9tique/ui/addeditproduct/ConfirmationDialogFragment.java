@@ -60,6 +60,7 @@ public class ConfirmationDialogFragment extends DialogFragment {
             mTitle = getArguments().getString(PARAM_TITLE);
             mMessage = getArguments().getString(PARAM_MESSAGE);
         }
+        setCancelable(false);
     }
 
     @Override

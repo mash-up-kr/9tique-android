@@ -15,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.rd.PageIndicatorView;
 
@@ -25,8 +24,10 @@ import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
 import kr.co.mash_up.a9tique.data.MainCategory;
 import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
+import kr.co.mash_up.a9tique.ui.sellproducts.SellProductsActivity;
 import kr.co.mash_up.a9tique.ui.setting.SettingActivity;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
+
 
 //Todo: EventPage 무한 스크롤
 //Todo: EventPage 오토 스크롤
@@ -174,8 +175,7 @@ public class SellerProductListActivity extends BaseActivity {
                 startActivity(new Intent(SellerProductListActivity.this, SettingActivity.class));
                 return true;
             case R.id.action_seller_products:
-                //Todo: open seller products activity, remove toast
-                Toast.makeText(this, "open seller products activity", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SellerProductListActivity.this, SellProductsActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);

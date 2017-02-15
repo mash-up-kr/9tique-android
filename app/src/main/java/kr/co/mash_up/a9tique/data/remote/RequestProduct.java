@@ -9,6 +9,9 @@ import kr.co.mash_up.a9tique.data.ProductImage;
 
 public class RequestProduct {
 
+    @SerializedName("id")
+    Long id;
+
     @SerializedName("name")
     private String name;
 
@@ -35,6 +38,21 @@ public class RequestProduct {
 
     @SerializedName("product_images")
     private List<ProductImage> productImages;
+
+    public RequestProduct() {
+    }
+
+    public RequestProduct(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

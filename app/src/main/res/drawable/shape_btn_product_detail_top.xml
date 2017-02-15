@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <solid
-        android:color="@color/my_sin"/>
+        android:color="@color/tulip_tree"/>
 
     <corners
         android:radius="2dp"/>

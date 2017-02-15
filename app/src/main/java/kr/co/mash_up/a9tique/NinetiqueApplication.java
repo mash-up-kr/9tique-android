@@ -9,6 +9,8 @@ import com.kakao.auth.ISessionConfig;
 import com.kakao.auth.KakaoAdapter;
 import com.kakao.auth.KakaoSDK;
 
+import kr.co.mash_up.a9tique.data.source.ProductsRepository;
+
 
 public class NinetiqueApplication extends Application {
 
@@ -35,8 +37,9 @@ public class NinetiqueApplication extends Application {
      */
     @Override
     public void onTerminate() {
-        super.onTerminate();
+//        ProductsRepository.destroyInstance();
         instance = null;
+        super.onTerminate();
     }
 
     /**

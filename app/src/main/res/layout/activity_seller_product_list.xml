@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="kr.co.mash_up.a9tique.ui.products.SellerProductListActivity">
+    tools:context="kr.co.mash_up.a9tique.ui.sellProducts.SellerProductListActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/abl_seller_product_list"

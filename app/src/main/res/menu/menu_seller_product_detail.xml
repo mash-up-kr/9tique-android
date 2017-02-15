@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context="kr.co.mash_up.a9tique.ui.seller.products.SellerProductListActivity">
+      tools:context="kr.co.mash_up.a9tique.ui.seller.sellProducts.SellerProductListActivity">
 
     <item
         android:id="@+id/action_seller_product_modify"

@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:text="message"
-        android:textColor="@color/nero"
+        android:textColor="@color/mine_shaft"
         android:textSize="12sp"/>
 
     <LinearLayout
@@ -43,7 +43,7 @@
             android:background="@android:color/transparent"
             android:foreground="?attr/selectableItemBackground"
             android:text="Cancel"
-            android:textColor="@color/my_sin"
+            android:textColor="@color/tulip_tree"
             android:textSize="12sp"/>
 
         <Button
@@ -53,7 +53,7 @@
             android:background="@android:color/transparent"
             android:foreground="?attr/selectableItemBackground"
             android:text="AGREE"
-            android:textColor="@color/my_sin"
+            android:textColor="@color/tulip_tree"
             android:textSize="12sp"/>
     </LinearLayout>
 

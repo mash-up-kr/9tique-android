@@ -124,6 +124,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kr.co.mash_up.a9tique.ui.setting.sellerinformation.SellerInformationActivity"/>
         </activity>
+        <activity
+            android:name=".ui.sellproducts.SellProductsActivity"
+            android:parentActivityName=".ui.products.SellerProductListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kr.co.mash_up.a9tique.ui.products.SellerProductListActivity"/>
+        </activity>
     </application>
 
 </manifest>

@@ -11,6 +11,7 @@ public class RecyclerViewEmptySupport extends RecyclerView {
 
     @Nullable
     private View mEmptyView;
+    private boolean mHeader;
 
     private AdapterDataObserver emptyObserver = new AdapterDataObserver() {
         @Override
@@ -57,7 +58,13 @@ public class RecyclerViewEmptySupport extends RecyclerView {
     protected void checkIfEmpty() {
         Adapter<?> adapter = getAdapter();
         if (adapter != null && mEmptyView != null) {
-            boolean emptyViewVisible = adapter.getItemCount() == 0;
+            boolean emptyViewVisible;
+            if (mHeader) {
+                emptyViewVisible = adapter.getItemCount() == 1;
+            } else {
+                emptyViewVisible = adapter.getItemCount() == 0;
+            }
+
             mEmptyView.setVisibility(emptyViewVisible ? VISIBLE : GONE);
             RecyclerViewEmptySupport.this.setVisibility(emptyViewVisible ? GONE : VISIBLE);
         }
@@ -66,5 +73,13 @@ public class RecyclerViewEmptySupport extends RecyclerView {
     public void setEmptyView(@NonNull View emptyView) {
         this.mEmptyView = emptyView;
         checkIfEmpty();
+    }
+
+    public boolean isHeader() {
+        return mHeader;
+    }
+
+    public void setHeader(boolean header) {
+        mHeader = header;
     }
 }

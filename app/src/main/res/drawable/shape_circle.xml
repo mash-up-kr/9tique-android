@@ -3,6 +3,6 @@
     android:shape="oval">
 
     <solid
-        android:color="@color/my_sin"/>
+        android:color="@color/tulip_tree"/>
 
 </shape>

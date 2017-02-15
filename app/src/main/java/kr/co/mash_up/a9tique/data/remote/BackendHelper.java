@@ -13,9 +13,9 @@ import java.util.concurrent.TimeUnit;
 
 import kr.co.mash_up.a9tique.BuildConfig;
 import kr.co.mash_up.a9tique.common.Constants;
+import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.data.ProductImage;
 import kr.co.mash_up.a9tique.data.Seller;
-import kr.co.mash_up.a9tique.data.Shop;
 import kr.co.mash_up.a9tique.data.User;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -180,7 +180,7 @@ public class BackendHelper {
                         callback.onFailure();
                     }
                 }, throwable -> {
-                    Log.e(TAG, "getProducts " + throwable.getMessage());
+                    Log.e(TAG, "getSellProducts " + throwable.getMessage());
                     callback.onFailure();
                 });
     }
@@ -308,6 +308,60 @@ public class BackendHelper {
                     }
                 }, throwable -> {
                     Log.e(TAG, "updateSellerInfo " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
+
+    public void getSellProducts(int pageNo, ResultCallback<ResponseProduct> callback) {
+        Observable<JsonObject> call = service.getSellProducts(pageNo, 20);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    int statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if (statusCode / 100 == 2) {
+//                        int currentPageNo = jsonObject.get("page_no").getAsInt();
+//                        int pageTotal = jsonObject.get("page_total").getAsInt();
+//                        int elementsTotal = jsonObject.get("total").getAsInt();
+//
+//                        List<Product> products = new ArrayList<Product>();
+//                        JsonArray jsonArray = jsonObject.getAsJsonArray("list");
+//                        Product product;
+//                        for (int i = 0; i < jsonArray.size(); i++) {
+//                            product = new Gson().fromJson(jsonArray.get(i).getAsJsonObject(), Product.class);
+//                            Log.d(TAG, "product: " + product.toString());
+//                            products.add(product);
+//                        }
+//                        callback.onSuccess(new ResponseProduct(products, currentPageNo, pageTotal, elementsTotal));
+
+                        // Gson을 이용해 아래 code로 축약
+                        ResponseProduct responseProduct = new Gson().fromJson(jsonObject, ResponseProduct.class);
+                        callback.onSuccess(responseProduct);
+                    } else {
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "getSellProducts " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
+
+    public void deleteSellProducts(List<Product> products, ResultCallback callback) {
+        Observable<JsonObject> call = service.deleteSellProducts(new RequestDeleteProduct(products));
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    int statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if (statusCode / 100 == 2) {
+                        callback.onSuccess(null);
+                    } else {
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "deleteSellProducts " + throwable.getMessage());
                     callback.onFailure();
                 });
     }

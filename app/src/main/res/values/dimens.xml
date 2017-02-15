@@ -6,4 +6,5 @@
     <dimen name="product_detail_image_list_item_bottom_margin">7dp</dimen>
     <dimen name="add_edit_product_image_list_item_margin">11dp</dimen>
     <dimen name="setting_list_item_margin">1dp</dimen>
+    <dimen name="sell_product_list_item_bottom_margin">7dp</dimen>
 </resources>
