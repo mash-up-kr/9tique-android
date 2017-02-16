@@ -24,6 +24,8 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         void onUpdate(T t, int position);
 
         void onStatusUpdate(T t, int position);
+
+        void onCheck(T t, int position);
     }
 
     private ArrayList<SellProduct> mSellProducts;

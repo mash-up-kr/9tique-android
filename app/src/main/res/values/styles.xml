@@ -66,9 +66,18 @@
 
     <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
-    <!--<style name="theme" parent="Theme.AppCompat.Light.NoActionBar">-->
-    <!--<item name="android:windowTitleSize">50dp</item>-->
-    <!--<item name="android:windowNoTitle">true</item>-->
-    <!--</style>-->
-
+    <!-- Sell Products -->
+    <style name="Switch.SellProduct" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Active thumb color & Active track color(30% transparency) -->
+        <item name="colorControlActivated">@color/scooter</item>
+        <!-- Inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/mercury</item>
+        <!-- Inactive track color(30% transparency) -->
+        <!--<item name="android:colorForeground">@color/mercury</item>-->
+    </style>
+    
+    <style name="CheckBox.SellProduct" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="colorAccent">@color/gray</item>
+        <!--<item name="colorControlNormal">@color/white</item>-->
+    </style>
 </resources>

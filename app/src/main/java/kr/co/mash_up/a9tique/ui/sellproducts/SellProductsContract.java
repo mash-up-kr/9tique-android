@@ -40,11 +40,11 @@ public interface SellProductsContract {
      */
     interface View extends BaseView<Presenter> {
 
-        void setLodingIndicator(boolean active);
+        void showLodingIndicator(boolean active);
 
-        void setProgressbar(boolean active);
+        void showProgressbar(boolean active);
 
-        void setFooterView(boolean active, int position);
+        void showFooterView(boolean active, int position);
 
         void showProducts(List<Product> products, int elementsTotal);
 
@@ -66,13 +66,17 @@ public interface SellProductsContract {
 
         void showEditProduct(Product product);
 
+        void showSuccessfullyUpdateMessage();
+
+        void showFailureUpdateMessage();
+
         void showSuccessfullyRemovedMessage();
 
         void showFailureRemovedMessage();
 
-        void showSuccessfullyRemovedAllMessage();
+        void showSuccessfullyRemovedSelectedMessage();
 
-        void showFailureRemovedAllMessage();
+        void showFailureRemovedSelectedMessage();
 
         void showSuccessfullyUpdatedStatusMessage();
 

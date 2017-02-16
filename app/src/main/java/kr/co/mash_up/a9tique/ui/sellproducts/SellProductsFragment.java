@@ -1,6 +1,5 @@
 package kr.co.mash_up.a9tique.ui.sellproducts;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,9 +18,11 @@ import java.util.Locale;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
+import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
 import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
@@ -29,6 +30,7 @@ import kr.co.mash_up.a9tique.ui.addeditproduct.ConfirmationDialogFragment;
 import kr.co.mash_up.a9tique.ui.addeditproduct.OrientationSpacingItemDecoration;
 import kr.co.mash_up.a9tique.ui.productdetail.SellerProductDetailActivity;
 import kr.co.mash_up.a9tique.util.CheckNonNullUtil;
+import kr.co.mash_up.a9tique.util.ProgressUtil;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 public class SellProductsFragment extends BaseFragment implements SellProductsContract.View {
@@ -55,8 +57,6 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
 
     @BindDimen(R.dimen.sell_product_list_item_bottom_margin)
     int itemSpacingSize;
-
-    ProgressDialog mPprogressDialog;
 
     private SellProductListAdapter mSellProductListAdapter;
 
@@ -106,7 +106,7 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
         mRvProducts.setHasFixedSize(true);
         LinearLayoutManager llmProducts = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRvProducts.setLayoutManager(llmProducts);
-        mRvProducts.addItemDecoration(new OrientationSpacingItemDecoration(itemSpacingSize, OrientationSpacingItemDecoration.Orientation.BOTTOM, true));
+        mRvProducts.addItemDecoration(new OrientationSpacingItemDecoration(itemSpacingSize, OrientationSpacingItemDecoration.Orientation.BOTTOM, false));
 
         mSellProductListAdapter = new SellProductListAdapter(getActivity());
         mSellProductListAdapter.setOnItemClickListener(new SellProductListAdapter.OnItemClickListener<SellProduct>() {
@@ -145,28 +145,13 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
 
             @Override
             public void onStatusUpdate(SellProduct sellProduct, int position) {
-                ConfirmationDialogFragment dlgStatusUpdateConfirmaation;
-                if (sellProduct.getStatus().name().equals(Product.Status.SELL.name())) {
-                    dlgStatusUpdateConfirmaation
-                            = ConfirmationDialogFragment.newInstance("상품 판매 표기", "해당 상품을 판매중으로 표기하시겠습니까?");
-                } else {
-                    dlgStatusUpdateConfirmaation
-                            = ConfirmationDialogFragment.newInstance("상품 판매 표기", "해당 상품을 판매완료로 표기하시겠습니까?");
-                }
+                //Todo: 바로 api call하지말고 시간을 두고 최종 변경사항으로 api 호출. 스위치는 상태를 바꾸기 쉬우니까!!
+                mPresenter.updateProductStatus(sellProduct, position);
+            }
 
-                dlgStatusUpdateConfirmaation.setCallback(new ConfirmationDialogFragment.Callback() {
-                    @Override
-                    public void onClickOk() {
-                        mPresenter.updateProductStatus(sellProduct, position);
-                    }
-
-                    @Override
-                    public void onClickCancel() {
-                        // Do nothing
-                    }
-                });
-                dlgStatusUpdateConfirmaation.setTargetFragment(SellProductsFragment.this, 0);
-                dlgStatusUpdateConfirmaation.show(getChildFragmentManager(), ConfirmationDialogFragment.TAG);
+            @Override
+            public void onCheck(SellProduct sellProduct, int position) {
+                setProductsSelectedCount();
             }
         });
         mRvProducts.setAdapter(mSellProductListAdapter);
@@ -186,25 +171,12 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
 
         mSwipeRefreshLayout.setColorSchemeResources(R.color.tulip_tree, R.color.mine_shaft);
         mSwipeRefreshLayout.setOnRefreshListener(this::refreshProducts);
+    }
 
-//        if (mSellProductListAdapter.getItemCount() == 0) {
-//            mEmptyView.setVisibility(View.VISIBLE);
-//            mRvProducts.setVisibility(View.GONE);
-//            mRlProductsHeader.setVisibility(View.GONE);
-//        } else {
-//            mEmptyView.setVisibility(View.GONE);
-//            mRvProducts.setVisibility(View.VISIBLE);
-//            mRlProductsHeader.setVisibility(View.VISIBLE);
-//        }
-
-        //Todo: util로 변경
-        mPprogressDialog = new ProgressDialog(getActivity(), ProgressDialog.STYLE_SPINNER);
-        mPprogressDialog.setCancelable(false);
-
-        mCbCheckAll.setOnCheckedChangeListener((compoundButton, b) -> {
-            mSellProductListAdapter.setSellProductsChecked(b);
-            setProductsSelectedCount();
-        });
+    @OnCheckedChanged(R.id.cb_check_all)
+    public void onCheckedAll(boolean checked) {
+        mSellProductListAdapter.setSellProductsChecked(checked);
+        setProductsSelectedCount();
     }
 
     @OnClick(R.id.tv_product_checked_remove)
@@ -243,21 +215,21 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
     }
 
     @Override
-    public void setLodingIndicator(boolean active) {
+    public void showLodingIndicator(boolean active) {
         mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(active));
     }
 
     @Override
-    public void setProgressbar(boolean active) {
+    public void showProgressbar(boolean active) {
         if (active) {
-            mPprogressDialog.show();
+            ProgressUtil.showProgressDialog(getActivity());
         } else {
-            mPprogressDialog.dismiss();
+            ProgressUtil.hideProgressDialog();
         }
     }
 
     @Override
-    public void setFooterView(boolean active, int position) {
+    public void showFooterView(boolean active, int position) {
         if (active) {
             mSellProductListAdapter.addFooterView(position);
         } else {
@@ -302,7 +274,7 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
     @Override
     public void showProductDetailForSeller(Product product) {
         Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
-        intent.putExtra("product", product);
+        intent.putExtra(Constants.PRODUCT, product);
         startActivityForResult(intent, SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
     }
 
@@ -310,15 +282,15 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
     public void showProductDetailForCustomer(Product product) {
         //Todo: change customer product detail activity
         Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
-        intent.putExtra("product", product);
+        intent.putExtra(Constants.PRODUCT, product);
         startActivityForResult(intent, SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
     }
 
     @Override
     public void showEditProduct(Product product) {
         Intent intent = new Intent(getActivity(), AddEditProductActivity.class);
-        intent.putExtra("productId", product.getId());
-        intent.putExtra("product", product);
+        intent.putExtra(Constants.PRODUCT_ID, product.getId());
+        intent.putExtra(Constants.PRODUCT, product);
         startActivityForResult(intent, AddEditProductActivity.REQUEST_CODE_EDIT_PRODUCT);
     }
 
@@ -343,13 +315,23 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
     }
 
     @Override
-    public void showSuccessfullyRemovedAllMessage() {
-        SnackbarUtil.showMessage(getActivity(), getView(), "전체 상품삭제 성공", "", null);
+    public void showSuccessfullyUpdateMessage() {
+        SnackbarUtil.showMessage(getActivity(), getView(), "상품 수정 성공", "", null);
     }
 
     @Override
-    public void showFailureRemovedAllMessage() {
-        SnackbarUtil.showMessage(getActivity(), getView(), "전체 상품삭제 실패", "", null);
+    public void showFailureUpdateMessage() {
+        SnackbarUtil.showMessage(getActivity(), getView(), "상품 수정 실패", "", null);
+    }
+
+    @Override
+    public void showSuccessfullyRemovedSelectedMessage() {
+        SnackbarUtil.showMessage(getActivity(), getView(), "선택 상품삭제 성공", "", null);
+    }
+
+    @Override
+    public void showFailureRemovedSelectedMessage() {
+        SnackbarUtil.showMessage(getActivity(), getView(), "선택 상품삭제 실패", "", null);
     }
 
     @Override

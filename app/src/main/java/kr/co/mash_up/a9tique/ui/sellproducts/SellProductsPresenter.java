@@ -1,5 +1,6 @@
 package kr.co.mash_up.a9tique.ui.sellproducts;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.RequestProduct;
 import kr.co.mash_up.a9tique.data.remote.ResponseProduct;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
+import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
 import kr.co.mash_up.a9tique.util.CheckNonNullUtil;
 
 /**
@@ -63,7 +65,16 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
 
     @Override
     public void result(int requestCode, int resultCode) {
-        //Todo: receive result and show succesfully or failure
+        switch (requestCode) {
+            case AddEditProductActivity.REQUEST_CODE_EDIT_PRODUCT:
+                if (resultCode == Activity.RESULT_OK) {
+                    mView.showSuccessfullyUpdateMessage();
+                    mView.refreshProducts();
+                } else {
+                    mView.showFailureUpdateMessage();
+                }
+                break;
+        }
     }
 
     @Override
@@ -80,7 +91,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
      */
     private void loadProducts(boolean forceUpdate, final boolean showLoadingUI) {
         if (showLoadingUI) {
-            mView.setLodingIndicator(true);  // 로딩 인디케이터 표시
+            mView.showLodingIndicator(true);  // 로딩 인디케이터 표시
         }
         if (forceUpdate) {
             mCurrentPageNo = -1;
@@ -96,7 +107,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                             return;
                         }
                         if (showLoadingUI) {
-                            mView.setLodingIndicator(false);
+                            mView.showLodingIndicator(false);
                         }
 
                         mCurrentPageNo = responseProduct.getCurrentPageNo();
@@ -111,7 +122,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                             return;
                         }
                         if (showLoadingUI) {
-                            mView.setLodingIndicator(false);
+                            mView.showLodingIndicator(false);
                         }
                         mView.showNoProducts();
                         mView.showLoadingProductsError();
@@ -127,7 +138,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
     @Override
     public void loadMoreProducts(int loadingFooterPosition) {
         if (mCurrentPageNo + 1 < mPageTotal) {
-            mView.setFooterView(true, loadingFooterPosition);
+            mView.showFooterView(true, loadingFooterPosition);
 
             BackendHelper.getInstance().getSellProducts(mCurrentPageNo + 1,
                     new ResultCallback<ResponseProduct>() {
@@ -136,7 +147,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                             if (!mView.isActive()) {
                                 return;
                             }
-                            mView.setFooterView(false, loadingFooterPosition);
+                            mView.showFooterView(false, loadingFooterPosition);
 
                             mCurrentPageNo = responseProduct.getCurrentPageNo();
                             mPageTotal = responseProduct.getPageTotal();
@@ -149,7 +160,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                             if (!mView.isActive()) {
                                 return;
                             }
-                            mView.setFooterView(false, loadingFooterPosition);
+                            mView.showFooterView(false, loadingFooterPosition);
                             mView.showLoadingProductsError();
                         }
                     });
@@ -173,7 +184,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
 
     @Override
     public void removeProduct(Product product, int position) {
-        mView.setProgressbar(true);
+        mView.showProgressbar(true);
 
         BackendHelper.getInstance().deleteProduct(product.getId(), new ResultCallback() {
             @Override
@@ -181,7 +192,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                 if (!mView.isActive()) {
                     return;
                 }
-                mView.setProgressbar(false);
+                mView.showProgressbar(false);
                 mView.showSuccessfullyRemovedMessage();
                 mView.removeProduct(position);
             }
@@ -191,7 +202,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                 if (!mView.isActive()) {
                     return;
                 }
-                mView.setProgressbar(false);
+                mView.showProgressbar(false);
                 mView.showFailureRemovedMessage();
             }
         });
@@ -203,7 +214,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
             mView.showRemoveProductSelectedErrorMessage();
             return;
         }
-        mView.setProgressbar(true);
+        mView.showProgressbar(true);
 
         BackendHelper.getInstance().deleteSellProducts(products, new ResultCallback() {
             @Override
@@ -211,8 +222,8 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                 if (!mView.isActive()) {
                     return;
                 }
-                mView.setProgressbar(false);
-                mView.showSuccessfullyRemovedAllMessage();
+                mView.showProgressbar(false);
+                mView.showSuccessfullyRemovedSelectedMessage();
                 mView.refreshProducts();
             }
 
@@ -221,15 +232,15 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                 if (!mView.isActive()) {
                     return;
                 }
-                mView.setProgressbar(false);
-                mView.showFailureRemovedAllMessage();
+                mView.showProgressbar(false);
+                mView.showFailureRemovedSelectedMessage();
             }
         });
     }
 
     @Override
     public void updateProductStatus(Product product, int position) {
-        mView.setProgressbar(true);
+        mView.showProgressbar(true);
 
         RequestProduct requestProduct = new RequestProduct();
         requestProduct.setStatus(product.getStatus());
@@ -240,7 +251,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                 if (!mView.isActive()) {
                     return;
                 }
-                mView.setProgressbar(false);
+                mView.showProgressbar(false);
                 mView.showSuccessfullyUpdatedStatusMessage();
                 mView.updateProductStatus(position);
             }
@@ -250,7 +261,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                 if (!mView.isActive()) {
                     return;
                 }
-                mView.setProgressbar(false);
+                mView.showProgressbar(false);
                 mView.showFailureUpdatedStatusMessage();
             }
         });

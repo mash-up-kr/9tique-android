@@ -116,7 +116,11 @@ public class SellProductsViewHolder extends BaseViewHolder<SellProduct> {
         });
 
         mCbProduct.setOnCheckedChangeListener(null);
+//        mCbProduct.post(() -> mCbProduct.setChecked(sellProduct.isChecked()));  // animation 작동하는데 살짝 느리다..
         mCbProduct.setChecked(sellProduct.isChecked());
-        mCbProduct.setOnCheckedChangeListener((compoundButton, b) -> sellProduct.setChecked(b));
+        mCbProduct.setOnCheckedChangeListener((compoundButton, b) -> {
+            sellProduct.setChecked(b);
+            mOnItemClickListener.onCheck(sellProduct, getAdapterPosition());
+        });
     }
 }
