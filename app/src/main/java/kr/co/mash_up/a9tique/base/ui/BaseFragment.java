@@ -10,12 +10,16 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import kr.co.mash_up.a9tique.common.eventbus.RxEventBus;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public abstract class BaseFragment extends Fragment {
 
-    protected Unbinder mUnbinder;
+    private Unbinder mUnbinder;
 
-    public BaseFragment(){
+    public BaseFragment() {
     }
 
     @LayoutRes
@@ -46,5 +50,45 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         mUnbinder.unbind();
         super.onDestroyView();
+    }
+
+    private Subscription mBusSubscription;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        unsubscribeBus();
+        mBusSubscription = RxEventBus.getInstance().getBusObservable()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            if (o == null) {
+                                return;
+                            }
+                            handleEventFromBus(o);
+                        },
+                        this::handleError,
+                        this::handleCompleted);
+    }
+
+    @Override
+    public void onStop() {
+        unsubscribeBus();
+        super.onStop();
+    }
+
+    private void unsubscribeBus() {
+        if (mBusSubscription != null && !mBusSubscription.isUnsubscribed()) {
+            mBusSubscription.unsubscribe();
+        }
+    }
+
+    protected void handleEventFromBus(Object event) {
+    }
+
+    protected void handleError(Throwable t) {
+    }
+
+    protected void handleCompleted() {
     }
 }

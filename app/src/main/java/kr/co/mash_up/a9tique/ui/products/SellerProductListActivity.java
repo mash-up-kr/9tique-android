@@ -22,6 +22,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
+import kr.co.mash_up.a9tique.common.eventbus.Events;
+import kr.co.mash_up.a9tique.common.eventbus.RxEventBus;
 import kr.co.mash_up.a9tique.data.MainCategory;
 import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
 import kr.co.mash_up.a9tique.ui.sellproducts.SellProductsActivity;
@@ -31,6 +33,7 @@ import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 //Todo: EventPage 무한 스크롤
 //Todo: EventPage 오토 스크롤
+//Todo: viewPager에도 MVP 적용, google sample, tablet branch 참고
 public class SellerProductListActivity extends BaseActivity {
 
     public static final String TAG = SellerProductListActivity.class.getSimpleName();
@@ -196,8 +199,7 @@ public class SellerProductListActivity extends BaseActivity {
             case AddEditProductActivity.REQUEST_CODE_ADD_RPODUCT:
                 if (resultCode == Activity.RESULT_OK) {
                     SnackbarUtil.showMessage(SellerProductListActivity.this, mClRoot, "상품 등록 완료", "", null);
-                    //Todo: reloading
-
+                    RxEventBus.getInstance().post(new Events("reloading"));
                 } else {
                     SnackbarUtil.showMessage(SellerProductListActivity.this, mClRoot, "상품 등록 실패. 다시 등록해주세요", "RETRY", view -> {
                         Intent intent = new Intent(SellerProductListActivity.this, AddEditProductActivity.class);

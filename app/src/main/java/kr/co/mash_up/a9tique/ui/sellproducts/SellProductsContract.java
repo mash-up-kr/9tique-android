@@ -40,15 +40,15 @@ public interface SellProductsContract {
      */
     interface View extends BaseView<Presenter> {
 
-        void showLodingIndicator(boolean active);
+        void showLoadingIndicator(boolean active);
 
         void showProgressbar(boolean active);
 
         void showFooterView(boolean active, int position);
 
-        void showProducts(List<Product> products, int elementsTotal);
+        void showLoadedProducts(List<Product> products, int elementsTotal);
 
-        void showAddProducts(List<Product> products);
+        void showLoadedMoreProducts(List<Product> products);
 
         void showLoadingProductsError();
 

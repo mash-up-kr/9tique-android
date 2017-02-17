@@ -86,8 +86,8 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public void removeItem(int position) {
-        if (position < 1) {
-            position = 1;
+        if (position < 0) {
+            position = 0;
         }
         mSellProducts.remove(position);
         notifyItemRemoved(position);

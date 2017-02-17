@@ -27,7 +27,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private ArrayList<Product> mProducts;
     private final Context mContext;
 
-    OnItemClickListener<Product> mOnItemClickListener;
+    private OnItemClickListener<Product> mOnItemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener<Product> onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
@@ -36,26 +36,6 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public ProductListAdapter(@NonNull Context context) {
         this.mContext = context;
         this.mProducts = new ArrayList<>();
-
-//        dummyData();
-    }
-
-    //Todo: remove
-    private void dummyData() {
-        Product product;
-        for (int i = 0; i < 30; i++) {
-            product = new Product();
-            product.setName("name " + i);
-            product.setBrandName("brand name " + i);
-            product.setPrice(10000);
-            product.setSize("size " + i);
-            product.setDescription("description " + i);
-            product.setMainCategory("main " + i);
-            product.setSubCategory("sub " + i);
-            product.setProductImages(new ArrayList<>());
-            product.setCreatedAt(new Date().getTime());
-            addItem(product, i);
-        }
     }
 
     @Override
@@ -87,7 +67,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        return mProducts.get(position) == null ? VIEW_TYPE_FOOTER : VIEW_TYPE_CONTENT;
+        return mProducts.get(position).getViewType();
     }
 
     public void addItem(Product product, int position) {
@@ -101,14 +81,37 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void removeItem(int position) {
         mProducts.remove(position);
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position, mProducts.size());
+//        notifyItemRangeChanged(position, mProducts.size());
     }
 
     public void setProducts(List<Product> products) {
-
-        for (int i = 0; i < products.size(); i++) {
-            mProducts.add(products.get(i));
+        mProducts.clear();
+        for(Product product : products){
+            product.setViewType(VIEW_TYPE_CONTENT);
+            mProducts.add(product);
         }
         notifyDataSetChanged();
+    }
+
+    public void addProducts(List<Product> products){
+        int currentSize = mProducts.size();
+        for(Product product : products){
+            product.setViewType(VIEW_TYPE_CONTENT);
+            mProducts.add(product);
+        }
+        notifyItemRangeInserted(currentSize, products.size());
+    }
+
+    public void clearProducts(){
+        mProducts.clear();
+        //Todo: call notifyDataSetChanged();
+    }
+
+    public void addFooterView(int position){
+        addItem(new Product(VIEW_TYPE_FOOTER), position);
+    }
+
+    public void removeFooterView(int position){
+        removeItem(position);
     }
 }

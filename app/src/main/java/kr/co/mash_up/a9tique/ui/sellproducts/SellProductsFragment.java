@@ -215,7 +215,7 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
     }
 
     @Override
-    public void showLodingIndicator(boolean active) {
+    public void showLoadingIndicator(boolean active) {
         mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(active));
     }
 
@@ -250,14 +250,14 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
     }
 
     @Override
-    public void showProducts(List<Product> products, int elementsTotal) {
+    public void showLoadedProducts(List<Product> products, int elementsTotal) {
         mSellProductListAdapter.setSellProducts(products);
         showEmptyView(mSellProductListAdapter.getItemCount() == 0);
         mElementsTotal = elementsTotal;
         setProductsSelectedCount();
     }
 
-    public void showAddProducts(List<Product> products) {
+    public void showLoadedMoreProducts(List<Product> products) {
         mSellProductListAdapter.addProducts(products);
     }
 

@@ -91,7 +91,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
      */
     private void loadProducts(boolean forceUpdate, final boolean showLoadingUI) {
         if (showLoadingUI) {
-            mView.showLodingIndicator(true);  // 로딩 인디케이터 표시
+            mView.showLoadingIndicator(true);  // 로딩 인디케이터 표시
         }
         if (forceUpdate) {
             mCurrentPageNo = -1;
@@ -107,13 +107,13 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                             return;
                         }
                         if (showLoadingUI) {
-                            mView.showLodingIndicator(false);
+                            mView.showLoadingIndicator(false);
                         }
 
                         mCurrentPageNo = responseProduct.getCurrentPageNo();
                         mPageTotal = responseProduct.getPageTotal();
 
-                        mView.showProducts(responseProduct.getProducts(), responseProduct.getElementsTotal());
+                        mView.showLoadedProducts(responseProduct.getProducts(), responseProduct.getElementsTotal());
                     }
 
                     @Override
@@ -122,7 +122,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                             return;
                         }
                         if (showLoadingUI) {
-                            mView.showLodingIndicator(false);
+                            mView.showLoadingIndicator(false);
                         }
                         mView.showNoProducts();
                         mView.showLoadingProductsError();
@@ -152,7 +152,7 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                             mCurrentPageNo = responseProduct.getCurrentPageNo();
                             mPageTotal = responseProduct.getPageTotal();
 
-                            mView.showAddProducts(responseProduct.getProducts());
+                            mView.showLoadedMoreProducts(responseProduct.getProducts());
                         }
 
                         @Override
