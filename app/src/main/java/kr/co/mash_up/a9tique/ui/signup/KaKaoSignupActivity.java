@@ -23,8 +23,9 @@ import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.RequestUser;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
 import kr.co.mash_up.a9tique.ui.login.LoginActivity;
-import kr.co.mash_up.a9tique.ui.products.SellerProductListActivity;
+import kr.co.mash_up.a9tique.ui.products.ProductsActivity;
 import kr.co.mash_up.a9tique.util.PreferencesUtils;
+
 
 /**
  * 유효한 세션이 있다는 검증 후
@@ -90,21 +91,18 @@ public class KaKaoSignupActivity extends AppCompatActivity {
             @Override
             public void onSuccess(UserProfile userProfile) {
                 Logger.d("UserProfile: " + userProfile);
-                //Todo: AccountManager 사용하는 로직으로 변경
-                mAccountManager.setKakaoId(String.valueOf(userProfile.getId()));
 
                 // request access token
                 RequestUser requestUser = new RequestUser(
-                        mAccountManager.getKakaoId(),
-                        RequestUser.Type.KAKAO);
+                        String.valueOf(userProfile.getId()),
+                        RequestUser.OauthType.KAKAO);
 
                 BackendHelper.getInstance().login(requestUser, new ResultCallback<User>() {
 
                     @Override
                     public void onSuccess(User user) {
-                        PreferencesUtils.putString(KaKaoSignupActivity.this, Constants.PREF_ACCESS_TOKEN, user.getAccessToken());
-                        PreferencesUtils.putString(KaKaoSignupActivity.this, Constants.PREF_USER_LEVEL, user.getUserLevel());
-                        redirectProductListActivity(user.getUserLevel());
+                        initAccountData(user);
+                        redirectProductListActivity();
                     }
 
                     @Override
@@ -117,6 +115,28 @@ public class KaKaoSignupActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 사용자 정보를 SharedPreferences와 AccountManager에 setting
+     *
+     * @param user setting할 사용자 정보
+     */
+    private void initAccountData(User user) {
+        String accessToken = user.getAccessToken();
+        String strUserLevel = user.getUserLevel();
+
+        PreferencesUtils.putString(KaKaoSignupActivity.this, Constants.PREF_ACCESS_TOKEN, accessToken);
+        PreferencesUtils.putString(KaKaoSignupActivity.this, Constants.PREF_USER_LEVEL, strUserLevel);
+
+        User.Level level = User.Level.USER;
+        if ("SELLER".equals(strUserLevel)) {
+            level = User.Level.SELLER;
+        }
+        mAccountManager.updateAccountInformation(user.getAccessToken(), level);
+    }
+
+    /**
+     * 현재 화면을 종료하고 로그인 화면으로 이동
+     */
     private void redirectLoginActivity() {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -125,18 +145,10 @@ public class KaKaoSignupActivity extends AppCompatActivity {
     }
 
     /**
-     * 판매자, 유저인지 확인하고 분기 시킨다.
+     * 현재 화면을 종료하고 상품 리스트 화면으로 이동
      */
-    private void redirectProductListActivity(String userLevel) {
-        switch (userLevel) {
-            case "USER":
-                //Todo: start user product list activity
-                startActivity(new Intent(this, SellerProductListActivity.class));
-                break;
-            case "SELLER":
-                startActivity(new Intent(this, SellerProductListActivity.class));
-                break;
-        }
+    private void redirectProductListActivity() {
+        startActivity(new Intent(KaKaoSignupActivity.this, ProductsActivity.class));
         finish();
     }
 }

@@ -93,4 +93,23 @@ public class User implements Parcelable {
         parcel.writeString(name);
         parcel.writeString(email);
     }
+
+    public enum Level {
+        USER("user"),
+        SELLER("seller");
+
+        private String value;
+
+        Level(String value){
+            this.value = value;
+        }
+
+        public String getKey(){
+            return name();
+        }
+
+        public String getValue(){
+            return this.value;
+        }
+    }
 }

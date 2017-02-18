@@ -11,7 +11,7 @@ import kr.co.mash_up.a9tique.data.Product;
 /**
  * This specifies the contract between the view and the presenter.
  */
-public class SellerProductsContract {
+public class ProductsContract {
 
     /*
     상품 클릭했을 때 -> detail
@@ -41,7 +41,7 @@ public class SellerProductsContract {
     /**
      * Presenter -> View
      */
-    interface View extends BaseView<SellerProductsContract.Presenter> {
+    interface View extends BaseView<ProductsContract.Presenter> {
 
         void showLoadingIndicator(boolean active);
 

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -22,9 +23,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
+import kr.co.mash_up.a9tique.common.AccountManager;
 import kr.co.mash_up.a9tique.common.eventbus.Events;
 import kr.co.mash_up.a9tique.common.eventbus.RxEventBus;
 import kr.co.mash_up.a9tique.data.MainCategory;
+import kr.co.mash_up.a9tique.data.User;
 import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
 import kr.co.mash_up.a9tique.ui.sellproducts.SellProductsActivity;
 import kr.co.mash_up.a9tique.ui.setting.SettingActivity;
@@ -33,10 +36,13 @@ import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 //Todo: EventPage 무한 스크롤
 //Todo: EventPage 오토 스크롤
-//Todo: viewPager에도 MVP 적용, google sample, tablet branch 참고
-public class SellerProductListActivity extends BaseActivity {
+/*
+Todo: viewPager에도 MVP 적용, google sample, tablet branch 참고
+https://github.com/googlesamples/android-architecture/tree/dev-todo-mvp-tablet
+ */
+public class ProductsActivity extends BaseActivity {
 
-    public static final String TAG = SellerProductListActivity.class.getSimpleName();
+    public static final String TAG = ProductsActivity.class.getSimpleName();
     public static final String CURRENT_PAGER_POSITION = "current_pager_position";
 
     @BindView(R.id.cl_root)
@@ -63,14 +69,18 @@ public class SellerProductListActivity extends BaseActivity {
     @BindView(R.id.vp_main_categories)
     ViewPager mVpMainCategories;
 
-    CategoryPagerAdapter mMainCategoryPagerAdapter;
+    @BindView(R.id.fab_add_product)
+    FloatingActionButton mFabAddProduct;
 
-    SellerProductListEventPagerAdapter mEventPagerAdapter;
+    private CategoryPagerAdapter mMainCategoryPagerAdapter;
+
+    private ProductListEventPagerAdapter mEventPagerAdapter;
+
+    private AccountManager mAccountManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initView();
     }
 
     @Override
@@ -117,6 +127,13 @@ public class SellerProductListActivity extends BaseActivity {
 //                mCtlSellerProductList.setStatusBarScrimColor(vibrantDarkColor);
 //            }
 //        });
+
+        mAccountManager = AccountManager.getInstance();
+        if (mAccountManager.getLevel().equals(User.Level.SELLER)) {
+            mFabAddProduct.setVisibility(View.VISIBLE);
+        } else {
+            mFabAddProduct.setVisibility(View.GONE);
+        }
     }
 
     private void setupToolbar() {
@@ -144,12 +161,12 @@ public class SellerProductListActivity extends BaseActivity {
     }
 
     private void setupEventViewPager() {
-        mEventPagerAdapter = new SellerProductListEventPagerAdapter(getSupportFragmentManager());
-        mEventPagerAdapter.addFragment(SellerProductListEventFragment.newInstance());
-        mEventPagerAdapter.addFragment(SellerProductListEventFragment.newInstance());
-        mEventPagerAdapter.addFragment(SellerProductListEventFragment.newInstance());
-        mEventPagerAdapter.addFragment(SellerProductListEventFragment.newInstance());
-        mEventPagerAdapter.addFragment(SellerProductListEventFragment.newInstance());
+        mEventPagerAdapter = new ProductListEventPagerAdapter(getSupportFragmentManager());
+        mEventPagerAdapter.addFragment(ProductListEventFragment.newInstance());
+        mEventPagerAdapter.addFragment(ProductListEventFragment.newInstance());
+        mEventPagerAdapter.addFragment(ProductListEventFragment.newInstance());
+        mEventPagerAdapter.addFragment(ProductListEventFragment.newInstance());
+        mEventPagerAdapter.addFragment(ProductListEventFragment.newInstance());
         mVpEvents.setAdapter(mEventPagerAdapter);
     }
 
@@ -158,10 +175,17 @@ public class SellerProductListActivity extends BaseActivity {
         // Do nothing
     }
 
+    /**
+     * User Level을 확인 후 Level에 맞는 메뉴를 생성한다
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_seller_product_list, menu);
+        if (mAccountManager.getLevel().equals(User.Level.SELLER)) {
+            getMenuInflater().inflate(R.menu.menu_seller_product_list, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.menu_customer_product_list, menu);
+        }
         return true;
     }
 
@@ -175,10 +199,14 @@ public class SellerProductListActivity extends BaseActivity {
         //noinspection SimplifiableIfStatement
         switch (id) {
             case android.R.id.home:
-                startActivity(new Intent(SellerProductListActivity.this, SettingActivity.class));
+                startActivity(new Intent(ProductsActivity.this, SettingActivity.class));
                 return true;
             case R.id.action_seller_products:
-                startActivity(new Intent(SellerProductListActivity.this, SellProductsActivity.class));
+                startActivity(new Intent(ProductsActivity.this, SellProductsActivity.class));
+                return true;
+            case R.id.action_zzim_products:
+                //Todo: change show zzim activity
+                startActivity(new Intent(ProductsActivity.this, SellProductsActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -187,7 +215,7 @@ public class SellerProductListActivity extends BaseActivity {
     // open seller add product
     @OnClick(R.id.fab_add_product)
     public void addProduct(View view) {
-        Intent intent = new Intent(SellerProductListActivity.this, AddEditProductActivity.class);
+        Intent intent = new Intent(ProductsActivity.this, AddEditProductActivity.class);
         startActivityForResult(intent, AddEditProductActivity.REQUEST_CODE_ADD_RPODUCT);
     }
 
@@ -198,11 +226,11 @@ public class SellerProductListActivity extends BaseActivity {
         switch (requestCode) {
             case AddEditProductActivity.REQUEST_CODE_ADD_RPODUCT:
                 if (resultCode == Activity.RESULT_OK) {
-                    SnackbarUtil.showMessage(SellerProductListActivity.this, mClRoot, "상품 등록 완료", "", null);
+                    SnackbarUtil.showMessage(ProductsActivity.this, mClRoot, "상품 등록 완료", "", null);
                     RxEventBus.getInstance().post(new Events("reloading"));
                 } else {
-                    SnackbarUtil.showMessage(SellerProductListActivity.this, mClRoot, "상품 등록 실패. 다시 등록해주세요", "RETRY", view -> {
-                        Intent intent = new Intent(SellerProductListActivity.this, AddEditProductActivity.class);
+                    SnackbarUtil.showMessage(ProductsActivity.this, mClRoot, "상품 등록 실패. 다시 등록해주세요", "RETRY", view -> {
+                        Intent intent = new Intent(ProductsActivity.this, AddEditProductActivity.class);
                         startActivityForResult(intent, AddEditProductActivity.REQUEST_CODE_ADD_RPODUCT);
                     });
                 }

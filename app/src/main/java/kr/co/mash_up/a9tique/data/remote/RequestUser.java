@@ -9,15 +9,29 @@ public class RequestUser {
     private String oauthToken;
 
     @SerializedName("type")
-    private Type type;
+    private OauthType oauthType;
 
-    public RequestUser(String oauthToken, Type type) {
+    public RequestUser(String oauthToken, OauthType oauthType) {
         this.oauthToken = oauthToken;
-        this.type = type;
+        this.oauthType = oauthType;
     }
 
-    public enum Type{
-        KAKAO,
-        FB
+    public enum OauthType {
+        KAKAO("kakao"),
+        FB("fb");
+
+        private String value;
+
+        OauthType(String value) {
+            this.value = value;
+        }
+
+        public String getKey(){
+            return name();
+        }
+
+        public String getValue(){
+            return this.value;
+        }
     }
 }

@@ -14,10 +14,10 @@ import kr.co.mash_up.a9tique.data.remote.ResultCallback;
 import kr.co.mash_up.a9tique.ui.productdetail.SellerProductDetailActivity;
 import kr.co.mash_up.a9tique.util.CheckNonNullUtil;
 
-public class SellerProductsPresenter implements SellerProductsContract.Presenter {
+public class ProductsPresenter implements ProductsContract.Presenter {
 
     //Todo: add Model Layer
-    private SellerProductsContract.View mView;  // View Layer
+    private ProductsContract.View mView;  // View Layer
 
     private boolean mFirstLoad = true;
     private int mCurrentPageNo = -1;
@@ -25,9 +25,9 @@ public class SellerProductsPresenter implements SellerProductsContract.Presenter
     private String mMainCategory;
     private String mSubCategory;
 
-    public SellerProductsPresenter( /*Todo: add Model Layer */
-                                    @NonNull SellerProductsContract.View view,
-                                    String mainCategory, String subCategory) {
+    public ProductsPresenter( /*Todo: add Model Layer */
+                              @NonNull ProductsContract.View view,
+                              String mainCategory, String subCategory) {
         //Todo: add Model Layer
         mView = CheckNonNullUtil.checkNotNull(view, " sellProduct view cannot be null!");
 //        mView.setPresenter(this);

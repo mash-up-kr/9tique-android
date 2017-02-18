@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_seller_products">Seller Products</string>
     <string name="action_seller_product_modify">Seller Product Modify</string>
+    <string name="action_zzim_products">Zzim Products</string>
 
     <string name="title_activity_main_fragment">MainActivityFragment</string>
     <string name="title_activity_add_edit_product">AddEditProductActivity</string>

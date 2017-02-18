@@ -10,7 +10,7 @@ import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 
 //Todo: 이벤트 내용 바인딩
-public class SellerProductListEventFragment extends BaseFragment {
+public class ProductListEventFragment extends BaseFragment {
 
     @BindView(R.id.iv_event_content)
     ImageView ivEvent;
@@ -18,12 +18,12 @@ public class SellerProductListEventFragment extends BaseFragment {
     @BindView(R.id.tv_event_content)
     TextView tvEvent;
 
-    public SellerProductListEventFragment() {
+    public ProductListEventFragment() {
         // Required empty public constructor
     }
 
-    public static SellerProductListEventFragment newInstance() {
-        SellerProductListEventFragment fragment = new SellerProductListEventFragment();
+    public static ProductListEventFragment newInstance() {
+        ProductListEventFragment fragment = new ProductListEventFragment();
         Bundle args = new Bundle();
 //        args.putString(ARG_PARAM_TITLE, paramTitle);
         fragment.setArguments(args);

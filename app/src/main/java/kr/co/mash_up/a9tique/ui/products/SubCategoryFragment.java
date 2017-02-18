@@ -21,7 +21,7 @@ import kr.co.mash_up.a9tique.ui.productdetail.SellerProductDetailActivity;
 import kr.co.mash_up.a9tique.ui.widget.RecyclerViewEmptySupport;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
-public class SubCategoryFragment extends BaseFragment implements SellerProductsContract.View {
+public class SubCategoryFragment extends BaseFragment implements ProductsContract.View {
 
     public static final String TAG = SubCategoryFragment.class.getSimpleName();
 
@@ -36,7 +36,7 @@ public class SubCategoryFragment extends BaseFragment implements SellerProductsC
 
     private ProductListAdapter mProductListAdapter;
 
-    private SellerProductsContract.Presenter mPresenter;
+    private ProductsContract.Presenter mPresenter;
 
     private static final String ARG_MAIN_CATEGORY = "mainCategory";
     private static final String ARG_SUB_CATEGORY = "subCategory";
@@ -79,7 +79,7 @@ public class SubCategoryFragment extends BaseFragment implements SellerProductsC
 //            mFirstLoad = getArguments().getBoolean(ARG_PARAM_FIRST_LOADING);
         }
 
-        mPresenter = new SellerProductsPresenter(this, mArgMainCategory, mArgSubCategory);
+        mPresenter = new ProductsPresenter(this, mArgMainCategory, mArgSubCategory);
     }
 
     @Override
@@ -230,7 +230,7 @@ public class SubCategoryFragment extends BaseFragment implements SellerProductsC
     }
 
     @Override
-    public void setPresenter(SellerProductsContract.Presenter presenter) {
+    public void setPresenter(ProductsContract.Presenter presenter) {
         // Do nothing
 //        mPresenter = presenter;
     }

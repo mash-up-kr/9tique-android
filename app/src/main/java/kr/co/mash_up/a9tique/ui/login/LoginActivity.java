@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.kakao.auth.ISessionCallback;
@@ -13,11 +12,12 @@ import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
 
 import kr.co.mash_up.a9tique.R;
+import kr.co.mash_up.a9tique.common.AccountManager;
 import kr.co.mash_up.a9tique.common.Constants;
-import kr.co.mash_up.a9tique.ui.products.SellerProductListActivity;
+import kr.co.mash_up.a9tique.data.User;
+import kr.co.mash_up.a9tique.ui.products.ProductsActivity;
 import kr.co.mash_up.a9tique.ui.signup.KaKaoSignupActivity;
 import kr.co.mash_up.a9tique.util.PreferencesUtils;
-import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -35,12 +35,18 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 //      자동 로그인, access token이 저장되 있으면 바로 메인으로 넘어간다.
-        String token = PreferencesUtils.getString(LoginActivity.this, Constants.PREF_ACCESS_TOKEN, "");
-        String userLevel = PreferencesUtils.getString(LoginActivity.this, Constants.PREF_USER_LEVEL, "");
+        String accessToken = PreferencesUtils.getString(LoginActivity.this, Constants.PREF_ACCESS_TOKEN, "");
+        String strUserLevel = PreferencesUtils.getString(LoginActivity.this, Constants.PREF_USER_LEVEL, "");
         //Todo: token 만료일 확인하고 서버로 token refresh request.
 
-        if (userLevel != null && !"".equals(userLevel)) {
-            redirectProductListActivity(userLevel);
+        if (strUserLevel != null && !"".equals(strUserLevel)) {
+            User.Level userLevel = User.Level.USER;
+            if(strUserLevel.equals("SELLER")){
+                userLevel = User.Level.SELLER;
+            }
+            AccountManager.getInstance().updateAccountInformation(accessToken, userLevel);
+
+            redirectProductListActivity();
         } else {
             mSessionCallback = new SessionCallback();
             Session.getCurrentSession().addCallback(mSessionCallback);
@@ -90,6 +96,9 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 현재화면을 종료하고 회원가입 화면으로 이동
+     */
     protected void redirectSignupActivity() {
         final Intent intent = new Intent(this, KaKaoSignupActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -98,18 +107,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * 판매자, 유저인지 확인하고 분기 시킨다.
+     * 현재 화면을 종료하고 상품 리스트 화면으로 이동
      */
-    private void redirectProductListActivity(String userLevel) {
-        switch (userLevel) {
-            case "USER":
-                //Todo: start user product list activity
-                startActivity(new Intent(this, SellerProductListActivity.class));
-                break;
-            case "SELLER":
-                startActivity(new Intent(this, SellerProductListActivity.class));
-                break;
-        }
+    private void redirectProductListActivity() {
+        startActivity(new Intent(LoginActivity.this, ProductsActivity.class));
         finish();
     }
 }

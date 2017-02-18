@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="kr.co.mash_up.a9tique.ui.products.customer.CustomerProductsActivity">
+
+    <item
+        android:id="@+id/action_zzim_products"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_heratlist_white"
+        android:title="@string/action_zzim_products"
+        app:showAsAction="always"/>
+
+    <!--<item-->
+        <!--android:id="@+id/action_settings"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:icon="@drawable/ic_logo"-->
+        <!--android:title="@string/action_seller_products"-->
+        <!--app:showAsAction="always"/>-->
+</menu>

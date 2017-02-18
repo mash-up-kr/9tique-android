@@ -7,11 +7,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SellerProductListEventPagerAdapter extends FragmentPagerAdapter {
+public class ProductListEventPagerAdapter extends FragmentPagerAdapter {
 
     private final List<Fragment> mFragments = new ArrayList<>();
 
-    public SellerProductListEventPagerAdapter(FragmentManager fm) {
+    public ProductListEventPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
