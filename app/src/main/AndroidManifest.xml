@@ -132,6 +132,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kr.co.mash_up.a9tique.ui.products.ProductsActivity"/>
         </activity>
+        <activity
+            android:name=".ui.zzimproducts.ZzimProductsActivity"
+            android:parentActivityName=".ui.products.ProductsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kr.co.mash_up.a9tique.ui.products.ProductsActivity"/>
+        </activity>
     </application>
 
 </manifest>

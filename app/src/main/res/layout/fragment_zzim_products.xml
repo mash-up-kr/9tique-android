@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mercury"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="10dp"
+        android:background="@color/mercury">
+
+        <kr.co.mash_up.a9tique.ui.widget.RecyclerViewEmptySupport
+            android:id="@+id/rv_zzim_products"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="34dp"
+            app:srcCompat="@drawable/ic_nodata"/>
+
+        <TextView
+            android:lineSpacingExtra="4dp"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:textColor="@color/boulder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="찜한 상품이 없습니다.\n상품 상세화면에서 하트버튼을\n눌러 찜리스트에 추가하세요!"/>
+    </LinearLayout>
+</RelativeLayout>

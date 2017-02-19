@@ -365,4 +365,62 @@ public class BackendHelper {
                     callback.onFailure();
                 });
     }
+
+    public void getZzimProducts(int pageNo, ResultCallback<ResponseProduct> callback) {
+        Observable<JsonObject> call = service.getZzimProducts(pageNo, 20);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    int statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if (statusCode / 100 == 2) {
+                        ResponseProduct responseProduct = new Gson().fromJson(jsonObject, ResponseProduct.class);
+                        callback.onSuccess(responseProduct);
+                    } else {
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "getZzimProducts " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
+
+    public void addZzimProduct(long productId, ResultCallback callback){
+        Observable<JsonObject> call = service.addZzimProduct(productId);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    int statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if(statusCode /100 ==2){
+                        callback.onSuccess(null);
+                    }else {
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "addZzimProduct " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
+
+    public void deleteZzzimProduct(long productId, ResultCallback callback){
+        Observable<JsonObject> call = service.addZzimProduct(productId);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    int statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if(statusCode /100 ==2){
+                        callback.onSuccess(null);
+                    }else {
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "deleteZzzimProduct " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
 }
