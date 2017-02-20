@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="kr.co.mash_up.a9tique"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="kr.co.mash_up.a9tique">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".NinetiqueApplication"
@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
+    
         <!-- kakao app key -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -137,6 +138,14 @@
             android:parentActivityName=".ui.products.ProductsActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kr.co.mash_up.a9tique.ui.products.ProductsActivity"/>
+        </activity>
+        <activity 
+            android:name=".CustomerProductDetailActivity"
+            android:parentActivityName=".ui.products.ProductsActivity"
+            android:theme="@style/AppTheme.NoActionBar">>
+             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kr.co.mash_up.a9tique.ui.products.ProductsActivity"/>
         </activity>

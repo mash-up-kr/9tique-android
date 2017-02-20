@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import java.util.List;
 
 import butterknife.BindView;
+import kr.co.mash_up.a9tique.CustomerProductDetailActivity;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.common.Constants;
@@ -198,9 +199,9 @@ public class SubCategoryFragment extends BaseFragment implements ProductsContrac
     @Override
     public void showProductDetailForCustomer(Product product) {
         //Todo: show customer product detail activity
-        Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
+        Intent intent = new Intent(getActivity(), CustomerProductDetailActivity.class);
         intent.putExtra(Constants.PRODUCT, product);
-        startActivityForResult(intent, SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
+        startActivityForResult(intent, CustomerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
 
     }
 

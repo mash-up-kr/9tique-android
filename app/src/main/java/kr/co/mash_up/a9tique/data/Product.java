@@ -73,6 +73,10 @@ public class Product implements Parcelable {
     @SerializedName("seller")
     private boolean seller;
 
+    public void updateZzimStatue() {
+        this.zzimStatus = !this.zzimStatus;
+    }
+
     public enum Status {
         SELL,  // 판매중
         SOLD_OUT  // 판매완료

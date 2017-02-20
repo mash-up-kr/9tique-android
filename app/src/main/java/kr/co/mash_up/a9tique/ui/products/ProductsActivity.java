@@ -31,6 +31,7 @@ import kr.co.mash_up.a9tique.data.User;
 import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
 import kr.co.mash_up.a9tique.ui.sellproducts.SellProductsActivity;
 import kr.co.mash_up.a9tique.ui.setting.SettingActivity;
+import kr.co.mash_up.a9tique.ui.zzimproducts.ZzimProductsActivity;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 
@@ -205,8 +206,7 @@ public class ProductsActivity extends BaseActivity {
                 startActivity(new Intent(ProductsActivity.this, SellProductsActivity.class));
                 return true;
             case R.id.action_zzim_products:
-                //Todo: change show zzim activity
-                startActivity(new Intent(ProductsActivity.this, SellProductsActivity.class));
+                startActivity(new Intent(ProductsActivity.this, ZzimProductsActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);

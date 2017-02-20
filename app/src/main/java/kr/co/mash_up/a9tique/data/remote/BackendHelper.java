@@ -406,7 +406,7 @@ public class BackendHelper {
     }
 
     public void deleteZzzimProduct(long productId, ResultCallback callback){
-        Observable<JsonObject> call = service.addZzimProduct(productId);
+        Observable<JsonObject> call = service.deleteZzimProduct(productId);
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(jsonObject -> {

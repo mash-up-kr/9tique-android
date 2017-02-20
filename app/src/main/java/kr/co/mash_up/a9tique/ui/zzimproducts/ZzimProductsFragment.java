@@ -134,6 +134,12 @@ public class ZzimProductsFragment extends BaseFragment implements ZzimProductsCo
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
+    }
+
+    @Override
     public void showLoadingIndicator(boolean active) {
         mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(active));
     }
