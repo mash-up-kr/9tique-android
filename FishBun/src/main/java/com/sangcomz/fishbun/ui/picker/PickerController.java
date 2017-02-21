@@ -218,7 +218,7 @@ public class PickerController {
         long dateTaken;
         String selection = MediaStore.Images.Media.BUCKET_ID + " = ?";
         String bucketid = String.valueOf(id);
-        String sort = MediaStore.Images.Media._ID + " DESC";
+        String sort = MediaStore.Images.Media.DATE_TAKEN + " DESC";
         String[] selectionArgs = {bucketid};
 
         Uri images = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
@@ -238,7 +238,7 @@ public class PickerController {
                     do {
                         path = c.getString(c.getColumnIndex(MediaStore.Images.Thumbnails.DATA));
                         dateTaken = c.getLong(c.getColumnIndex(MediaStore.Images.ImageColumns.DATE_TAKEN));
-                        Log.e("aa", " " + dateTaken);
+//                        Log.d("dateTaken", " " + dateTaken);
                         imageBeans[++position] = new ImageBean(-1, path, dateTaken / 1000);
                     } while (c.moveToNext());
                 }
