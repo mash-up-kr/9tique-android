@@ -14,8 +14,10 @@ import java.util.List;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
+import kr.co.mash_up.a9tique.ui.productdetail.customer.CustomerProductDetailActivity;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
+import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
 import kr.co.mash_up.a9tique.ui.addeditproduct.ConfirmationDialogFragment;
@@ -189,7 +191,9 @@ public class ZzimProductsFragment extends BaseFragment implements ZzimProductsCo
 
     @Override
     public void showProductDetail(Product product) {
-        //Todo: show detail activity
+        Intent intent = new Intent(getActivity(), CustomerProductDetailActivity.class);
+        intent.putExtra(Constants.PRODUCT, product);
+        startActivityForResult(intent, CustomerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
     }
 
     @Override

@@ -11,7 +11,7 @@ import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.ResponseProduct;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
-import kr.co.mash_up.a9tique.ui.productdetail.SellerProductDetailActivity;
+import kr.co.mash_up.a9tique.ui.productdetail.seller_mine.SellerMineProductDetailActivity;
 import kr.co.mash_up.a9tique.util.CheckNonNullUtil;
 
 public class ProductsPresenter implements ProductsContract.Presenter {
@@ -38,7 +38,7 @@ public class ProductsPresenter implements ProductsContract.Presenter {
     @Override
     public void result(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT:
+            case SellerMineProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT:
                 if (resultCode == Activity.RESULT_OK) {
                     int result = data.getIntExtra(Constants.API_RESULT, 0);
                     switch (result) {
@@ -156,8 +156,13 @@ public class ProductsPresenter implements ProductsContract.Presenter {
     }
 
     @Override
-    public void detailProductSeller(Product product) {
-        mView.showProductDetailForSeller(product);
+    public void detailMineProductSeller(Product product) {
+        mView.showMineProductDetailForSeller(product);
+    }
+
+    @Override
+    public void detailOtherProductSeller(Product product) {
+        mView.showOtherProductDetailForSeller(product);
     }
 
     @Override

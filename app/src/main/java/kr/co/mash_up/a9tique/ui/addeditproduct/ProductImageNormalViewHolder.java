@@ -59,6 +59,9 @@ public class ProductImageNormalViewHolder extends BaseViewHolder<ProductImage> {
         }
 
         request
+                .placeholder(R.drawable.ic_nodata)
+                .error(R.drawable.ic_nodata)
+                .crossFade()
                 .fitCenter()
                 .centerCrop()
                 .into(ivProductImage);

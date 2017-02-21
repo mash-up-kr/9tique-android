@@ -69,7 +69,15 @@
                 android:value=".ui.addeditproduct.AddEditProductActivity"/>
         </activity>
         <activity
-            android:name=".ui.productdetail.SellerProductDetailActivity"
+            android:name=".ui.productdetail.seller_mine.SellerMineProductDetailActivity"
+            android:parentActivityName=".ui.products.ProductsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="kr.co.mash_up.a9tique.ui.products.ProductsActivity"/>
+        </activity>
+        <activity
+            android:name=".ui.productdetail.seller_other.SellerOtherProductDetailActivity"
             android:parentActivityName=".ui.products.ProductsActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -142,7 +150,7 @@
                 android:value="kr.co.mash_up.a9tique.ui.products.ProductsActivity"/>
         </activity>
         <activity 
-            android:name=".CustomerProductDetailActivity"
+            android:name=".ui.productdetail.customer.CustomerProductDetailActivity"
             android:parentActivityName=".ui.products.ProductsActivity"
             android:theme="@style/AppTheme.NoActionBar">>
              <meta-data

@@ -33,7 +33,9 @@ public class ProductsContract {
 
         void loadMoreProducts(int loadingFooterPosition);
 
-        void detailProductSeller(Product product);
+        void detailMineProductSeller(Product product);
+
+        void detailOtherProductSeller(Product product);
 
         void detailProductCustomer(Product product);
     }
@@ -57,7 +59,9 @@ public class ProductsContract {
 
         void showNoProducts();
 
-        void showProductDetailForSeller(Product product);
+        void showMineProductDetailForSeller(Product product);
+
+        void showOtherProductDetailForSeller(Product product);
 
         void showProductDetailForCustomer(Product product);
 

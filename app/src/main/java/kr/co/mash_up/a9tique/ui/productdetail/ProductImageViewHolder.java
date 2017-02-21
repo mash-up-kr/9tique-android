@@ -33,7 +33,8 @@ public class ProductImageViewHolder extends BaseViewHolder<ProductImage> {
     public void bind(ProductImage productImage) {
         Glide.with(itemView.getContext())
                 .load(productImage.getImageUrl())
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.drawable.ic_nodata)
+                .error(R.drawable.ic_nodata)
                 .crossFade()
                 .fitCenter()
                 .centerCrop()

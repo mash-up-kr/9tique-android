@@ -11,14 +11,17 @@ import android.widget.LinearLayout;
 import java.util.List;
 
 import butterknife.BindView;
-import kr.co.mash_up.a9tique.CustomerProductDetailActivity;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
+import kr.co.mash_up.a9tique.common.AccountManager;
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.common.eventbus.Events;
 import kr.co.mash_up.a9tique.data.Product;
+import kr.co.mash_up.a9tique.data.User;
 import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
-import kr.co.mash_up.a9tique.ui.productdetail.SellerProductDetailActivity;
+import kr.co.mash_up.a9tique.ui.productdetail.customer.CustomerProductDetailActivity;
+import kr.co.mash_up.a9tique.ui.productdetail.seller_mine.SellerMineProductDetailActivity;
+import kr.co.mash_up.a9tique.ui.productdetail.seller_other.SellerOtherProductDetailActivity;
 import kr.co.mash_up.a9tique.ui.widget.RecyclerViewEmptySupport;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
@@ -107,9 +110,14 @@ public class SubCategoryFragment extends BaseFragment implements ProductsContrac
         mProductListAdapter = new ProductListAdapter(getActivity());
         mProductListAdapter.setOnItemClickListener((product, position) -> {
             if (product.isSeller()) {
-                mPresenter.detailProductSeller(product);
+                mPresenter.detailMineProductSeller(product);
             } else {
-                mPresenter.detailProductCustomer(product);
+                if (AccountManager.getInstance().getLevel() == User.Level.SELLER) {
+                    mPresenter.detailOtherProductSeller(product);
+                } else {
+                    mPresenter.detailProductCustomer(product);
+                }
+
             }
         });
         mRvProducts.setAdapter(mProductListAdapter);
@@ -190,19 +198,24 @@ public class SubCategoryFragment extends BaseFragment implements ProductsContrac
     }
 
     @Override
-    public void showProductDetailForSeller(Product product) {
-        Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
+    public void showMineProductDetailForSeller(Product product) {
+        Intent intent = new Intent(getActivity(), SellerMineProductDetailActivity.class);
         intent.putExtra(Constants.PRODUCT, product);
-        startActivityForResult(intent, SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
+        startActivityForResult(intent, SellerMineProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
+    }
+
+    @Override
+    public void showOtherProductDetailForSeller(Product product) {
+        Intent intent = new Intent(getActivity(), SellerOtherProductDetailActivity.class);
+        intent.putExtra(Constants.PRODUCT, product);
+        startActivity(intent);
     }
 
     @Override
     public void showProductDetailForCustomer(Product product) {
-        //Todo: show customer product detail activity
         Intent intent = new Intent(getActivity(), CustomerProductDetailActivity.class);
         intent.putExtra(Constants.PRODUCT, product);
-        startActivityForResult(intent, CustomerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
-
+        startActivity(intent);
     }
 
     @Override

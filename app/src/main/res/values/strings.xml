@@ -2,18 +2,7 @@
     <string name="app_name">9tique</string>
     <string name="action_settings">Settings</string>
     <string name="action_seller_products">Seller Products</string>
-    <string name="action_seller_product_modify">Seller Product Modify</string>
     <string name="action_zzim_products">Zzim Products</string>
-
-    <string name="title_activity_main_fragment">MainActivityFragment</string>
-    <string name="title_activity_add_edit_product">AddEditProductActivity</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_category_selection">CategorySelectionActivity</string>
-    <string name="title_activity_gallery">GalleryActivity</string>
-    <string name="title_activity_seller_product_list">SellerProductListActivity</string>
-
     <string name="action_seller_information_modify">Seller Information Modify</string>
     <string name="action_complete">완료</string>
 
@@ -28,6 +17,16 @@
     <string name="seller_info_shop_name_hint">등록하시는 매장명을 입력해주세요</string>
     <string name="seller_info_shop_info_hint">매장에 대한 정보를 입력해 주세요</string>
     <string name="seller_info_shop_phone_hint">상품 문의가 가능한 연락처를 남겨 주세요</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="action_seller_product_modify">Seller Product Modify</string>
+    <string name="title_activity_main_fragment">MainActivityFragment</string>
+    <string name="title_activity_add_edit_product">AddEditProductActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_category_selection">CategorySelectionActivity</string>
+    <string name="title_activity_gallery">GalleryActivity</string>
+    <string name="title_activity_seller_product_list">SellerProductListActivity</string>
     <string name="title_activity_seller_information_edit">SellerInformationEditActivity</string>
 
 </resources>

@@ -86,6 +86,9 @@ public class SellProductsViewHolder extends BaseViewHolder<SellProduct> {
         if (sellProduct.getProductImages().size() > 0) {  //Todo: remove
             Glide.with(itemView.getContext())
                     .load(Constants.END_POINT + sellProduct.getProductImages().get(0).getImageUrl())
+                    .placeholder(R.drawable.ic_nodata)
+                    .error(R.drawable.ic_nodata)
+                    .crossFade()
                     .fitCenter()
                     .centerCrop()
                     .into(mIvProductThumbnail);

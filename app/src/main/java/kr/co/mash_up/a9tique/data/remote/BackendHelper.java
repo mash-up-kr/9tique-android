@@ -185,6 +185,26 @@ public class BackendHelper {
                 });
     }
 
+    public void getProductDetail(long productId, ResultCallback<Product> callback) {
+        Observable<JsonObject> call = service.getProductDetail(productId);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    int statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if (statusCode / 100 == 2) {
+                        Product product = new Gson().fromJson(jsonObject.get("item"), Product.class);
+                        callback.onSuccess(product);
+                    } else {
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "getProductDetail " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
+
     public void addProduct(RequestProduct requestProduct, ResultCallback callback) {
         Observable<JsonObject> call = service.addProduct(requestProduct);
         call.subscribeOn(Schedulers.io())
@@ -386,7 +406,7 @@ public class BackendHelper {
                 });
     }
 
-    public void addZzimProduct(long productId, ResultCallback callback){
+    public void addZzimProduct(long productId, ResultCallback callback) {
         Observable<JsonObject> call = service.addZzimProduct(productId);
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -394,9 +414,9 @@ public class BackendHelper {
                     int statusCode = jsonObject.get("status").getAsInt();
                     Log.d(TAG, "status code: " + statusCode);
 
-                    if(statusCode /100 ==2){
+                    if (statusCode / 100 == 2) {
                         callback.onSuccess(null);
-                    }else {
+                    } else {
                         callback.onFailure();
                     }
                 }, throwable -> {
@@ -405,7 +425,7 @@ public class BackendHelper {
                 });
     }
 
-    public void deleteZzzimProduct(long productId, ResultCallback callback){
+    public void deleteZzzimProduct(long productId, ResultCallback callback) {
         Observable<JsonObject> call = service.deleteZzimProduct(productId);
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -413,9 +433,9 @@ public class BackendHelper {
                     int statusCode = jsonObject.get("status").getAsInt();
                     Log.d(TAG, "status code: " + statusCode);
 
-                    if(statusCode /100 ==2){
+                    if (statusCode / 100 == 2) {
                         callback.onSuccess(null);
-                    }else {
+                    } else {
                         callback.onFailure();
                     }
                 }, throwable -> {

@@ -1,5 +1,6 @@
-package kr.co.mash_up.a9tique;
+package kr.co.mash_up.a9tique.ui.productdetail.seller_other;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,17 +19,20 @@ import java.util.List;
 import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.OnClick;
+import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.data.ProductImage;
+import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
+import kr.co.mash_up.a9tique.ui.productdetail.customer.CustomerProductDetailFragment;
 import kr.co.mash_up.a9tique.ui.zzimproducts.InquireSelectionDialogFragment;
+import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 
-public class CustomerProductDetailFragment extends BaseFragment {
+public class SellerOtherProductDetailFragment extends BaseFragment {
 
-    public static final String TAG = CustomerProductDetailFragment.class.getSimpleName();
-    private static final String ARG_PARAM_PRODUCT = "product";
+    public static final String TAG = SellerOtherProductDetailFragment.class.getSimpleName();
 
     @BindView(R.id.tv_name)
     TextView mTvName;
@@ -56,14 +60,16 @@ public class CustomerProductDetailFragment extends BaseFragment {
 
     private Product mProduct;
 
-    public CustomerProductDetailFragment() {
+//    private ProductImageListAdapter mProductImageListAdapter;
+
+    public SellerOtherProductDetailFragment() {
         // Required empty public constructor
     }
 
-    public static CustomerProductDetailFragment newInstance(Product product) {
-        CustomerProductDetailFragment fragment = new CustomerProductDetailFragment();
+    public static SellerOtherProductDetailFragment newInstance(Product product) {
+        SellerOtherProductDetailFragment fragment = new SellerOtherProductDetailFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_PARAM_PRODUCT, product);
+        args.putParcelable(Constants.PRODUCT, product);
         fragment.setArguments(args);
         return fragment;
     }
@@ -72,25 +78,15 @@ public class CustomerProductDetailFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mProduct = getArguments().getParcelable(ARG_PARAM_PRODUCT);
+            mProduct = getArguments().getParcelable(Constants.PRODUCT);
         }
         setRetainInstance(true);
+        setHasOptionsMenu(true);
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_customer_product_detail;
-    }
-
-    @Override
-    public void initView(View rootView) {
-        mTvName.setText(mProduct.getName());
-        mTvProductBrandName.setText(mProduct.getBrandName());
-        mTvProductSize.setText(mProduct.getSize());
-        mTvProductPrice.setText(String.valueOf(mProduct.getPrice()));
-        mTvProductDescription.setText(mProduct.getDescription());
-
-        initDetailProductImageList(mProduct.getProductImages());
+        return R.layout.fragment_seller_other_product_detail;
     }
 
     private void initDetailProductImageList(List<ProductImage> productImages) {
@@ -113,13 +109,25 @@ public class CustomerProductDetailFragment extends BaseFragment {
             ImageView ivImage = (ImageView) cardView.findViewById(R.id.iv_product_image);
             Glide.with(getActivity())
                     .load(Constants.END_POINT + productImage.getImageUrl())
-                    .placeholder(R.mipmap.ic_launcher)
+                    .placeholder(R.drawable.ic_nodata)
+                    .error(R.drawable.ic_nodata)
                     .crossFade()
                     .fitCenter()
                     .centerCrop()
                     .into(ivImage);
             mLlDetailImageContainer.addView(cardView);
         }
+    }
+
+    @Override
+    public void initView(View rootView) {
+        mTvName.setText(mProduct.getName());
+        mTvProductBrandName.setText(mProduct.getBrandName());
+        mTvProductSize.setText(mProduct.getSize());
+        mTvProductPrice.setText(String.valueOf(mProduct.getPrice()));
+        mTvProductDescription.setText(mProduct.getDescription());
+
+        initDetailProductImageList(mProduct.getProductImages());
     }
 
     @OnClick({R.id.btn_product_inquire_top, R.id.btn_product_inquire_bottom})
@@ -150,7 +158,49 @@ public class CustomerProductDetailFragment extends BaseFragment {
                 }
             }
         });
-        dlgInquire.setTargetFragment(CustomerProductDetailFragment.this, 0);
+        dlgInquire.setTargetFragment(SellerOtherProductDetailFragment.this, 0);
         dlgInquire.show(getChildFragmentManager(), InquireSelectionDialogFragment.TAG);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // destroy all menu and re-call onCreateOptionsMenu
+//        getActivity().invalidateOptionsMenu();
+    }
+
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        super.onCreateOptionsMenu(menu, inflater);
+//        inflater.inflate(R.menu.menu_seller_product_detail, menu);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_seller_product_modify:
+//                // open seller product edit activity
+//                Intent intent = new Intent(getActivity(), AddEditProductActivity.class);
+//                intent.putExtra(Constants.PRODUCT_ID, mProduct.getId());
+//                intent.putExtra(Constants.PRODUCT, mProduct);
+//                startActivityForResult(intent, AddEditProductActivity.REQUEST_CODE_EDIT_PRODUCT);
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case AddEditProductActivity.REQUEST_CODE_EDIT_PRODUCT:
+                if (resultCode == Activity.RESULT_OK) {
+                    SnackbarUtil.showMessage(getActivity(), getView(), "상품 수정 완료", "", null);
+                    //Todo: reloading
+                } else {
+                    SnackbarUtil.showMessage(getActivity(), getView(), "상품 수정 실패", "", null);
+                }
+                break;
+        }
     }
 }

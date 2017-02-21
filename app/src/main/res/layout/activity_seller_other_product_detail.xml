@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
-    android:id="@+id/cl_root"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="kr.co.mash_up.a9tique.ui.productdetail.customer.CustomerProductDetailActivity">
+    tools:context="kr.co.mash_up.a9tique.ui.productdetail.seller_mine.SellerMineProductDetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/abl_detail"
         android:layout_width="match_parent"
-        android:layout_height="317dp"
+        android:layout_height="256dp"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:elevation="4dp">
-        <!--android:layout_height="256dp"-->
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/ctl_detail"
@@ -29,16 +27,18 @@
 
             <ImageView
                 android:id="@+id/iv_product_thumbnail"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"/>
+                android:scaleType="centerCrop"/>
 
             <include
-                android:id="@+id/toolbar_customer_detail"
-                layout="@layout/toolbar_customer_detail"/>
+                android:id="@+id/toolbar_seller_other_detail"
+                layout="@layout/toolbar_seller_other_detail"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
+
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -47,13 +47,10 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <FrameLayout
-            android:id="@+id/fl_fragment_customer_product_detail"
+            android:id="@+id/fl_fragment_seller_product_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
     </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
-
-
-

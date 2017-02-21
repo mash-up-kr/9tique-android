@@ -1,8 +1,10 @@
-package kr.co.mash_up.a9tique;
+package kr.co.mash_up.a9tique.ui.productdetail.customer;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -15,6 +17,7 @@ import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
@@ -24,12 +27,16 @@ import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 public class CustomerProductDetailActivity extends BaseActivity {
 
-    public static final int REQUEST_CODE_DETAIL_RPODUCT = 1100;
-
     @BindView(R.id.cl_root)
     CoordinatorLayout mClRoot;
 
-    @BindView(R.id.toolbar_detail)
+    @BindView(R.id.abl_detail)
+    AppBarLayout mAblDetail;
+
+    @BindView(R.id.ctl_detail)
+    CollapsingToolbarLayout mCtlDetail;
+
+    @BindView(R.id.toolbar_customer_detail)
     Toolbar mToolbarDetail;
 
     @BindView(R.id.iv_product_thumbnail)
@@ -96,7 +103,18 @@ public class CustomerProductDetailActivity extends BaseActivity {
                 .centerCrop()
                 .into(mIvProductThumbnail);
 
-        // Todo: CollapsingToolbarLayout 확장모드 이벤트를 받아 iv_navigate_up, iv_zzim의 색을 변경한다
+        // verticalOffset은 0 ~ -xx 값을 갖는다
+        mAblDetail.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+            if (mCtlDetail.getHeight() + verticalOffset < mCtlDetail.getScrimVisibleHeightTrigger()) {
+                // collapsed
+                mIvNavigateUp.setImageResource(R.drawable.ic_arrow_left_white);
+                mIvZzim.setBackgroundResource(R.drawable.selector_btn_zzim_white);
+            } else {
+                // extended
+                mIvNavigateUp.setImageResource(R.drawable.ic_arrow_left_black);
+                mIvZzim.setBackgroundResource(R.drawable.selector_btn_zzim_black);
+            }
+        });
         mIvZzim.setSelected(mProduct.isZzimStatus());
     }
 

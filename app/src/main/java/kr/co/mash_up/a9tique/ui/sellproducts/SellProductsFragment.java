@@ -28,7 +28,7 @@ import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
 import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
 import kr.co.mash_up.a9tique.ui.addeditproduct.ConfirmationDialogFragment;
 import kr.co.mash_up.a9tique.ui.addeditproduct.OrientationSpacingItemDecoration;
-import kr.co.mash_up.a9tique.ui.productdetail.SellerProductDetailActivity;
+import kr.co.mash_up.a9tique.ui.productdetail.seller_mine.SellerMineProductDetailActivity;
 import kr.co.mash_up.a9tique.util.CheckNonNullUtil;
 import kr.co.mash_up.a9tique.util.ProgressUtil;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
@@ -121,9 +121,9 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
 
             @Override
             public void onRemove(SellProduct sellProduct, int position) {
-                ConfirmationDialogFragment dlgRemoveConfirmaation
+                ConfirmationDialogFragment dlgRemoveConfirmation
                         = ConfirmationDialogFragment.newInstance("판매중인 상품 삭제", "선택하신 상품을 삭제 하시겠습니까?");
-                dlgRemoveConfirmaation.setCallback(new ConfirmationDialogFragment.Callback() {
+                dlgRemoveConfirmation.setCallback(new ConfirmationDialogFragment.Callback() {
                     @Override
                     public void onClickOk() {
                         mPresenter.removeProduct(sellProduct, position);
@@ -134,8 +134,8 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
                         // Do nothing
                     }
                 });
-                dlgRemoveConfirmaation.setTargetFragment(SellProductsFragment.this, 0);
-                dlgRemoveConfirmaation.show(getChildFragmentManager(), ConfirmationDialogFragment.TAG);
+                dlgRemoveConfirmation.setTargetFragment(SellProductsFragment.this, 0);
+                dlgRemoveConfirmation.show(getChildFragmentManager(), ConfirmationDialogFragment.TAG);
             }
 
             @Override
@@ -273,17 +273,17 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
 
     @Override
     public void showProductDetailForSeller(Product product) {
-        Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
+        Intent intent = new Intent(getActivity(), SellerMineProductDetailActivity.class);
         intent.putExtra(Constants.PRODUCT, product);
-        startActivityForResult(intent, SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
+        startActivityForResult(intent, SellerMineProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
     }
 
     @Override
     public void showProductDetailForCustomer(Product product) {
         //Todo: change customer product detail activity
-        Intent intent = new Intent(getActivity(), SellerProductDetailActivity.class);
+        Intent intent = new Intent(getActivity(), SellerMineProductDetailActivity.class);
         intent.putExtra(Constants.PRODUCT, product);
-        startActivityForResult(intent, SellerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
+        startActivityForResult(intent, SellerMineProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
     }
 
     @Override
@@ -356,7 +356,7 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
 
     @Override
     public void removeProduct(int position) {
-        mSellProductListAdapter.removeItem(position - 1);
+        mSellProductListAdapter.removeItem(position);
         mElementsTotal -= 1;
         setProductsSelectedCount();
     }
