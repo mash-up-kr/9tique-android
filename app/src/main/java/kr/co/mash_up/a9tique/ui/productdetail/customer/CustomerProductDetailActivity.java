@@ -27,6 +27,8 @@ import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 public class CustomerProductDetailActivity extends BaseActivity {
 
+    public static final int REQUEST_CODE_DETAIL_RPODUCT = 1110;
+
     @BindView(R.id.cl_root)
     CoordinatorLayout mClRoot;
 

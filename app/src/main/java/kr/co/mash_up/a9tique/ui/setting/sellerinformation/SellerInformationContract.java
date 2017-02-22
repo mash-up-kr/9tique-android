@@ -1,9 +1,9 @@
 package kr.co.mash_up.a9tique.ui.setting.sellerinformation;
 
-
 import kr.co.mash_up.a9tique.base.BasePresenter;
 import kr.co.mash_up.a9tique.base.BaseView;
 import kr.co.mash_up.a9tique.data.Seller;
+
 
 public interface SellerInformationContract {
 
@@ -11,6 +11,8 @@ public interface SellerInformationContract {
      * View -> Presenter
      */
     interface Presenter extends BasePresenter {
+
+        void onClickSellerInformationModify();
 
         void loadSellerInformation();
 
@@ -21,6 +23,7 @@ public interface SellerInformationContract {
      * Presenter -> View
      */
     interface View extends BaseView<Presenter> {
+
         void showProgressbar(boolean active);
 
         void showFailureLoadingSellerInformationMessage();
@@ -32,5 +35,7 @@ public interface SellerInformationContract {
         void showSellerInformation(Seller seller);
 
         boolean isActive();
+
+        void showSellerInformationModify();
     }
 }

@@ -10,17 +10,17 @@ import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseViewHolder;
 import  kr.co.mash_up.a9tique.ui.addeditproduct.ProductImageListAdapter.OnItemClickListener;
 
-public class ProductImageFooterViewHolder extends BaseViewHolder {
+public class ProductImageHeaderViewHolder extends BaseViewHolder {
 
     private OnItemClickListener mOnItemClickListener;
 
-    public static ProductImageFooterViewHolder newInstance(@NonNull ViewGroup parent, @NonNull OnItemClickListener listener) {
+    public static ProductImageHeaderViewHolder newInstance(@NonNull ViewGroup parent, @NonNull OnItemClickListener listener) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_footer_product_image_list, parent, false);
-        return new ProductImageFooterViewHolder(itemView, listener);
+        return new ProductImageHeaderViewHolder(itemView, listener);
     }
 
-    public ProductImageFooterViewHolder(View itemView, OnItemClickListener listener) {
+    public ProductImageHeaderViewHolder(View itemView, OnItemClickListener listener) {
         super(itemView);
 
         mOnItemClickListener = listener;

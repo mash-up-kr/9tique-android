@@ -14,14 +14,15 @@ import java.util.List;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
+import kr.co.mash_up.a9tique.ui.InquireSelectionDialogFragment;
 import kr.co.mash_up.a9tique.ui.productdetail.customer.CustomerProductDetailActivity;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
-import kr.co.mash_up.a9tique.ui.addeditproduct.ConfirmationDialogFragment;
-import kr.co.mash_up.a9tique.ui.addeditproduct.OrientationSpacingItemDecoration;
+import kr.co.mash_up.a9tique.ui.ConfirmationDialogFragment;
+import kr.co.mash_up.a9tique.ui.OrientationSpacingItemDecoration;
 import kr.co.mash_up.a9tique.ui.widget.RecyclerViewEmptySupport;
 import kr.co.mash_up.a9tique.util.CheckNonNullUtil;
 import kr.co.mash_up.a9tique.util.ProgressUtil;
@@ -73,6 +74,13 @@ public class ZzimProductsFragment extends BaseFragment implements ZzimProductsCo
 
     @Override
     public void initView(View rootView) {
+        initZzimList();
+
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.tulip_tree, R.color.mine_shaft);
+        mSwipeRefreshLayout.setOnRefreshListener(this::refreshProducts);
+    }
+
+    private void initZzimList(){
         mRvZzimProducts.setHasFixedSize(true);
         LinearLayoutManager llmZzimProducts = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRvZzimProducts.setLayoutManager(llmZzimProducts);
@@ -80,6 +88,7 @@ public class ZzimProductsFragment extends BaseFragment implements ZzimProductsCo
         mRvZzimProducts.setEmptyView(mEmptyView);
 
         mZzimlProductListAdapter = new ZzimlProductListAdapter(getActivity());
+        mRvZzimProducts.setAdapter(mZzimlProductListAdapter);
         mZzimlProductListAdapter.setOnItemClickListener(new ZzimlProductListAdapter.OnItemClickListener<Product>() {
 
             @Override
@@ -89,29 +98,15 @@ public class ZzimProductsFragment extends BaseFragment implements ZzimProductsCo
 
             @Override
             public void onRemove(Product product, int position) {
-                ConfirmationDialogFragment dlgRemoveConfirmation
-                        = ConfirmationDialogFragment.newInstance("찜 상품 삭제", "선택하신 상품을 삭제 하시겠습니까?");
-                dlgRemoveConfirmation.setCallback(new ConfirmationDialogFragment.Callback() {
-                    @Override
-                    public void onClickOk() {
-                        mPresenter.removeProduct(product, position);
-                    }
-
-                    @Override
-                    public void onClickCancel() {
-                        // Do nothing
-                    }
-                });
-                dlgRemoveConfirmation.setTargetFragment(ZzimProductsFragment.this, 0);
-                dlgRemoveConfirmation.show(getChildFragmentManager(), ConfirmationDialogFragment.TAG);
+                mPresenter.onClickRemoveProduct(product, position);
             }
 
             @Override
             public void onInquire(Product product, int position) {
-                mPresenter.inquireProduct(product, position);
+                mPresenter.onClickInquireProduct(product, position);
             }
         });
-        mRvZzimProducts.setAdapter(mZzimlProductListAdapter);
+
         mRvZzimProducts.addOnScrollListener(new EndlessRecyclerViewScrollListener(llmZzimProducts) {
             @Override
             public int getFooterViewType(int defaultNoFooterViewType) {
@@ -124,9 +119,6 @@ public class ZzimProductsFragment extends BaseFragment implements ZzimProductsCo
                 mPresenter.loadMoreProducts(totalItemCount);
             }
         });
-
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.tulip_tree, R.color.mine_shaft);
-        mSwipeRefreshLayout.setOnRefreshListener(this::refreshProducts);
     }
 
     @Override
@@ -202,7 +194,7 @@ public class ZzimProductsFragment extends BaseFragment implements ZzimProductsCo
     }
 
     @Override
-    public void showInquireDialog(Product product, int position) {
+    public void showDialogInquire(Product product, int position) {
         InquireSelectionDialogFragment dlgInquire = InquireSelectionDialogFragment.newInstance("문의하기");
         dlgInquire.setCallback(new InquireSelectionDialogFragment.Callback() {
             @Override
@@ -256,6 +248,25 @@ public class ZzimProductsFragment extends BaseFragment implements ZzimProductsCo
         } else {
             //Todo: show message - 문자 app이 없습니다.. 설치해주세요
         }
+    }
+
+    @Override
+    public void showDialogRemoveProduct(Product product, int position) {
+        ConfirmationDialogFragment dlgRemoveConfirmation
+                = ConfirmationDialogFragment.newInstance("찜 상품 삭제", "선택하신 상품을 삭제 하시겠습니까?");
+        dlgRemoveConfirmation.setCallback(new ConfirmationDialogFragment.Callback() {
+            @Override
+            public void onClickOk() {
+                mPresenter.removeProduct(product, position);
+            }
+
+            @Override
+            public void onClickCancel() {
+                // Do nothing
+            }
+        });
+        dlgRemoveConfirmation.setTargetFragment(ZzimProductsFragment.this, 0);
+        dlgRemoveConfirmation.show(getChildFragmentManager(), ConfirmationDialogFragment.TAG);
     }
 
     @Override

@@ -3,8 +3,6 @@ package kr.co.mash_up.a9tique.ui.setting.license;
 import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
@@ -17,7 +15,7 @@ public class LicenseActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @BindView(R.id.tv_title)
+    @BindView(R.id.tv_toolbar_title)
     TextView mTvTitle;
 
     @BindView(R.id.tv_license_title)

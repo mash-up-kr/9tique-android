@@ -15,6 +15,7 @@ import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Seller;
 import kr.co.mash_up.a9tique.ui.setting.sellerinformation.edit.SellerInformationEditActivity;
+import kr.co.mash_up.a9tique.util.CheckNonNullUtil;
 import kr.co.mash_up.a9tique.util.ProgressUtil;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
@@ -22,7 +23,6 @@ import kr.co.mash_up.a9tique.util.SnackbarUtil;
 public class SellerInformationFragment extends BaseFragment implements SellerInformationContract.View {
 
     public static final String TAG = SellerInformationFragment.class.getSimpleName();
-    public static final int REQUEST_CODE_SELLER_INFORMATION_MODIFY = 3000;
 
     @BindView(R.id.tv_seller_name)
     TextView mTvSellerName;
@@ -79,7 +79,7 @@ public class SellerInformationFragment extends BaseFragment implements SellerInf
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_seller_information_modify:
-                showSellerInformationModify();
+                mPresenter.onClickSellerInformationModify();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -91,10 +91,11 @@ public class SellerInformationFragment extends BaseFragment implements SellerInf
         mPresenter.result(requestCode, resultCode);
     }
 
-    private void showSellerInformationModify() {
+    @Override
+    public void showSellerInformationModify() {
         Intent intent = new Intent(getActivity(), SellerInformationEditActivity.class);
         intent.putExtra(Constants.SELLER, mSeller);
-        startActivityForResult(intent, REQUEST_CODE_SELLER_INFORMATION_MODIFY);
+        startActivityForResult(intent, SellerInformationEditActivity.REQUEST_CODE_SELLER_INFORMATION_MODIFY);
     }
 
     @Override
@@ -139,6 +140,6 @@ public class SellerInformationFragment extends BaseFragment implements SellerInf
 
     @Override
     public void setPresenter(SellerInformationContract.Presenter presenter) {
-        mPresenter = presenter;
+        mPresenter = CheckNonNullUtil.checkNotNull(presenter);
     }
 }

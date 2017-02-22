@@ -24,21 +24,27 @@ public interface SellProductsContract {
 
         void editProduct(Product product);
 
-        void detailProductSeller(Product product);
+        void detailProduct(Product product);
 
-        void detailProductCustomer(Product product);
+        void onClickRemove(Product product, int position);
 
         void removeProduct(Product product, int position);
 
         void removeProductSelected(List<Product> products);
 
         void updateProductStatus(Product product, int position);
+
+        void onCheckedProductSelectAll(boolean checked);
+
+        void onClickRemoveCheckedProducts();
     }
 
     /**
      * Presenter -> View
      */
     interface View extends BaseView<Presenter> {
+
+        boolean isActive();
 
         void showLoadingIndicator(boolean active);
 
@@ -56,9 +62,7 @@ public interface SellProductsContract {
 
         void showNoProducts();
 
-        void showProductDetailForSeller(Product product);
-
-        void showProductDetailForCustomer(Product product);
+        void showProductDetail(Product product);
 
         void removeProduct(int position);
 
@@ -84,6 +88,10 @@ public interface SellProductsContract {
 
         void showRemoveProductSelectedErrorMessage();
 
-        boolean isActive();
+        void showDialogRemoveProduct(Product product, int position);
+
+        void showProductSelectAll(boolean checked);
+
+        void showDialogRemoveCheckedProducts();
     }
 }

@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique.ui.zzimproducts;
+package kr.co.mash_up.a9tique.ui;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -27,7 +27,7 @@ public class InquireSelectionDialogFragment extends DialogFragment {
 
     private String mTitle;
 
-    @BindView(R.id.tv_title)
+    @BindView(R.id.tv_toolbar_title)
     TextView mTvTitle;
 
     Unbinder mUnbinder;

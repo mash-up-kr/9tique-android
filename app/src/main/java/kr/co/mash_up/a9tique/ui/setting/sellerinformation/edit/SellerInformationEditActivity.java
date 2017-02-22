@@ -15,10 +15,12 @@ import kr.co.mash_up.a9tique.data.Seller;
 
 public class SellerInformationEditActivity extends BaseActivity {
 
+    public static final int REQUEST_CODE_SELLER_INFORMATION_MODIFY = 3122;
+
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @BindView(R.id.tv_title)
+    @BindView(R.id.tv_toolbar_title)
     TextView mTvToolbarTitle;
 
     private Seller mSeller;

@@ -173,13 +173,13 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
     }
 
     @Override
-    public void detailProductSeller(Product product) {
-        mView.showProductDetailForSeller(product);
+    public void detailProduct(Product product) {
+        mView.showProductDetail(product);
     }
 
     @Override
-    public void detailProductCustomer(Product product) {
-        mView.showProductDetailForCustomer(product);
+    public void onClickRemove(Product product, int position) {
+        mView.showDialogRemoveProduct(product, position);
     }
 
     @Override
@@ -265,6 +265,16 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
                 mView.showFailureUpdatedStatusMessage();
             }
         });
+    }
+
+    @Override
+    public void onCheckedProductSelectAll(boolean checked) {
+        mView.showProductSelectAll(checked);
+    }
+
+    @Override
+    public void onClickRemoveCheckedProducts() {
+        mView.showDialogRemoveCheckedProducts();
     }
 
     @Override

@@ -126,12 +126,7 @@ public class KaKaoSignupActivity extends AppCompatActivity {
 
         PreferencesUtils.putString(KaKaoSignupActivity.this, Constants.PREF_ACCESS_TOKEN, accessToken);
         PreferencesUtils.putString(KaKaoSignupActivity.this, Constants.PREF_USER_LEVEL, strUserLevel);
-
-        User.Level level = User.Level.USER;
-        if ("SELLER".equals(strUserLevel)) {
-            level = User.Level.SELLER;
-        }
-        mAccountManager.updateAccountInformation(user.getAccessToken(), level);
+        mAccountManager.updateAccountInformation(accessToken, strUserLevel);
     }
 
     /**

@@ -11,7 +11,7 @@ import kr.co.mash_up.a9tique.data.Product;
 /**
  * This specifies the contract between the view and the presenter.
  */
-public class ProductsContract {
+public interface ProductsContract {
 
     /*
     상품 클릭했을 때 -> detail

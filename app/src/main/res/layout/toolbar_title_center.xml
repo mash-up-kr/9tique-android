@@ -13,7 +13,7 @@
     app:contentInsetStart="0dp">
 
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/tv_toolbar_title"
         android:layout_gravity="center"
         android:layout_marginLeft="20dp"
         android:textColor="@android:color/white"

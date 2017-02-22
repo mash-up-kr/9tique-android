@@ -28,7 +28,7 @@ import kr.co.mash_up.a9tique.data.ProductImage;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.RequestProduct;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
-import kr.co.mash_up.a9tique.ui.addeditproduct.ConfirmationDialogFragment;
+import kr.co.mash_up.a9tique.ui.ConfirmationDialogFragment;
 
 
 public class SellerMineProductDetailFragment extends BaseFragment {

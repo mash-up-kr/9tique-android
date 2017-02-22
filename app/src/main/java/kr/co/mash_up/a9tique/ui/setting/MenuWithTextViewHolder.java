@@ -14,7 +14,7 @@ import kr.co.mash_up.a9tique.ui.OnItemClickListener;
 
 public class MenuWithTextViewHolder extends BaseViewHolder<Menu> {
 
-    @BindView(R.id.tv_title)
+    @BindView(R.id.tv_toolbar_title)
     TextView mTvTitle;
 
     @BindView(R.id.tv_label)

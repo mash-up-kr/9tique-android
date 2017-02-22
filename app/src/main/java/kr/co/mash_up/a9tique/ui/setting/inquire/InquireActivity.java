@@ -17,7 +17,7 @@ import butterknife.BindDimen;
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
-import kr.co.mash_up.a9tique.ui.addeditproduct.OrientationSpacingItemDecoration;
+import kr.co.mash_up.a9tique.ui.OrientationSpacingItemDecoration;
 import kr.co.mash_up.a9tique.data.Menu;
 import kr.co.mash_up.a9tique.ui.setting.MenuListAdapter;
 
@@ -26,7 +26,7 @@ public class InquireActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @BindView(R.id.tv_title)
+    @BindView(R.id.tv_toolbar_title)
     TextView mTvTitle;
 
     @BindView(R.id.rv_inquire)

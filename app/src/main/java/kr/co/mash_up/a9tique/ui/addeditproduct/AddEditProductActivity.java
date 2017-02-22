@@ -11,6 +11,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
+import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
 
 public class AddEditProductActivity extends BaseActivity {
@@ -21,7 +22,7 @@ public class AddEditProductActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @BindView(R.id.tv_title)
+    @BindView(R.id.tv_toolbar_title)
     TextView mTvTitle;
 
     Long mProductId = null;
@@ -29,9 +30,9 @@ public class AddEditProductActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        if (getIntent().hasExtra(AddEditProductFragment.ARG_PARAM_PRODUCT_ID)) {
-            mProductId = getIntent().getLongExtra(AddEditProductFragment.ARG_PARAM_PRODUCT_ID, 0);
-            mProduct = getIntent().getParcelableExtra("product");
+        if (getIntent().hasExtra(Constants.PRODUCT_ID)) {
+            mProductId = getIntent().getLongExtra(Constants.PRODUCT_ID, 0);
+            mProduct = getIntent().getParcelableExtra(Constants.PRODUCT);
         }
         super.onCreate(savedInstanceState);
 
@@ -44,8 +45,8 @@ public class AddEditProductActivity extends BaseActivity {
             if (mProductId != null && mProductId > 0) {
                 // 상품정보 수정
                 Bundle bundle = new Bundle();
-                bundle.putLong(AddEditProductFragment.ARG_PARAM_PRODUCT_ID, mProductId);
-                bundle.putParcelable(AddEditProductFragment.ARG_PARAM_PRODUCT, mProduct);
+                bundle.putLong(Constants.PRODUCT_ID, mProductId);
+                bundle.putParcelable(Constants.PRODUCT, mProduct);
                 addEditProductFragment.setArguments(bundle);
             } else {
                 // 상품정보 등록

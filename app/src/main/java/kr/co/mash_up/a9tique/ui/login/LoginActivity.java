@@ -40,11 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         //Todo: token 만료일 확인하고 서버로 token refresh request.
 
         if (strUserLevel != null && !"".equals(strUserLevel)) {
-            User.Level userLevel = User.Level.USER;
-            if(strUserLevel.equals("SELLER")){
-                userLevel = User.Level.SELLER;
-            }
-            AccountManager.getInstance().updateAccountInformation(accessToken, userLevel);
+            AccountManager.getInstance().updateAccountInformation(accessToken, strUserLevel);
 
             redirectProductListActivity();
         } else {

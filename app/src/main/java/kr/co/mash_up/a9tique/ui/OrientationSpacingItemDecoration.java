@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique.ui.addeditproduct;
+package kr.co.mash_up.a9tique.ui;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

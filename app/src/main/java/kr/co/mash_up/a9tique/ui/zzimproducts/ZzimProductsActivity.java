@@ -2,13 +2,9 @@ package kr.co.mash_up.a9tique.ui.zzimproducts;
 
 import android.os.Bundle;
 import android.support.annotation.UiThread;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -20,8 +16,8 @@ public class ZzimProductsActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @BindView(R.id.tv_title)
-    TextView mTvTitle;
+    @BindView(R.id.tv_toolbar_title)
+    TextView mTvToolbarTitle;
 
     private ZzimProductsContract.Presenter mPresenter;
 
@@ -69,7 +65,7 @@ public class ZzimProductsActivity extends BaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
         }
-        mTvTitle.setText("내가 찜한 상품");
+        mTvToolbarTitle.setText("내가 찜한 상품");
     }
 
     /**

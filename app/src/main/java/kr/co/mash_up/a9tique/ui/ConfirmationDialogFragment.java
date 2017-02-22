@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique.ui.addeditproduct;
+package kr.co.mash_up.a9tique.ui;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -19,7 +19,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import kr.co.mash_up.a9tique.R;
-import kr.co.mash_up.a9tique.base.ui.BaseActivity;
 
 public class ConfirmationDialogFragment extends DialogFragment {
 
@@ -27,7 +26,7 @@ public class ConfirmationDialogFragment extends DialogFragment {
     public static final String PARAM_TITLE = "title";
     public static final String PARAM_MESSAGE = "message";
 
-    @BindView(R.id.tv_title)
+    @BindView(R.id.tv_toolbar_title)
     TextView mTvTitle;
 
     @BindView(R.id.tv_message)

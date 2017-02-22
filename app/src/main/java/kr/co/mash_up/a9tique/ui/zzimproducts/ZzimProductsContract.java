@@ -1,7 +1,6 @@
 package kr.co.mash_up.a9tique.ui.zzimproducts;
 
 
-
 import android.content.Intent;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import kr.co.mash_up.a9tique.data.Product;
 /**
  * This specifies the contract between the view and the presenter.
  */
-public class ZzimProductsContract {
+public interface ZzimProductsContract {
 
     /**
      * View -> Presenter
@@ -29,9 +28,11 @@ public class ZzimProductsContract {
 
         void detailProduct(Product product);
 
+        void onClickRemoveProduct(Product product, int position);
+
         void removeProduct(Product product, int position);
 
-        void inquireProduct(Product product, int position);
+        void onClickInquireProduct(Product product, int position);
 
         void callPhone(Product product);
 
@@ -42,6 +43,8 @@ public class ZzimProductsContract {
      * Presenter -> View
      */
     interface View extends BaseView<ZzimProductsContract.Presenter> {
+
+        boolean isActive();
 
         void showLoadingIndicator(boolean active);
 
@@ -61,15 +64,15 @@ public class ZzimProductsContract {
 
         void showProductDetail(Product product);
 
-        void removeProduct(int position);
+        void showDialogRemoveProduct(Product product, int position);
 
-        void showInquireDialog(Product product, int position);
+        void removeProduct(int position);
 
         void showSuccessfullyRemovedMessage();
 
         void showFailureRemovedMessage();
 
-        boolean isActive();
+        void showDialogInquire(Product product, int position);
 
         void showCallPhone(String phoneNumber);
 

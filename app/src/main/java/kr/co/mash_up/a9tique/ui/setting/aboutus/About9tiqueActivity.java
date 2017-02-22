@@ -15,7 +15,7 @@ public class About9tiqueActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @BindView(R.id.tv_title)
+    @BindView(R.id.tv_toolbar_title)
     TextView mTvTitle;
 
     @BindView(R.id.tv_about_title)

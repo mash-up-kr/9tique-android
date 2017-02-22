@@ -16,8 +16,8 @@ public class SellProductsActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @BindView(R.id.tv_title)
-    TextView mTvTitle;
+    @BindView(R.id.tv_toolbar_title)
+    TextView mTvToolbarTitle;
 
     private SellProductsContract.Presenter mPresenter;
 
@@ -65,7 +65,7 @@ public class SellProductsActivity extends BaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
         }
-        mTvTitle.setText("판매 상품 리스트");
+        mTvToolbarTitle.setText("판매 상품 리스트");
     }
 
     /**

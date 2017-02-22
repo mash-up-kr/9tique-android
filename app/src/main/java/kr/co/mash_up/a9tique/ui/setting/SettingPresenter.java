@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import kr.co.mash_up.a9tique.data.User;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
+import kr.co.mash_up.a9tique.util.CheckNonNullUtil;
 
 
 public class SettingPresenter implements SettingContract.Presenter {
@@ -15,8 +16,13 @@ public class SettingPresenter implements SettingContract.Presenter {
     public SettingPresenter( /*Todo: add Model Layer */
                              @NonNull SettingContract.View view) {
         //Todo: add Model Layer
-        mView = view;
+        mView = CheckNonNullUtil.checkNotNull(view, " setting view cannot be null!");
         mView.setPresenter(this);
+    }
+
+    @Override
+    public void onClickSellerRegisteration() {
+        mView.showDialogSellerRegisteration();
     }
 
     @Override
@@ -26,7 +32,7 @@ public class SettingPresenter implements SettingContract.Presenter {
         BackendHelper.getInstance().registerSeller(authenticationCode, new ResultCallback<User>() {
             @Override
             public void onSuccess(User user) {
-                if(!mView.isActive()){
+                if (!mView.isActive()) {
                     return;
                 }
 
@@ -38,7 +44,7 @@ public class SettingPresenter implements SettingContract.Presenter {
 
             @Override
             public void onFailure() {
-                if(!mView.isActive()){
+                if (!mView.isActive()) {
                     return;
                 }
 
@@ -46,6 +52,36 @@ public class SettingPresenter implements SettingContract.Presenter {
                 mView.showFailureSellerRegisterMessage();
             }
         });
+    }
+
+    @Override
+    public void onClickSellerInformation() {
+        mView.showSellerInformation();
+    }
+
+    @Override
+    public void onClickInquire() {
+        mView.showInquire();
+    }
+
+    @Override
+    public void onClickAgreement() {
+        mView.showAgreement();
+    }
+
+    @Override
+    public void onClickLicense() {
+        mView.showLicense();
+    }
+
+    @Override
+    public void onClickAboutUs() {
+        mView.showAboutUs();
+    }
+
+    @Override
+    public void onClickLogout() {
+        mView.showDialogLogout();
     }
 
     @Override

@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import kr.co.mash_up.a9tique.data.Seller;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
+import kr.co.mash_up.a9tique.ui.setting.sellerinformation.edit.SellerInformationEditActivity;
+import kr.co.mash_up.a9tique.util.CheckNonNullUtil;
 
 
 public class SellerInformationPresenter implements SellerInformationContract.Presenter {
@@ -17,13 +19,18 @@ public class SellerInformationPresenter implements SellerInformationContract.Pre
     public SellerInformationPresenter(/*Todo: add Model Layer */
                                       @NonNull SellerInformationContract.View view) {
         //Todo: add Model Layer
-        mView = view;
+        mView = CheckNonNullUtil.checkNotNull(view, " seller Information view cannot be null!");
         mView.setPresenter(this);
     }
 
     @Override
     public void start() {
         // Do nothing
+    }
+
+    @Override
+    public void onClickSellerInformationModify() {
+        mView.showSellerInformationModify();
     }
 
     @Override
@@ -54,7 +61,7 @@ public class SellerInformationPresenter implements SellerInformationContract.Pre
     @Override
     public void result(int requestCode, int resultCode) {
         switch (requestCode) {
-            case SellerInformationFragment.REQUEST_CODE_SELLER_INFORMATION_MODIFY:
+            case SellerInformationEditActivity.REQUEST_CODE_SELLER_INFORMATION_MODIFY:
                 if (resultCode == Activity.RESULT_OK) {
                     mView.showSuccessfullyUpdateSellerInformationMessage();
                     loadSellerInformation();

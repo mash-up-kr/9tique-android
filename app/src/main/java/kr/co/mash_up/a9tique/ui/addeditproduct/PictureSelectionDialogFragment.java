@@ -27,7 +27,7 @@ public class PictureSelectionDialogFragment extends DialogFragment {
 
     private String mTitle;
 
-    @BindView(R.id.tv_title)
+    @BindView(R.id.tv_toolbar_title)
     TextView mTvTitle;
 
     Unbinder mUnbinder;

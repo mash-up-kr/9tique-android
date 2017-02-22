@@ -25,8 +25,7 @@ import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.data.ProductImage;
 import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
-import kr.co.mash_up.a9tique.ui.productdetail.customer.CustomerProductDetailFragment;
-import kr.co.mash_up.a9tique.ui.zzimproducts.InquireSelectionDialogFragment;
+import kr.co.mash_up.a9tique.ui.InquireSelectionDialogFragment;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 

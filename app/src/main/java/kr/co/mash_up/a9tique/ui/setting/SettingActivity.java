@@ -15,8 +15,8 @@ public class SettingActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @BindView(R.id.tv_title)
-    TextView mTvTitle;
+    @BindView(R.id.tv_toolbar_title)
+    TextView mTvToolbarTitle;
 
     private SettingContract.Presenter mPresenter;
 
@@ -57,7 +57,7 @@ public class SettingActivity extends BaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
         }
-        mTvTitle.setText("설정");
+        mTvToolbarTitle.setText("설정");
     }
 
     /**

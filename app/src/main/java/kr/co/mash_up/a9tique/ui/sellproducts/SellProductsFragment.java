@@ -26,8 +26,8 @@ import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
 import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
-import kr.co.mash_up.a9tique.ui.addeditproduct.ConfirmationDialogFragment;
-import kr.co.mash_up.a9tique.ui.addeditproduct.OrientationSpacingItemDecoration;
+import kr.co.mash_up.a9tique.ui.ConfirmationDialogFragment;
+import kr.co.mash_up.a9tique.ui.OrientationSpacingItemDecoration;
 import kr.co.mash_up.a9tique.ui.productdetail.seller_mine.SellerMineProductDetailActivity;
 import kr.co.mash_up.a9tique.util.CheckNonNullUtil;
 import kr.co.mash_up.a9tique.util.ProgressUtil;
@@ -103,39 +103,29 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
 
     @Override
     public void initView(View rootView) {
+        initList();
+
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.tulip_tree, R.color.mine_shaft);
+        mSwipeRefreshLayout.setOnRefreshListener(this::refreshProducts);
+    }
+
+    private void initList() {
         mRvProducts.setHasFixedSize(true);
         LinearLayoutManager llmProducts = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRvProducts.setLayoutManager(llmProducts);
         mRvProducts.addItemDecoration(new OrientationSpacingItemDecoration(itemSpacingSize, OrientationSpacingItemDecoration.Orientation.BOTTOM, false));
 
         mSellProductListAdapter = new SellProductListAdapter(getActivity());
+        mRvProducts.setAdapter(mSellProductListAdapter);
         mSellProductListAdapter.setOnItemClickListener(new SellProductListAdapter.OnItemClickListener<SellProduct>() {
             @Override
             public void onClick(SellProduct sellProduct, int position) {
-                if (sellProduct.isSeller()) {
-                    mPresenter.detailProductSeller(sellProduct);
-                } else {
-                    mPresenter.detailProductCustomer(sellProduct);
-                }
+                mPresenter.detailProduct(sellProduct);
             }
 
             @Override
             public void onRemove(SellProduct sellProduct, int position) {
-                ConfirmationDialogFragment dlgRemoveConfirmation
-                        = ConfirmationDialogFragment.newInstance("판매중인 상품 삭제", "선택하신 상품을 삭제 하시겠습니까?");
-                dlgRemoveConfirmation.setCallback(new ConfirmationDialogFragment.Callback() {
-                    @Override
-                    public void onClickOk() {
-                        mPresenter.removeProduct(sellProduct, position);
-                    }
-
-                    @Override
-                    public void onClickCancel() {
-                        // Do nothing
-                    }
-                });
-                dlgRemoveConfirmation.setTargetFragment(SellProductsFragment.this, 0);
-                dlgRemoveConfirmation.show(getChildFragmentManager(), ConfirmationDialogFragment.TAG);
+                mPresenter.onClickRemove(sellProduct, position);
             }
 
             @Override
@@ -154,8 +144,6 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
                 setProductsSelectedCount();
             }
         });
-        mRvProducts.setAdapter(mSellProductListAdapter);
-
         mRvProducts.addOnScrollListener(new EndlessRecyclerViewScrollListener(llmProducts) {
             @Override
             public int getFooterViewType(int defaultNoFooterViewType) {
@@ -168,19 +156,30 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
                 mPresenter.loadMoreProducts(totalItemCount - 1);  // 로딩 푸터 추가할 위치 전달. 헤더 때문에 -1
             }
         });
-
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.tulip_tree, R.color.mine_shaft);
-        mSwipeRefreshLayout.setOnRefreshListener(this::refreshProducts);
     }
 
     @OnCheckedChanged(R.id.cb_check_all)
-    public void onCheckedAll(boolean checked) {
+    public void onCheckedProductSelectAll(boolean checked) {
+        mPresenter.onCheckedProductSelectAll(checked);
+    }
+
+    public void showProductSelectAll(boolean checked) {
         mSellProductListAdapter.setSellProductsChecked(checked);
         setProductsSelectedCount();
     }
 
+    private void setProductsSelectedCount() {
+        int checkedItemCount = mSellProductListAdapter.getSellProductSelectedCount();
+        mTvProductsSelectedCount.setText(String.format(Locale.KOREA, "%d/%d", checkedItemCount, mElementsTotal));
+    }
+
     @OnClick(R.id.tv_product_checked_remove)
-    public void removeCheckedProducts() {
+    public void onClickRemoveCheckedProducts() {
+        mPresenter.onClickRemoveCheckedProducts();
+    }
+
+    @Override
+    public void showDialogRemoveCheckedProducts() {
         ConfirmationDialogFragment dlgRemoveCheckedConfirmaation
                 = ConfirmationDialogFragment.newInstance("판매중인 상품 선택삭제", "선택하신 상품을 삭제 하시겠습니까?");
         dlgRemoveCheckedConfirmaation.setCallback(new ConfirmationDialogFragment.Callback() {
@@ -196,11 +195,6 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
         });
         dlgRemoveCheckedConfirmaation.setTargetFragment(SellProductsFragment.this, 0);
         dlgRemoveCheckedConfirmaation.show(getChildFragmentManager(), ConfirmationDialogFragment.TAG);
-    }
-
-    private void setProductsSelectedCount() {
-        int checkedItemCount = mSellProductListAdapter.getSellProductSelectedCount();
-        mTvProductsSelectedCount.setText(String.format(Locale.KOREA, "%d/%d", checkedItemCount, mElementsTotal));
     }
 
     @Override
@@ -272,15 +266,7 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
     }
 
     @Override
-    public void showProductDetailForSeller(Product product) {
-        Intent intent = new Intent(getActivity(), SellerMineProductDetailActivity.class);
-        intent.putExtra(Constants.PRODUCT, product);
-        startActivityForResult(intent, SellerMineProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
-    }
-
-    @Override
-    public void showProductDetailForCustomer(Product product) {
-        //Todo: change customer product detail activity
+    public void showProductDetail(Product product) {
         Intent intent = new Intent(getActivity(), SellerMineProductDetailActivity.class);
         intent.putExtra(Constants.PRODUCT, product);
         startActivityForResult(intent, SellerMineProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
@@ -347,6 +333,25 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
     @Override
     public void showRemoveProductSelectedErrorMessage() {
         SnackbarUtil.showMessage(getActivity(), getView(), "선택하신 상품이 없습니다.", "", null);
+    }
+
+    @Override
+    public void showDialogRemoveProduct(Product product, int position) {
+        ConfirmationDialogFragment dlgRemoveConfirmation
+                = ConfirmationDialogFragment.newInstance("판매중인 상품 삭제", "선택하신 상품을 삭제 하시겠습니까?");
+        dlgRemoveConfirmation.setCallback(new ConfirmationDialogFragment.Callback() {
+            @Override
+            public void onClickOk() {
+                mPresenter.removeProduct(product, position);
+            }
+
+            @Override
+            public void onClickCancel() {
+                // Do nothing
+            }
+        });
+        dlgRemoveConfirmation.setTargetFragment(SellProductsFragment.this, 0);
+        dlgRemoveConfirmation.show(getChildFragmentManager(), ConfirmationDialogFragment.TAG);
     }
 
     @Override

@@ -30,11 +30,14 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
+import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.data.ProductImage;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.RequestProduct;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
+import kr.co.mash_up.a9tique.ui.ConfirmationDialogFragment;
+import kr.co.mash_up.a9tique.ui.OrientationSpacingItemDecoration;
 import kr.co.mash_up.a9tique.ui.addeditproduct.categorysleleciton.CategorySelectionActivity;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
 import kr.co.mash_up.a9tique.util.TranslationUtil;
@@ -47,8 +50,6 @@ public class AddEditProductFragment extends BaseFragment implements Confirmation
         PictureSelectionDialogFragment.Callback {
 
     public static final String TAG = AddEditProductFragment.class.getSimpleName();
-    public static final String ARG_PARAM_PRODUCT_ID = "productId";
-    public static final String ARG_PARAM_PRODUCT = "product";
     public static final int REQUEST_CODE_CATEGORY_SELECTION = 1000;
     public static final int REQUEST_CODE_CAMERA_CAPTURE = 1001;
 
@@ -106,8 +107,8 @@ public class AddEditProductFragment extends BaseFragment implements Confirmation
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mProductId = getArguments().getLong(ARG_PARAM_PRODUCT_ID);
-            mProduct = getArguments().getParcelable(ARG_PARAM_PRODUCT);
+            mProductId = getArguments().getLong(Constants.PRODUCT_ID);
+            mProduct = getArguments().getParcelable(Constants.PRODUCT);
         }
         setRetainInstance(true);
     }

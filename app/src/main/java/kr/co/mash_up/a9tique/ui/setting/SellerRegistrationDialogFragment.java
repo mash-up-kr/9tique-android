@@ -23,7 +23,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.util.KeyboardUtils;
-import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 /**
  * Created by CY on 2017. 1. 10..
@@ -35,7 +34,7 @@ public class SellerRegistrationDialogFragment extends DialogFragment {
     public static final String PARAM_TITLE = "title";
     public static final String PARAM_MESSAGE = "message";
 
-    @BindView(R.id.tv_title)
+    @BindView(R.id.tv_toolbar_title)
     TextView mTvTitle;
 
     @BindView(R.id.et_authentication_code)
