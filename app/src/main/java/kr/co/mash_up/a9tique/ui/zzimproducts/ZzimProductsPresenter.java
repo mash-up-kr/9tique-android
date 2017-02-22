@@ -8,6 +8,7 @@ import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.ResponseProduct;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
+import kr.co.mash_up.a9tique.ui.productdetail.customer.CustomerProductDetailActivity;
 import kr.co.mash_up.a9tique.util.CheckNonNullUtil;
 
 
@@ -38,7 +39,7 @@ public class ZzimProductsPresenter implements ZzimProductsContract.Presenter {
     public void result(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             //Todo: 상세정보에서 찜 제거 했을 경우
-            case 232:
+            case CustomerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT:
                 int position = data.getIntExtra("position", 0);
                 mView.removeProduct(position);
         }

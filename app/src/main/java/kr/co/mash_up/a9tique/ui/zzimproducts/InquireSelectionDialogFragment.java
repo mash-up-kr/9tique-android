@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.support.v4.app.DialogFragment;
 import android.view.Display;
 import android.view.Gravity;
@@ -18,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import kr.co.mash_up.a9tique.NinetiqueApplication;
 import kr.co.mash_up.a9tique.R;
 
 public class InquireSelectionDialogFragment extends DialogFragment {
@@ -29,6 +31,13 @@ public class InquireSelectionDialogFragment extends DialogFragment {
 
     @BindView(R.id.tv_title)
     TextView mTvTitle;
+
+    @BindView(R.id.tv_call_phone)
+    TextView mTvCallPhone;
+
+    @BindView(R.id.tv_send_message)
+    TextView mTvSendMessage;
+
 
     Unbinder mUnbinder;
 
@@ -65,7 +74,7 @@ public class InquireSelectionDialogFragment extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if(callback == null) {
+        if (callback == null) {
             try {
                 callback = (Callback) getTargetFragment();
             } catch (ClassCastException e) {
@@ -100,6 +109,14 @@ public class InquireSelectionDialogFragment extends DialogFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTvTitle.setText(mTitle);
+
+        setupFont();
+    }
+
+    @UiThread
+    private void setupFont() {
+        NinetiqueApplication.getNinetiqueApplication(getActivity())
+                .setNotoSansMedium(mTvTitle, mTvCallPhone, mTvSendMessage);
     }
 
     @Override

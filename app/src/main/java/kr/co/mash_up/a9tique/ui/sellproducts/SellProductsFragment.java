@@ -3,6 +3,7 @@ package kr.co.mash_up.a9tique.ui.sellproducts;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,7 @@ import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
+import kr.co.mash_up.a9tique.NinetiqueApplication;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.common.Constants;
@@ -29,6 +31,7 @@ import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
 import kr.co.mash_up.a9tique.ui.addeditproduct.ConfirmationDialogFragment;
 import kr.co.mash_up.a9tique.ui.addeditproduct.OrientationSpacingItemDecoration;
 import kr.co.mash_up.a9tique.ui.productdetail.seller_mine.SellerMineProductDetailActivity;
+import kr.co.mash_up.a9tique.ui.zzimproducts.ZzimProductsActivity;
 import kr.co.mash_up.a9tique.util.CheckNonNullUtil;
 import kr.co.mash_up.a9tique.util.ProgressUtil;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
@@ -40,11 +43,14 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
     @BindView(R.id.rl_products_header)
     RelativeLayout mRlProductsHeader;
 
-    @BindView(R.id.cb_check_all)
-    CheckBox mCbCheckAll;
+    @BindView(R.id.tv_products_select_all)
+    TextView mTvProductsSelectAll;
 
     @BindView(R.id.tv_products_selected_count)
     TextView mTvProductsSelectedCount;
+
+    @BindView(R.id.tv_product_checked_remove)
+    TextView mTvProductCheckedRemove;
 
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -54,6 +60,9 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
 
     @BindView(R.id.ll_emptyView)
     LinearLayout mEmptyView;
+
+    @BindView(R.id.tv_empty_message)
+    TextView mTvEmptyMessage;
 
     @BindDimen(R.dimen.sell_product_list_item_bottom_margin)
     int itemSpacingSize;
@@ -103,6 +112,8 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
 
     @Override
     public void initView(View rootView) {
+        setupFont();
+
         mRvProducts.setHasFixedSize(true);
         LinearLayoutManager llmProducts = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRvProducts.setLayoutManager(llmProducts);
@@ -171,6 +182,13 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
 
         mSwipeRefreshLayout.setColorSchemeResources(R.color.tulip_tree, R.color.mine_shaft);
         mSwipeRefreshLayout.setOnRefreshListener(this::refreshProducts);
+    }
+
+    @UiThread
+    private void setupFont(){
+        NinetiqueApplication.getNinetiqueApplication(getActivity())
+                .setNotoSansMedium(mTvProductsSelectAll, mTvProductsSelectedCount, mTvProductCheckedRemove,
+                        mTvEmptyMessage);
     }
 
     @OnCheckedChanged(R.id.cb_check_all)

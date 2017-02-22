@@ -101,6 +101,7 @@
             app:srcCompat="@drawable/ic_nodata"/>
 
         <TextView
+            android:id="@+id/tv_empty_message"
             android:lineSpacingExtra="4dp"
             android:textAlignment="center"
             android:textSize="15sp"

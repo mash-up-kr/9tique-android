@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import butterknife.BindView;
+import kr.co.mash_up.a9tique.NinetiqueApplication;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
 
@@ -46,6 +47,7 @@ public class SellProductsActivity extends BaseActivity {
     @Override
     public void initView() {
         setupToolbar();
+        setupFont();
     }
 
     @Override
@@ -53,6 +55,12 @@ public class SellProductsActivity extends BaseActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fl_fragment_sell_products, fragment, SellProductsFragment.TAG)
                 .commit();
+    }
+
+    @UiThread
+    private void setupFont() {
+        NinetiqueApplication.getNinetiqueApplication(SellProductsActivity.this)
+                .setNotoSansMedium(mTvTitle);
     }
 
     @UiThread

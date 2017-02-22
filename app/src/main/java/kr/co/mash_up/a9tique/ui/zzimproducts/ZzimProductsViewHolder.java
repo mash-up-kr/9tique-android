@@ -15,6 +15,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import butterknife.BindView;
+import kr.co.mash_up.a9tique.NinetiqueApplication;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseViewHolder;
 import kr.co.mash_up.a9tique.common.Constants;
@@ -29,6 +30,9 @@ public class ZzimProductsViewHolder extends BaseViewHolder<Product> {
 
     @BindView(R.id.rl_sold_out_filter)
     RelativeLayout mRlSoldoutFilter;
+
+    @BindView(R.id.tv_sold_out_filter)
+    TextView mTvSoldoutFilter;
 
     @BindView(R.id.tv_product_name)
     TextView mTvProductName;
@@ -58,6 +62,8 @@ public class ZzimProductsViewHolder extends BaseViewHolder<Product> {
 
     public ZzimProductsViewHolder(View itemView, OnItemClickListener<Product> listener) {
         super(itemView);
+
+        setupFont();
 
         mOnItemClickListener = listener;
     }
@@ -89,5 +95,12 @@ public class ZzimProductsViewHolder extends BaseViewHolder<Product> {
         } else {
             mRlSoldoutFilter.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void setupFont() {
+        NinetiqueApplication app = NinetiqueApplication.getNinetiqueApplication(itemView.getContext());
+        app.setNotoSansMedium(mTvSoldoutFilter, mBtnProductRemove, mBtnProductInquire);
+        app.setNotoSansRegular(mTvProductBrandName, mTvProductName, mTvProductSize);
+        app.setNotoSansBold(mTvProductPrice);
     }
 }

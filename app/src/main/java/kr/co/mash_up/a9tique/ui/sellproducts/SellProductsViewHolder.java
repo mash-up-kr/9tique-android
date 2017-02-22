@@ -17,6 +17,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import butterknife.BindView;
+import kr.co.mash_up.a9tique.NinetiqueApplication;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseViewHolder;
 import kr.co.mash_up.a9tique.common.Constants;
@@ -37,6 +38,9 @@ public class SellProductsViewHolder extends BaseViewHolder<SellProduct> {
 
     @BindView(R.id.rl_sold_out_filter)
     RelativeLayout mRlSoldoutFilter;
+
+    @BindView(R.id.tv_sold_out_filter)
+    TextView mTvSoldoutFilter;
 
     @BindView(R.id.tv_product_name)
     TextView mTvProductName;
@@ -72,6 +76,8 @@ public class SellProductsViewHolder extends BaseViewHolder<SellProduct> {
 
     public SellProductsViewHolder(View itemView, OnItemClickListener<SellProduct> listener) {
         super(itemView);
+
+        setupFont();
 
         mOnItemClickListener = listener;
     }
@@ -125,5 +131,12 @@ public class SellProductsViewHolder extends BaseViewHolder<SellProduct> {
             sellProduct.setChecked(b);
             mOnItemClickListener.onCheck(sellProduct, getAdapterPosition());
         });
+    }
+
+    private void setupFont(){
+        NinetiqueApplication app = NinetiqueApplication.getNinetiqueApplication(itemView.getContext());
+        app.setNotoSansMedium(mTvSoldoutFilter, mBtnProductRemove, mBtnProductModify, mTvProductStatus);
+        app.setNotoSansRegular(mTvProductBrandName, mTvProductName, mTvProductSize);
+        app.setNotoSansBold(mTvProductPrice);
     }
 }

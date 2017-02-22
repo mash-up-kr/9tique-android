@@ -36,6 +36,7 @@
             android:background="@color/black_alpha_99">
 
             <TextView
+                android:id="@+id/tv_sold_out_filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"

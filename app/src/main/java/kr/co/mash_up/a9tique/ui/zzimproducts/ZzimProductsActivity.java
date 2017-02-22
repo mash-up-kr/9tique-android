@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import butterknife.BindView;
+import kr.co.mash_up.a9tique.NinetiqueApplication;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
 
@@ -50,6 +51,7 @@ public class ZzimProductsActivity extends BaseActivity {
     @Override
     public void initView() {
         setupToolbar();
+        setupFont();
     }
 
     @Override
@@ -57,6 +59,12 @@ public class ZzimProductsActivity extends BaseActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fl_fragment_zzim_products, fragment, ZzimProductsFragment.TAG)
                 .commit();
+    }
+
+    @UiThread
+    private void setupFont(){
+        NinetiqueApplication.getNinetiqueApplication(ZzimProductsActivity.this)
+                .setNotoSansMedium(mTvTitle);
     }
 
     @UiThread
