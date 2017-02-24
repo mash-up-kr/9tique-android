@@ -29,4 +29,7 @@
     <string name="title_activity_seller_product_list">SellerProductListActivity</string>
     <string name="title_activity_seller_information_edit">SellerInformationEditActivity</string>
 
+
+    <string name="kakao_app_key">147fb0c64769cb137db3f722e36d3e9b</string>
+    <string name="facebook_app_id">1845329159075366</string>
 </resources>

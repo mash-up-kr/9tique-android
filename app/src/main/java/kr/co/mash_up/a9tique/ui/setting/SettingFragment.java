@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.kakao.auth.Session;
+import com.facebook.login.LoginManager;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -211,7 +211,8 @@ public class SettingFragment extends BaseFragment implements SettingContract.Vie
 
     @Override
     public void clearUserAccount() {
-        Session.getCurrentSession().close();
+//        Session.getCurrentSession().close();
+        LoginManager.getInstance().logOut();
         PreferencesUtils.clear(getActivity());
         mAccountManager.clearAccountInformation();
     }

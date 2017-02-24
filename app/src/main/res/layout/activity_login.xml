@@ -1,58 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/ll_root"
+
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/cl_root"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context="kr.co.mash_up.a9tique.ui.login.LoginActivity">
-    <!--android:background="@drawable/bg_splash"-->
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:paddingLeft="60dp"
-        android:paddingRight="60dp"
-        android:paddingTop="65dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--android:background="@drawable/bg_splash"-->
 
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="219.3dp"
-            android:src="@drawable/ic_logo"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp"
+            android:paddingTop="65dp">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="219.3dp"
+                android:src="@drawable/ic_logo"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingLeft="55dp"
+            android:paddingRight="55dp"
+            android:paddingTop="174dp">
+
+            <Button
+                android:id="@+id/btn_fb_login"
+                android:layout_width="250dp"
+                android:layout_height="55dp"
+                android:background="@drawable/shape_btn_login_normal"
+                android:foreground="@drawable/ripple_btn_login"
+                android:text="페이스북으로 계속하기"
+                android:textColor="@color/mine_shaft"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/fb_login"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:visibility="gone"/>
+
+            <!--<com.kakao.usermgmt.LoginButton-->
+            <!--android:id="@+id/btn_login_kakao"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="bottom"-->
+            <!--android:layout_marginBottom="30dp"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginRight="20dp"/>-->
+
+        </LinearLayout>
+
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingLeft="55dp"
-        android:paddingRight="55dp"
-        android:paddingTop="174dp">
-
-        <!--<ImageButton-->
-        <!--android:layout_width="250dp"-->
-        <!--android:layout_height="55dp"-->
-        <!--android:background="@android:color/transparent"-->
-        <!--android:padding="0sp"-->
-        <!--android:scaleType="centerCrop"-->
-        <!--android:src="@drawable/btn_login_fb"/>-->
-
-        <com.kakao.usermgmt.LoginButton
-            android:id="@+id/btn_login_kakao"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"/>
-
-        <!--<com.kakao.usermgmt.LoginButton-->
-        <!--android:id="@+id/com_kakao_login"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--android:layout_marginBottom="30dp"-->
-        <!--android:layout_marginLeft="20dp"-->
-        <!--android:layout_marginRight="20dp"/>-->
-    </LinearLayout>
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
