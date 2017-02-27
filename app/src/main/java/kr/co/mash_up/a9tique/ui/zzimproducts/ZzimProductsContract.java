@@ -2,6 +2,7 @@ package kr.co.mash_up.a9tique.ui.zzimproducts;
 
 
 import android.content.Intent;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public interface ZzimProductsContract {
 
         void loadMoreProducts(int loadingFooterPosition);
 
-        void detailProduct(Product product);
+        void detailProduct(Product product, ImageView shareImageView, String transitionName);
 
         void onClickRemoveProduct(Product product, int position);
 
@@ -62,7 +63,7 @@ public interface ZzimProductsContract {
 
         void showNoProducts();
 
-        void showProductDetail(Product product);
+        void showProductDetail(Product product, ImageView shareImageView, String transitionName);
 
         void showDialogRemoveProduct(Product product, int position);
 

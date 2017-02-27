@@ -4,25 +4,27 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.List;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
-import kr.co.mash_up.a9tique.ui.InquireSelectionDialogFragment;
-import kr.co.mash_up.a9tique.ui.productdetail.customer.CustomerProductDetailActivity;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
-import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
 import kr.co.mash_up.a9tique.ui.ConfirmationDialogFragment;
+import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
+import kr.co.mash_up.a9tique.ui.InquireSelectionDialogFragment;
 import kr.co.mash_up.a9tique.ui.OrientationSpacingItemDecoration;
+import kr.co.mash_up.a9tique.ui.productdetail.customer.CustomerProductDetailActivity;
 import kr.co.mash_up.a9tique.ui.widget.RecyclerViewEmptySupport;
 import kr.co.mash_up.a9tique.util.CheckNonNullUtil;
 import kr.co.mash_up.a9tique.util.ProgressUtil;
@@ -80,7 +82,7 @@ public class ZzimProductsFragment extends BaseFragment implements ZzimProductsCo
         mSwipeRefreshLayout.setOnRefreshListener(this::refreshProducts);
     }
 
-    private void initZzimList(){
+    private void initZzimList() {
         mRvZzimProducts.setHasFixedSize(true);
         LinearLayoutManager llmZzimProducts = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRvZzimProducts.setLayoutManager(llmZzimProducts);
@@ -89,11 +91,11 @@ public class ZzimProductsFragment extends BaseFragment implements ZzimProductsCo
 
         mZzimlProductListAdapter = new ZzimlProductListAdapter(getActivity());
         mRvZzimProducts.setAdapter(mZzimlProductListAdapter);
-        mZzimlProductListAdapter.setOnItemClickListener(new ZzimlProductListAdapter.OnItemClickListener<Product>() {
+               mZzimlProductListAdapter.setOnItemClickListener(new ZzimlProductListAdapter.OnItemClickListener<Product>() {
 
             @Override
-            public void onClick(Product product, int position) {
-                mPresenter.detailProduct(product);
+            public void onClick(Product product, int position, ImageView shareImageView, String transitionName) {
+                mPresenter.detailProduct(product, shareImageView, transitionName);
             }
 
             @Override
@@ -182,10 +184,15 @@ public class ZzimProductsFragment extends BaseFragment implements ZzimProductsCo
     }
 
     @Override
-    public void showProductDetail(Product product) {
+    public void showProductDetail(Product product, ImageView shareImageView, String transitionName) {
         Intent intent = new Intent(getActivity(), CustomerProductDetailActivity.class);
         intent.putExtra(Constants.PRODUCT, product);
-        startActivityForResult(intent, CustomerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
+        intent.putExtra(Constants.TRANSITION_NAME, transitionName);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                getActivity(),
+                shareImageView,
+                transitionName);
+        startActivityForResult(intent, CustomerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT, options.toBundle());
     }
 
     @Override

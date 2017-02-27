@@ -2,6 +2,7 @@ package kr.co.mash_up.a9tique.ui.sellproducts;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -173,8 +174,8 @@ public class SellProductsPresenter implements SellProductsContract.Presenter {
     }
 
     @Override
-    public void detailProduct(Product product) {
-        mView.showProductDetail(product);
+    public void detailProduct(Product product, ImageView shareImageView, String transitionName) {
+        mView.showProductDetail(product, shareImageView, transitionName);
     }
 
     @Override

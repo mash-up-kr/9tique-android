@@ -1,5 +1,7 @@
 package kr.co.mash_up.a9tique.ui.sellproducts;
 
+import android.widget.ImageView;
+
 import java.util.List;
 
 import kr.co.mash_up.a9tique.base.BasePresenter;
@@ -24,7 +26,7 @@ public interface SellProductsContract {
 
         void editProduct(Product product);
 
-        void detailProduct(Product product);
+        void detailProduct(Product product, ImageView shareImageView, String transitionName);
 
         void onClickRemove(Product product, int position);
 
@@ -62,7 +64,7 @@ public interface SellProductsContract {
 
         void showNoProducts();
 
-        void showProductDetail(Product product);
+        void showProductDetail(Product product, ImageView shareImageView, String transitionName);
 
         void removeProduct(int position);
 

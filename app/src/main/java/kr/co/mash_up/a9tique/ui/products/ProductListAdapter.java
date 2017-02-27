@@ -1,19 +1,16 @@
 package kr.co.mash_up.a9tique.ui.products;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import kr.co.mash_up.a9tique.base.ui.BaseViewHolder;
 import kr.co.mash_up.a9tique.data.Product;
-import kr.co.mash_up.a9tique.ui.OnItemClickListener;
+import kr.co.mash_up.a9tique.ui.OnItemClickTransitionListener;
 
 /**
  * Created by Dong on 2016-11-12.
@@ -27,10 +24,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private ArrayList<Product> mProducts;
     private final Context mContext;
 
-    private OnItemClickListener<Product> mOnItemClickListener;
+    private OnItemClickTransitionListener<Product> mOnItemClickListener;
 
-    public void setOnItemClickListener(OnItemClickListener<Product> onItemClickListener) {
-        mOnItemClickListener = onItemClickListener;
+    public void setOnItemClickListener(OnItemClickTransitionListener<Product> listener) {
+        mOnItemClickListener = listener;
     }
 
     public ProductListAdapter(@NonNull Context context) {
@@ -86,32 +83,32 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public void setProducts(List<Product> products) {
         mProducts.clear();
-        for(Product product : products){
+        for (Product product : products) {
             product.setViewType(VIEW_TYPE_CONTENT);
             mProducts.add(product);
         }
         notifyDataSetChanged();
     }
 
-    public void addProducts(List<Product> products){
+    public void addProducts(List<Product> products) {
         int currentSize = mProducts.size();
-        for(Product product : products){
+        for (Product product : products) {
             product.setViewType(VIEW_TYPE_CONTENT);
             mProducts.add(product);
         }
         notifyItemRangeInserted(currentSize, products.size());
     }
 
-    public void clearProducts(){
+    public void clearProducts() {
         mProducts.clear();
         //Todo: call notifyDataSetChanged();
     }
 
-    public void addFooterView(int position){
+    public void addFooterView(int position) {
         addItem(new Product(VIEW_TYPE_FOOTER), position);
     }
 
-    public void removeFooterView(int position){
+    public void removeFooterView(int position) {
         removeItem(position);
     }
 }

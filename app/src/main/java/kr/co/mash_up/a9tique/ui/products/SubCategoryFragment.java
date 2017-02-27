@@ -2,10 +2,12 @@ package kr.co.mash_up.a9tique.ui.products;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.List;
@@ -108,16 +110,15 @@ public class SubCategoryFragment extends BaseFragment implements ProductsContrac
         mRvProducts.setEmptyView(mEmptyView);
 
         mProductListAdapter = new ProductListAdapter(getActivity());
-        mProductListAdapter.setOnItemClickListener((product, position) -> {
+        mProductListAdapter.setOnItemClickListener((product, position, shareImageView, transitionName) -> {
             if (product.isSeller()) {
-                mPresenter.detailMineProductSeller(product);
+                mPresenter.detailMineProductSeller(product, shareImageView, transitionName);
             } else {
                 if (AccountManager.getInstance().getLevel() == User.Level.SELLER) {
-                    mPresenter.detailOtherProductSeller(product);
+                    mPresenter.detailOtherProductSeller(product, shareImageView, transitionName);
                 } else {
-                    mPresenter.detailProductCustomer(product);
+                    mPresenter.detailProductCustomer(product, shareImageView, transitionName);
                 }
-
             }
         });
         mRvProducts.setAdapter(mProductListAdapter);
@@ -198,24 +199,39 @@ public class SubCategoryFragment extends BaseFragment implements ProductsContrac
     }
 
     @Override
-    public void showMineProductDetailForSeller(Product product) {
+    public void showMineProductDetailForSeller(Product product, ImageView shareImageView, String transitionName) {
         Intent intent = new Intent(getActivity(), SellerMineProductDetailActivity.class);
         intent.putExtra(Constants.PRODUCT, product);
-        startActivityForResult(intent, SellerMineProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
+        intent.putExtra(Constants.TRANSITION_NAME, transitionName);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                getActivity(),
+                shareImageView,
+                transitionName);
+        startActivityForResult(intent, SellerMineProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT, options.toBundle());
     }
 
     @Override
-    public void showOtherProductDetailForSeller(Product product) {
+    public void showOtherProductDetailForSeller(Product product, ImageView shareImageView, String transitionName) {
         Intent intent = new Intent(getActivity(), SellerOtherProductDetailActivity.class);
         intent.putExtra(Constants.PRODUCT, product);
-        startActivity(intent);
+        intent.putExtra(Constants.TRANSITION_NAME, transitionName);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                getActivity(),
+                shareImageView,
+                transitionName);
+        startActivity(intent, options.toBundle());
     }
 
     @Override
-    public void showProductDetailForCustomer(Product product) {
+    public void showProductDetailForCustomer(Product product, ImageView shareImageView, String transitionName) {
         Intent intent = new Intent(getActivity(), CustomerProductDetailActivity.class);
         intent.putExtra(Constants.PRODUCT, product);
-        startActivity(intent);
+        intent.putExtra(Constants.TRANSITION_NAME, transitionName);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                getActivity(),
+                shareImageView,
+                transitionName);
+        startActivity(intent, options.toBundle());
     }
 
     @Override

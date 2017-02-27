@@ -1,8 +1,10 @@
 package kr.co.mash_up.a9tique.ui.zzimproducts;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.ImageView;
 
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
@@ -38,10 +40,12 @@ public class ZzimProductsPresenter implements ZzimProductsContract.Presenter {
     @Override
     public void result(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            //Todo: 상세정보에서 찜 제거 했을 경우
             case CustomerProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT:
-                int position = data.getIntExtra("position", 0);
-                mView.removeProduct(position);
+                if(resultCode == Activity.RESULT_OK){
+                    //Todo: 상세정보에서 찜 제거 했을 경우
+                    int position = data.getIntExtra("position", 0);
+                    mView.removeProduct(position);
+                }
         }
     }
 
@@ -136,8 +140,8 @@ public class ZzimProductsPresenter implements ZzimProductsContract.Presenter {
     }
 
     @Override
-    public void detailProduct(Product product) {
-        mView.showProductDetail(product);
+    public void detailProduct(Product product, ImageView shareImageView, String transitionName) {
+        mView.showProductDetail(product, shareImageView, transitionName);
     }
 
     @Override

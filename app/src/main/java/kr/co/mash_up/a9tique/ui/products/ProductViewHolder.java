@@ -1,5 +1,6 @@
 package kr.co.mash_up.a9tique.ui.products;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,7 @@ import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseViewHolder;
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
-import kr.co.mash_up.a9tique.ui.OnItemClickListener;
+import kr.co.mash_up.a9tique.ui.OnItemClickTransitionListener;
 
 /**
  * Created by Dong on 2016-11-12.
@@ -44,15 +45,15 @@ public class ProductViewHolder extends BaseViewHolder<Product> {
     @BindView(R.id.rl_sold_out_filter)
     RelativeLayout mRlSoldoutFilter;
 
-    private OnItemClickListener<Product> mOnItemClickListener;
+    private OnItemClickTransitionListener<Product> mOnItemClickListener;
 
-    public static ProductViewHolder newInstance(@NonNull ViewGroup parent, OnItemClickListener<Product> listener) {
+    public static ProductViewHolder newInstance(@NonNull ViewGroup parent, OnItemClickTransitionListener<Product> listener) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_content_product_list, parent, false);
         return new ProductViewHolder(itemView, listener);
     }
 
-    public ProductViewHolder(View itemView, OnItemClickListener<Product> listener) {
+    public ProductViewHolder(View itemView, OnItemClickTransitionListener<Product> listener) {
         super(itemView);
 
         mOnItemClickListener = listener;
@@ -82,10 +83,11 @@ public class ProductViewHolder extends BaseViewHolder<Product> {
             mRlSoldoutFilter.setVisibility(View.VISIBLE);
         }
 
-        itemView.setOnClickListener(view -> {
-            if (mOnItemClickListener != null) {
-                mOnItemClickListener.onClick(product, getAdapterPosition());
-            }
-        });
+        String transitionName = Constants.PRODUCT_IMAGE_TRANSITION + String.valueOf(getAdapterPosition());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ivThumbnail.setTransitionName(transitionName);
+        }
+
+        itemView.setOnClickListener(view -> mOnItemClickListener.onClick(product, getAdapterPosition(), ivThumbnail, transitionName));
     }
 }

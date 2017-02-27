@@ -1,5 +1,6 @@
 package kr.co.mash_up.a9tique.ui.sellproducts;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
@@ -94,7 +95,12 @@ public class SellProductsViewHolder extends BaseViewHolder<SellProduct> {
                     .into(mIvProductThumbnail);
         }
 
-        itemView.setOnClickListener(view -> mOnItemClickListener.onClick(sellProduct, getAdapterPosition()));
+        String transitionName = Constants.PRODUCT_IMAGE_TRANSITION + String.valueOf(getAdapterPosition());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mIvProductThumbnail.setTransitionName(transitionName);
+        }
+
+        itemView.setOnClickListener(view -> mOnItemClickListener.onClick(sellProduct, getAdapterPosition(), mIvProductThumbnail, transitionName));
         mBtnProductRemove.setOnClickListener(view -> mOnItemClickListener.onRemove(sellProduct, getAdapterPosition()));
         mBtnProductModify.setOnClickListener(view -> mOnItemClickListener.onUpdate(sellProduct, getAdapterPosition()));
 

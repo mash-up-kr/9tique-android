@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.ImageView;
 
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
@@ -156,18 +157,18 @@ public class ProductsPresenter implements ProductsContract.Presenter {
     }
 
     @Override
-    public void detailMineProductSeller(Product product) {
-        mView.showMineProductDetailForSeller(product);
+    public void detailMineProductSeller(Product product, ImageView shareImageView, String transitionName) {
+        mView.showMineProductDetailForSeller(product, shareImageView, transitionName);
     }
 
     @Override
-    public void detailOtherProductSeller(Product product) {
-        mView.showOtherProductDetailForSeller(product);
+    public void detailOtherProductSeller(Product product, ImageView shareImageView, String transitionName) {
+        mView.showOtherProductDetailForSeller(product, shareImageView, transitionName);
     }
 
     @Override
-    public void detailProductCustomer(Product product) {
-        mView.showProductDetailForCustomer(product);
+    public void detailProductCustomer(Product product, ImageView shareImageView, String transitionName) {
+        mView.showProductDetailForCustomer(product, shareImageView, transitionName);
     }
 
     @Override

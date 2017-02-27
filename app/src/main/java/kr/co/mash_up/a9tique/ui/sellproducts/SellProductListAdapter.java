@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class SellProductListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public static final int VIEW_TYPE_FOOTER = 1;
 
     public interface OnItemClickListener<T> {
-        void onClick(T t, int position);
+        void onClick(T t, int position, ImageView shareImageView, String transitionName);
 
         void onRemove(T t, int position);
 

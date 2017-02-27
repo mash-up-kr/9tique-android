@@ -3,12 +3,14 @@ package kr.co.mash_up.a9tique.ui.sellproducts;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,10 +26,10 @@ import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.Product;
-import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
-import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
 import kr.co.mash_up.a9tique.ui.ConfirmationDialogFragment;
+import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
 import kr.co.mash_up.a9tique.ui.OrientationSpacingItemDecoration;
+import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
 import kr.co.mash_up.a9tique.ui.productdetail.seller_mine.SellerMineProductDetailActivity;
 import kr.co.mash_up.a9tique.util.CheckNonNullUtil;
 import kr.co.mash_up.a9tique.util.ProgressUtil;
@@ -118,9 +120,10 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
         mSellProductListAdapter = new SellProductListAdapter(getActivity());
         mRvProducts.setAdapter(mSellProductListAdapter);
         mSellProductListAdapter.setOnItemClickListener(new SellProductListAdapter.OnItemClickListener<SellProduct>() {
+
             @Override
-            public void onClick(SellProduct sellProduct, int position) {
-                mPresenter.detailProduct(sellProduct);
+            public void onClick(SellProduct sellProduct, int position, ImageView shareImageView, String transitionName) {
+                mPresenter.detailProduct(sellProduct, shareImageView, transitionName);
             }
 
             @Override
@@ -266,10 +269,15 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
     }
 
     @Override
-    public void showProductDetail(Product product) {
+    public void showProductDetail(Product product, ImageView shareImageView, String transitionName) {
         Intent intent = new Intent(getActivity(), SellerMineProductDetailActivity.class);
         intent.putExtra(Constants.PRODUCT, product);
-        startActivityForResult(intent, SellerMineProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT);
+        intent.putExtra(Constants.TRANSITION_NAME, transitionName);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                getActivity(),
+                shareImageView,
+                transitionName);
+        startActivityForResult(intent, SellerMineProductDetailActivity.REQUEST_CODE_DETAIL_RPODUCT, options.toBundle());
     }
 
     @Override

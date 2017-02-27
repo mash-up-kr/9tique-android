@@ -1,6 +1,7 @@
 package kr.co.mash_up.a9tique.ui.products;
 
 import android.content.Intent;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -33,11 +34,11 @@ public interface ProductsContract {
 
         void loadMoreProducts(int loadingFooterPosition);
 
-        void detailMineProductSeller(Product product);
+        void detailMineProductSeller(Product product, ImageView shareImageView, String transitionName);
 
-        void detailOtherProductSeller(Product product);
+        void detailOtherProductSeller(Product product, ImageView shareImageView, String transitionName);
 
-        void detailProductCustomer(Product product);
+        void detailProductCustomer(Product product, ImageView shareImageView, String transitionName);
     }
 
     /**
@@ -59,11 +60,11 @@ public interface ProductsContract {
 
         void showNoProducts();
 
-        void showMineProductDetailForSeller(Product product);
+        void showMineProductDetailForSeller(Product product, ImageView shareImageView, String transitionName);
 
-        void showOtherProductDetailForSeller(Product product);
+        void showOtherProductDetailForSeller(Product product, ImageView shareImageView, String transitionName);
 
-        void showProductDetailForCustomer(Product product);
+        void showProductDetailForCustomer(Product product, ImageView shareImageView, String transitionName);
 
         void showSuccessfullyRemovedMessage();
 

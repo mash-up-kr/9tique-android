@@ -30,9 +30,12 @@ public final class Constants {
     public static final int PRODUCT_CREATE_SUCCESS = 3006;
     public static final int PRODUCT_CREATE_FAILURE = 3007;
 
+    public static final String TRANSITION_NAME = "transitionName";
+
     // Product
     public static final String PRODUCT = "product";
     public static final String PRODUCT_ID = "productId";
+    public static final String PRODUCT_IMAGE_TRANSITION = "product_image_";
 
     public static final String SELLER = "seller";
 }

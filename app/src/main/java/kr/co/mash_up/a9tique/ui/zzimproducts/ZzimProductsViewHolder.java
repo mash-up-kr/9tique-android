@@ -1,5 +1,6 @@
 package kr.co.mash_up.a9tique.ui.zzimproducts;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,7 +81,12 @@ public class ZzimProductsViewHolder extends BaseViewHolder<Product> {
                     .into(mIvProductThumbnail);
         }
 
-        itemView.setOnClickListener(view -> mOnItemClickListener.onClick(product, getAdapterPosition()));
+        String transitionName = Constants.PRODUCT_IMAGE_TRANSITION + String.valueOf(getAdapterPosition());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mIvProductThumbnail.setTransitionName(transitionName);
+        }
+
+        itemView.setOnClickListener(view -> mOnItemClickListener.onClick(product, getAdapterPosition(), mIvProductThumbnail, transitionName));
         mBtnProductRemove.setOnClickListener(view -> mOnItemClickListener.onRemove(product, getAdapterPosition()));
         mBtnProductInquire.setOnClickListener(view -> mOnItemClickListener.onInquire(product, getAdapterPosition()));
 

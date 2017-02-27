@@ -12,10 +12,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
         android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
         android:paddingTop="8dp">
+        <!--android:paddingRight="16dp"-->
 
         <ImageView
             android:id="@+id/iv_navigate_up"
@@ -23,17 +23,34 @@
             android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:scaleType="fitXY"
             android:src="@drawable/ic_arrow_left_black"/>
 
-        <ImageView
-            android:id="@+id/iv_zzim"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+        <com.like.LikeButton
+            android:id="@+id/lb_zzim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:scaleType="fitXY"/>
-        <!--android:src="@drawable/icn_heart"/>-->
+            android:layout_centerVertical="true"
+            app:anim_scale_factor="2.5"
+            app:circle_end_color="@color/tulip_tree"
+            app:circle_start_color="@color/colorPrimary"
+            app:dots_primary_color="@color/colorPrimary"
+            app:dots_secondary_color="@color/colorAccent"
+            app:icon_size="25dp"
+            app:like_drawable="@drawable/ic_heart_fill_black"
+            app:unlike_drawable="@drawable/ic_heart_empty_black"/>
+
+        <!--<ImageView-->
+        <!--android:id="@+id/iv_zzim"-->
+        <!--android:layout_width="25dp"-->
+        <!--android:layout_height="25dp"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:src="@drawable/ic_heart_empty_black"/>-->
     </RelativeLayout>
 
 </android.support.v7.widget.Toolbar>

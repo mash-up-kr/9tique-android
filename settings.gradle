@@ -1,1 +1,1 @@
-include ':app', ':FishBun'
+include ':app', ':FishBun', ':likebutton'
