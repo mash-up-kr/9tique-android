@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -21,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import kr.co.mash_up.a9tique.R;
+import kr.co.mash_up.a9tique.service.TokenRefreshService;
 import kr.co.mash_up.a9tique.common.AccountManager;
 import kr.co.mash_up.a9tique.common.Constants;
 import kr.co.mash_up.a9tique.data.User;
@@ -58,10 +60,13 @@ public class LoginActivity extends AppCompatActivity {
         //  자동 로그인, access token이 저장되 있으면 바로 메인으로 넘어간다.
         String accessToken = PreferencesUtils.getString(LoginActivity.this, Constants.PREF_ACCESS_TOKEN, "");
         String strUserLevel = PreferencesUtils.getString(LoginActivity.this, Constants.PREF_USER_LEVEL, "");
-        //Todo: token 만료일 확인하고 서버로 token refresh request.
+        Log.e(TAG, accessToken + " " + strUserLevel);
 
         if (strUserLevel != null && !"".equals(strUserLevel)) {
-            AccountManager.getInstance().updateAccountInformation(accessToken, strUserLevel);
+            AccountManager.getInstance().initAccountInformation(accessToken, strUserLevel);
+
+            // 로그인 기록이 있으면 토큰 갱신
+            startService(new Intent(getApplicationContext(), TokenRefreshService.class));
             redirectProductListActivity();
         } else {
 //            mSessionCallback = new SessionCallback();
@@ -90,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(@Nullable User user) {
                                         ProgressUtil.hideProgressDialog();
-                                        initAccountData(user);
+                                        AccountManager.getInstance().updateAccountInformation(LoginActivity.this, user);
                                         redirectProductListActivity();
                                     }
 
@@ -193,19 +198,5 @@ public class LoginActivity extends AppCompatActivity {
     private void redirectProductListActivity() {
         startActivity(new Intent(LoginActivity.this, ProductsActivity.class));
         finish();
-    }
-
-    /**
-     * 사용자 정보를 SharedPreferences와 AccountManager에 setting
-     *
-     * @param user setting할 사용자 정보
-     */
-    private void initAccountData(User user) {
-        String accessToken = user.getAccessToken();
-        String strUserLevel = user.getUserLevel();
-
-        PreferencesUtils.putString(LoginActivity.this, Constants.PREF_ACCESS_TOKEN, accessToken);
-        PreferencesUtils.putString(LoginActivity.this, Constants.PREF_USER_LEVEL, strUserLevel);
-        AccountManager.getInstance().updateAccountInformation(accessToken, strUserLevel);
     }
 }

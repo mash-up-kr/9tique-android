@@ -107,12 +107,7 @@ public class KaKaoSignupActivity extends AppCompatActivity {
      * @param user setting할 사용자 정보
      */
     private void initAccountData(User user) {
-        String accessToken = user.getAccessToken();
-        String strUserLevel = user.getUserLevel();
-
-        PreferencesUtils.putString(KaKaoSignupActivity.this, Constants.PREF_ACCESS_TOKEN, accessToken);
-        PreferencesUtils.putString(KaKaoSignupActivity.this, Constants.PREF_USER_LEVEL, strUserLevel);
-        mAccountManager.updateAccountInformation(accessToken, strUserLevel);
+        mAccountManager.updateAccountInformation(KaKaoSignupActivity.this, user);
     }
 
     /**

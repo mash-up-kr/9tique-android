@@ -40,15 +40,6 @@ import rx.Observable;
  */
 public interface BackendService {
 
-    /****************** Category ********************/
-    /**
-     * 카테고리 목록 조회
-     *
-     * @return 카테고리 목록
-     */
-    @GET("api/categories")
-    Observable<JsonObject> getCategories();
-
     /******************
      * Product Image
      ********************/
@@ -122,12 +113,14 @@ public interface BackendService {
     @POST("api/users/login")
     Observable<JsonObject> login(@Body RequestUser user);
 
+    @GET("api/users/refresh")
+    Observable<JsonObject> refreshAccessToken();
+
     /**
      * 판매자 권한 획득
      *
      * @return access token, user level
      */
-
     @PUT("api/sellers/register")
     Observable<JsonObject> registerSeller(@Body RequestAuthenticationCode authenticationCode);
 

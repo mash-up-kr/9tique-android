@@ -199,14 +199,12 @@ public class SettingFragment extends BaseFragment implements SettingContract.Vie
         SnackbarUtil.showMessage(getActivity(), getView(), "판매자 등록 성공", "", null);
     }
 
+    /**
+     * 판매자 인증후 access token, user level 저장
+     */
     @Override
     public void saveUserAccount(User user) {
-        String accessToken = user.getAccessToken();
-        String userLevel = user.getUserLevel();
-
-        PreferencesUtils.putString(getActivity(), Constants.PREF_ACCESS_TOKEN, accessToken);
-        PreferencesUtils.putString(getActivity(), Constants.PREF_USER_LEVEL, userLevel);
-        mAccountManager.updateAccountInformation(accessToken, userLevel);
+        mAccountManager.updateAccountInformation(getActivity(), user);
     }
 
     @Override

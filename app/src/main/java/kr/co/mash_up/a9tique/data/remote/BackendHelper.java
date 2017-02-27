@@ -86,26 +86,6 @@ public class BackendHelper {
         return logging;
     }
 
-    //Todo: implements
-    public void getCategories(ResultCallback callback) {
-        Observable<JsonObject> call = service.getCategories();
-        call.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(jaRoot -> {
-
-                    if (jaRoot != null) {
-                        Log.e(TAG, jaRoot.toString());
-
-//                        callback.onSuccess();
-                    } else {
-                        callback.onFailure();
-                    }
-
-                }, throwable -> {
-                    Log.e(TAG, "getCategories " + throwable.getMessage());
-                });
-    }
-
     public void login(RequestUser user, ResultCallback<User> callback) {
         Observable<JsonObject> call = service.login(user);
         call.subscribeOn(Schedulers.io())
@@ -124,6 +104,27 @@ public class BackendHelper {
                     }
                 }, throwable -> {
                     Log.e(TAG, "login " + throwable.getMessage());
+                    callback.onFailure();
+                });
+    }
+
+    public void refreshAccessToken(ResultCallback<User> callback) {
+        Observable<JsonObject> call = service.refreshAccessToken();
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jsonObject -> {
+                    Integer statusCode = jsonObject.get("status").getAsInt();
+                    Log.d(TAG, "status code: " + statusCode);
+
+                    if (statusCode / 100 == 2) {
+                        User resUser = new Gson().fromJson(jsonObject.get("item"), User.class);
+
+                        callback.onSuccess(resUser);
+                    } else {
+                        callback.onFailure();
+                    }
+                }, throwable -> {
+                    Log.e(TAG, "refreshAccessToken " + throwable.getMessage());
                     callback.onFailure();
                 });
     }

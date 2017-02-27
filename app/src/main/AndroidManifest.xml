@@ -18,7 +18,7 @@
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key"/>
-        <!--facebook app id-->
+        <!-- facebook app id -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
@@ -155,11 +155,18 @@
         <activity
             android:name=".ui.productdetail.customer.CustomerProductDetailActivity"
             android:parentActivityName=".ui.products.ProductsActivity"
-            android:theme="@style/AppTheme.NoActionBar">>
+            android:theme="@style/AppTheme.NoActionBar">
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="kr.co.mash_up.a9tique.ui.products.ProductsActivity"/>
         </activity>
+
+        <service
+            android:name=".service.TokenRefreshService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>
