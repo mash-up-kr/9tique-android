@@ -25,6 +25,7 @@ import butterknife.OnClick;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.common.Constants;
+import kr.co.mash_up.a9tique.common.eventbus.EventNetworkStatus;
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.ui.ConfirmationDialogFragment;
 import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
@@ -377,5 +378,12 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
     @Override
     public void refreshProducts() {
         mPresenter.loadProducts(true);
+    }
+
+    @Override
+    protected void handleEventFromBus(Object event) {
+        if(event instanceof EventNetworkStatus){
+            SnackbarUtil.showMessage(getActivity(), getView(), "네트워크 상태가 불안정합니다", "" , null);
+        }
     }
 }

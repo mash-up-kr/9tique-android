@@ -1,6 +1,7 @@
 package kr.co.mash_up.a9tique.ui.setting.aboutus;
 
 import android.support.annotation.UiThread;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -9,8 +10,18 @@ import android.widget.TextView;
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
+import kr.co.mash_up.a9tique.common.eventbus.EventNetworkStatus;
+import kr.co.mash_up.a9tique.common.eventbus.RxEventBus;
+import kr.co.mash_up.a9tique.ui.login.LoginActivity;
+import kr.co.mash_up.a9tique.util.SnackbarUtil;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class About9tiqueActivity extends BaseActivity {
+
+    @BindView(R.id.cl_root)
+    CoordinatorLayout mClRoot;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -77,5 +88,49 @@ public class About9tiqueActivity extends BaseActivity {
         // Todo: 전환 애니메이션 구현
 //        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         return true;
+    }
+
+    // Todo: 프래그먼트를 만들어서 아래코드를 지우자
+    private Subscription mBusSubscription;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        unsubscribeBus();
+        mBusSubscription = RxEventBus.getInstance().getBusObservable()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            if (o == null) {
+                                return;
+                            }
+                            handleEventFromBus(o);
+                        },
+                        this::handleError,
+                        this::handleCompleted);
+    }
+
+    @Override
+    public void onStop() {
+        unsubscribeBus();
+        super.onStop();
+    }
+
+    private void unsubscribeBus() {
+        if (mBusSubscription != null && !mBusSubscription.isUnsubscribed()) {
+            mBusSubscription.unsubscribe();
+        }
+    }
+
+    protected void handleEventFromBus(Object event) {
+        if(event instanceof EventNetworkStatus){
+            SnackbarUtil.showMessage(About9tiqueActivity.this, mClRoot, "네트워크 상태가 불안정합니다", "" , null);
+        }
+    }
+
+    protected void handleError(Throwable t) {
+    }
+
+    protected void handleCompleted() {
     }
 }

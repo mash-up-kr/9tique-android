@@ -3,6 +3,7 @@ package kr.co.mash_up.a9tique.ui.setting.inquire;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.UiThread;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.ActionBar;
@@ -17,11 +18,21 @@ import butterknife.BindDimen;
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
+import kr.co.mash_up.a9tique.common.eventbus.EventNetworkStatus;
+import kr.co.mash_up.a9tique.common.eventbus.RxEventBus;
 import kr.co.mash_up.a9tique.ui.OrientationSpacingItemDecoration;
 import kr.co.mash_up.a9tique.data.Menu;
 import kr.co.mash_up.a9tique.ui.setting.MenuListAdapter;
+import kr.co.mash_up.a9tique.ui.setting.agreement.AgreementActivity;
+import kr.co.mash_up.a9tique.util.SnackbarUtil;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class InquireActivity extends BaseActivity {
+
+    @BindView(R.id.cl_root)
+    CoordinatorLayout mClRoot;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -151,5 +162,49 @@ public class InquireActivity extends BaseActivity {
         Intent intent = new Intent();
         intent.setData(Uri.parse(openChatLink));
         startActivity(intent);
+    }
+
+    // Todo: 프래그먼트를 만들어서 아래코드를 지우자
+    private Subscription mBusSubscription;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        unsubscribeBus();
+        mBusSubscription = RxEventBus.getInstance().getBusObservable()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            if (o == null) {
+                                return;
+                            }
+                            handleEventFromBus(o);
+                        },
+                        this::handleError,
+                        this::handleCompleted);
+    }
+
+    @Override
+    public void onStop() {
+        unsubscribeBus();
+        super.onStop();
+    }
+
+    private void unsubscribeBus() {
+        if (mBusSubscription != null && !mBusSubscription.isUnsubscribed()) {
+            mBusSubscription.unsubscribe();
+        }
+    }
+
+    protected void handleEventFromBus(Object event) {
+        if(event instanceof EventNetworkStatus){
+            SnackbarUtil.showMessage(InquireActivity.this, mClRoot, "네트워크 상태가 불안정합니다", "" , null);
+        }
+    }
+
+    protected void handleError(Throwable t) {
+    }
+
+    protected void handleCompleted() {
     }
 }

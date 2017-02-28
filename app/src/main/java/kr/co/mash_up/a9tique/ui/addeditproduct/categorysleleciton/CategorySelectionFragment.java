@@ -15,9 +15,11 @@ import java.util.List;
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
+import kr.co.mash_up.a9tique.common.eventbus.EventNetworkStatus;
 import kr.co.mash_up.a9tique.data.MainCategory;
 import kr.co.mash_up.a9tique.data.SubCategory;
 import kr.co.mash_up.a9tique.ui.OnItemClickListener;
+import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 
 public class CategorySelectionFragment extends BaseFragment {
@@ -152,5 +154,12 @@ public class CategorySelectionFragment extends BaseFragment {
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         mCategoryListAdapter.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void handleEventFromBus(Object event) {
+        if(event instanceof EventNetworkStatus){
+            SnackbarUtil.showMessage(getActivity(), getView(), "네트워크 상태가 불안정합니다", "" , null);
+        }
     }
 }

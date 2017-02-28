@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.design.widget.CoordinatorLayout
     android:id="@+id/cl_root"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -38,16 +38,26 @@
             android:paddingRight="55dp"
             android:paddingTop="174dp">
 
-            <Button
-                android:id="@+id/btn_fb_login"
+            <kr.co.mash_up.a9tique.ui.widget.LoginButton
+                android:id="@+id/lb_fb_login"
                 android:layout_width="250dp"
                 android:layout_height="55dp"
-                android:background="@drawable/shape_btn_login_normal"
-                android:foreground="@drawable/ripple_btn_login"
-                android:text="페이스북으로 계속하기"
-                android:textColor="@color/mine_shaft"
-                android:textSize="15sp"
-                android:textStyle="bold"/>
+                app:lb_foreground="@drawable/ripple_btn_login"
+                app:lb_background="@drawable/shape_btn_login_fb"
+                app:lb_icon="@drawable/ic_fb"
+                app:lb_text="페이스북으로 계속하기"
+                app:lb_textColor="@color/chambray"/>
+
+            <!--<Button-->
+            <!--android:id="@+id/btn_fb_login"-->
+            <!--android:layout_width="250dp"-->
+            <!--android:layout_height="55dp"-->
+            <!--android:background="@drawable/shape_btn_login_normal"-->
+            <!--android:foreground="@drawable/ripple_btn_login"-->
+            <!--android:text="페이스북으로 계속하기"-->
+            <!--android:textColor="@color/mine_shaft"-->
+            <!--android:textSize="15sp"-->
+            <!--android:textStyle="bold"/>-->
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/fb_login"

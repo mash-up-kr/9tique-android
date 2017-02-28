@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="LoginButton">
+        <attr name="lb_background" format="reference|integer"/>
+        <attr name="lb_foreground" format="reference|integer"/>
+        <attr name="lb_icon" format="reference|integer"/>
+        <attr name="lb_text" format="reference|string"/>
+        <attr name="lb_textColor" format="reference|integer"/>
+    </declare-styleable>
+</resources>

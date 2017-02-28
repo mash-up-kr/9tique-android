@@ -14,6 +14,7 @@ import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.common.AccountManager;
 import kr.co.mash_up.a9tique.common.Constants;
+import kr.co.mash_up.a9tique.common.eventbus.EventNetworkStatus;
 import kr.co.mash_up.a9tique.data.User;
 import kr.co.mash_up.a9tique.ui.ConfirmationDialogFragment;
 import kr.co.mash_up.a9tique.ui.login.LoginActivity;
@@ -232,5 +233,12 @@ public class SettingFragment extends BaseFragment implements SettingContract.Vie
     @Override
     public void setPresenter(SettingContract.Presenter presenter) {
         mPresenter = CheckNonNullUtil.checkNotNull(presenter);
+    }
+
+    @Override
+    protected void handleEventFromBus(Object event) {
+        if(event instanceof EventNetworkStatus){
+            SnackbarUtil.showMessage(getActivity(), getView(), "네트워크 상태가 불안정합니다", "" , null);
+        }
     }
 }

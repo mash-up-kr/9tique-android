@@ -22,6 +22,9 @@ public class Shop implements Parcelable {
     @SerializedName("phone")
     private String phone;
 
+    @SerializedName("kakao_open_chat_url")
+    private String kakaoOpenChatUrl;
+
     public Long getId() {
         return id;
     }
@@ -54,6 +57,14 @@ public class Shop implements Parcelable {
         this.phone = phone;
     }
 
+    public String getKakaoOpenChatUrl() {
+        return kakaoOpenChatUrl;
+    }
+
+    public void setKakaoOpenChatUrl(String kakaoOpenChatUrl) {
+        this.kakaoOpenChatUrl = kakaoOpenChatUrl;
+    }
+
     public Shop() {
     }
 
@@ -68,6 +79,7 @@ public class Shop implements Parcelable {
         name = in.readString();
         info = in.readString();
         phone = in.readString();
+        kakaoOpenChatUrl = in.readString();
     }
 
     public static final Creator<Shop> CREATOR = new Creator<Shop>() {
@@ -93,6 +105,7 @@ public class Shop implements Parcelable {
         parcel.writeString(name);
         parcel.writeString(info);
         parcel.writeString(phone);
+        parcel.writeString(kakaoOpenChatUrl);
     }
 
     @Override
@@ -102,6 +115,7 @@ public class Shop implements Parcelable {
                 ", name='" + name + '\'' +
                 ", info='" + info + '\'' +
                 ", phone='" + phone + '\'' +
+                ", kakaoOpenChatUrl='" + kakaoOpenChatUrl + '\'' +
                 '}';
     }
 }

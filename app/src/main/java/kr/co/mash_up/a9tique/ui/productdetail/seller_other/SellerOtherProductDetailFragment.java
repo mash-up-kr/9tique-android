@@ -22,10 +22,11 @@ import butterknife.OnClick;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.common.Constants;
+import kr.co.mash_up.a9tique.common.eventbus.EventNetworkStatus;
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.data.ProductImage;
-import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
 import kr.co.mash_up.a9tique.ui.InquireSelectionDialogFragment;
+import kr.co.mash_up.a9tique.ui.addeditproduct.AddEditProductActivity;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
 
 
@@ -156,6 +157,13 @@ public class SellerOtherProductDetailFragment extends BaseFragment {
                     //Todo: show message - 문자 app이 없습니다.. 설치해주세요
                 }
             }
+
+            @Override
+            public void onClickKakaoOpenChat() {
+                Intent intent = new Intent();
+                intent.setData(Uri.parse(mProduct.getShop().getKakaoOpenChatUrl()));
+                startActivity(intent);
+            }
         });
         dlgInquire.setTargetFragment(SellerOtherProductDetailFragment.this, 0);
         dlgInquire.show(getChildFragmentManager(), InquireSelectionDialogFragment.TAG);
@@ -200,6 +208,13 @@ public class SellerOtherProductDetailFragment extends BaseFragment {
                     SnackbarUtil.showMessage(getActivity(), getView(), "상품 수정 실패", "", null);
                 }
                 break;
+        }
+    }
+
+    @Override
+    protected void handleEventFromBus(Object event) {
+        if (event instanceof EventNetworkStatus) {
+            SnackbarUtil.showMessage(getActivity(), getView(), "네트워크 상태가 불안정합니다", "", null);
         }
     }
 }

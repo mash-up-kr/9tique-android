@@ -36,6 +36,8 @@ public class InquireSelectionDialogFragment extends DialogFragment {
         void onClickCallPhone();
 
         void onClickSendMessage();
+
+        void onClickKakaoOpenChat();
     }
 
     private Callback callback;
@@ -128,6 +130,14 @@ public class InquireSelectionDialogFragment extends DialogFragment {
     void onClickSendMessage() {
         if (callback != null) {
             callback.onClickSendMessage();
+        }
+        dismiss();
+    }
+
+    @OnClick(R.id.ll_kakao_open_chat)
+    void onClickKakaoOpenChat() {
+        if (callback != null) {
+            callback.onClickKakaoOpenChat();
         }
         dismiss();
     }

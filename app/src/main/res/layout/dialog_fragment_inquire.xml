@@ -74,4 +74,28 @@
             android:textSize="12sp"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_kakao_open_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_send_message"
+        android:layout_marginTop="17dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_chat"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="카카오톡"
+            android:textColor="@color/black"
+            android:textSize="12sp"/>
+    </LinearLayout>
+
 </RelativeLayout>

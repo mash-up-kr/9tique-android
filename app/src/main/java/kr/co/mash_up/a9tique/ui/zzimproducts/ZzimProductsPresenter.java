@@ -190,4 +190,9 @@ public class ZzimProductsPresenter implements ZzimProductsContract.Presenter {
     public void sendMessage(Product product) {
         mView.showSendMessage(product.getShop().getPhone());
     }
+
+    @Override
+    public void kakaoOpenChat(Product product) {
+        mView.showKakaoOpenChat(product.getShop().getKakaoOpenChatUrl());
+    }
 }

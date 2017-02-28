@@ -38,6 +38,8 @@ public interface ZzimProductsContract {
         void callPhone(Product product);
 
         void sendMessage(Product product);
+
+        void kakaoOpenChat(Product product);
     }
 
     /**
@@ -78,5 +80,7 @@ public interface ZzimProductsContract {
         void showCallPhone(String phoneNumber);
 
         void showSendMessage(String phoneNumber);
+
+        void showKakaoOpenChat(String kakaoOpenChatUrl);
     }
 }

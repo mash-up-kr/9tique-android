@@ -13,6 +13,7 @@ import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.common.Constants;
+import kr.co.mash_up.a9tique.common.eventbus.EventNetworkStatus;
 import kr.co.mash_up.a9tique.data.Seller;
 import kr.co.mash_up.a9tique.data.remote.RequestSeller;
 import kr.co.mash_up.a9tique.util.KeyboardUtils;
@@ -141,5 +142,12 @@ public class SellerInformationEditFragment extends BaseFragment implements Selle
     @Override
     public void setPresenter(SellerInformationEditContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    protected void handleEventFromBus(Object event) {
+        if(event instanceof EventNetworkStatus){
+            SnackbarUtil.showMessage(getActivity(), getView(), "네트워크 상태가 불안정합니다", "" , null);
+        }
     }
 }

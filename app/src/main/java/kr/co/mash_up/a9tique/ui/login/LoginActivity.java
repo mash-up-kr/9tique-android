@@ -4,8 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v4.app.Fragment;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -22,19 +21,25 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import kr.co.mash_up.a9tique.R;
-import kr.co.mash_up.a9tique.service.TokenRefreshService;
+import kr.co.mash_up.a9tique.base.ui.BaseActivity;
 import kr.co.mash_up.a9tique.common.AccountManager;
 import kr.co.mash_up.a9tique.common.Constants;
+import kr.co.mash_up.a9tique.common.eventbus.EventNetworkStatus;
+import kr.co.mash_up.a9tique.common.eventbus.RxEventBus;
 import kr.co.mash_up.a9tique.data.User;
 import kr.co.mash_up.a9tique.data.remote.BackendHelper;
 import kr.co.mash_up.a9tique.data.remote.RequestUser;
 import kr.co.mash_up.a9tique.data.remote.ResultCallback;
+import kr.co.mash_up.a9tique.service.TokenRefreshService;
 import kr.co.mash_up.a9tique.ui.products.ProductsActivity;
 import kr.co.mash_up.a9tique.util.PreferencesUtils;
 import kr.co.mash_up.a9tique.util.ProgressUtil;
 import kr.co.mash_up.a9tique.util.SnackbarUtil;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     public static final String TAG = LoginActivity.class.getSimpleName();
 
@@ -44,7 +49,6 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.fb_login)
     LoginButton mLoginButton;
 
-    private Unbinder mUnbinder;
     private CallbackManager mCallbackManager;  // facebook
 //    private SessionCallback mSessionCallback;  // kakao
 
@@ -60,7 +64,6 @@ public class LoginActivity extends AppCompatActivity {
         //  자동 로그인, access token이 저장되 있으면 바로 메인으로 넘어간다.
         String accessToken = PreferencesUtils.getString(LoginActivity.this, Constants.PREF_ACCESS_TOKEN, "");
         String strUserLevel = PreferencesUtils.getString(LoginActivity.this, Constants.PREF_USER_LEVEL, "");
-        Log.e(TAG, accessToken + " " + strUserLevel);
 
         if (strUserLevel != null && !"".equals(strUserLevel)) {
             AccountManager.getInstance().initAccountInformation(accessToken, strUserLevel);
@@ -74,8 +77,6 @@ public class LoginActivity extends AppCompatActivity {
 //            if (!Session.getCurrentSession().checkAndImplicitOpen()) {
 //                setContentView(R.layout.activity_login);
 //            }
-            setContentView(R.layout.activity_login);
-            mUnbinder = ButterKnife.bind(this);
 
             // 같은 폰에서 다른 id로 로그인하면??
             // 해당 이메일을 찾아서 회원가입 여부를 가려야한다, 이메일로 토큰을 찾자!
@@ -130,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Facebook oauth login
      */
-    @OnClick(R.id.btn_fb_login)
+    @OnClick(R.id.lb_fb_login)
     public void onClickFbLogin() {
         mLoginButton.performClick();
     }
@@ -149,13 +150,25 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (mUnbinder != null) {
-            mUnbinder.unbind();
-        }
         super.onDestroy();
 //        if (mSessionCallback != null) {
 //            Session.getCurrentSession().removeCallback(mSessionCallback);
 //        }
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initFragment(Fragment fragment) {
+        // Do nothing
     }
 
     /**
@@ -198,5 +211,49 @@ public class LoginActivity extends AppCompatActivity {
     private void redirectProductListActivity() {
         startActivity(new Intent(LoginActivity.this, ProductsActivity.class));
         finish();
+    }
+
+    // Todo: 프래그먼트를 만들어서 아래코드를 지우자
+    private Subscription mBusSubscription;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        unsubscribeBus();
+        mBusSubscription = RxEventBus.getInstance().getBusObservable()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            if (o == null) {
+                                return;
+                            }
+                            handleEventFromBus(o);
+                        },
+                        this::handleError,
+                        this::handleCompleted);
+    }
+
+    @Override
+    public void onStop() {
+        unsubscribeBus();
+        super.onStop();
+    }
+
+    private void unsubscribeBus() {
+        if (mBusSubscription != null && !mBusSubscription.isUnsubscribed()) {
+            mBusSubscription.unsubscribe();
+        }
+    }
+
+    protected void handleEventFromBus(Object event) {
+        if(event instanceof EventNetworkStatus){
+            SnackbarUtil.showMessage(LoginActivity.this, mClRoot, "네트워크 상태가 불안정합니다", "" , null);
+        }
+    }
+
+    protected void handleError(Throwable t) {
+    }
+
+    protected void handleCompleted() {
     }
 }

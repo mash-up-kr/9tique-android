@@ -1,11 +1,17 @@
 package kr.co.mash_up.a9tique;
 
 import android.app.Application;
+import android.content.IntentFilter;
+import android.util.Log;
+
+import kr.co.mash_up.a9tique.networkstatus.NetworkChangeReceiver;
 
 
 public class NinetiqueApplication extends Application {
 
     private static NinetiqueApplication instance;
+
+    private NetworkChangeReceiver mNetworkChangeReceiver;
 
     /**
      * singleton 애플리케이션 객체를 얻는다.
@@ -22,6 +28,12 @@ public class NinetiqueApplication extends Application {
         instance = this;
 
 //        KakaoSDK.init(new KakaoSDKAdapter());
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+//        filter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
+        mNetworkChangeReceiver = new NetworkChangeReceiver();
+        registerReceiver(mNetworkChangeReceiver, filter);
     }
 
     /**
@@ -30,6 +42,7 @@ public class NinetiqueApplication extends Application {
     @Override
     public void onTerminate() {
 //        ProductsRepository.destroyInstance();
+        unregisterReceiver(mNetworkChangeReceiver);
         instance = null;
         super.onTerminate();
     }

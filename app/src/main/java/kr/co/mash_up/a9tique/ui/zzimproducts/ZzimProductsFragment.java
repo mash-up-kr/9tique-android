@@ -19,11 +19,13 @@ import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.common.Constants;
+import kr.co.mash_up.a9tique.common.eventbus.EventNetworkStatus;
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.ui.ConfirmationDialogFragment;
 import kr.co.mash_up.a9tique.ui.EndlessRecyclerViewScrollListener;
 import kr.co.mash_up.a9tique.ui.InquireSelectionDialogFragment;
 import kr.co.mash_up.a9tique.ui.OrientationSpacingItemDecoration;
+import kr.co.mash_up.a9tique.ui.login.LoginActivity;
 import kr.co.mash_up.a9tique.ui.productdetail.customer.CustomerProductDetailActivity;
 import kr.co.mash_up.a9tique.ui.widget.RecyclerViewEmptySupport;
 import kr.co.mash_up.a9tique.util.CheckNonNullUtil;
@@ -213,6 +215,11 @@ public class ZzimProductsFragment extends BaseFragment implements ZzimProductsCo
             public void onClickSendMessage() {
                 mPresenter.sendMessage(product);
             }
+
+            @Override
+            public void onClickKakaoOpenChat() {
+                mPresenter.kakaoOpenChat(product);
+            }
         });
         dlgInquire.setTargetFragment(ZzimProductsFragment.this, 0);
         dlgInquire.show(getChildFragmentManager(), InquireSelectionDialogFragment.TAG);
@@ -258,6 +265,13 @@ public class ZzimProductsFragment extends BaseFragment implements ZzimProductsCo
     }
 
     @Override
+    public void showKakaoOpenChat(String kakaoOpenChatUrl) {
+        Intent intent = new Intent();
+        intent.setData(Uri.parse(kakaoOpenChatUrl));
+        startActivity(intent);
+    }
+
+    @Override
     public void showDialogRemoveProduct(Product product, int position) {
         ConfirmationDialogFragment dlgRemoveConfirmation
                 = ConfirmationDialogFragment.newInstance("찜 상품 삭제", "선택하신 상품을 삭제 하시겠습니까?");
@@ -279,5 +293,12 @@ public class ZzimProductsFragment extends BaseFragment implements ZzimProductsCo
     @Override
     public void setPresenter(ZzimProductsContract.Presenter presenter) {
         mPresenter = CheckNonNullUtil.checkNotNull(presenter);
+    }
+
+    @Override
+    protected void handleEventFromBus(Object event) {
+        if(event instanceof EventNetworkStatus){
+            SnackbarUtil.showMessage(getActivity(), getView(), "네트워크 상태가 불안정합니다", "" , null);
+        }
     }
 }
