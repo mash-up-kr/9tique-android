@@ -377,6 +377,7 @@ public class SellProductsFragment extends BaseFragment implements SellProductsCo
 
     @Override
     public void refreshProducts() {
+        mCbCheckAll.setChecked(false);
         mPresenter.loadProducts(true);
     }
 

@@ -1,5 +1,7 @@
 package kr.co.mash_up.a9tique.common;
 
+import kr.co.mash_up.a9tique.BuildConfig;
+
 /**
  * Created by Dong on 2016-12-13.
  */
@@ -7,7 +9,7 @@ package kr.co.mash_up.a9tique.common;
 public final class Constants {
 
     // network
-    public static final String END_POINT = "http://192.168.0.4:8080/";
+    public static final String END_POINT = BuildConfig.API_SERVER_IP;
     public static final int CONNECT_TIMEOUT = 10;
     public static final int READ_TIMEOUT = 10;
     public static final int WRITE_TIMEOUT = 10;

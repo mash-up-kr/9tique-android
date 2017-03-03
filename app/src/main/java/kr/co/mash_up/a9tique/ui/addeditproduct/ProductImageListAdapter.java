@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import kr.co.mash_up.a9tique.data.ProductImage;
+import rx.Observable;
 
 public class ProductImageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -25,10 +27,6 @@ public class ProductImageListAdapter extends RecyclerView.Adapter<RecyclerView.V
     private Context mContext;
 
     private OnItemClickListener mOnItemClickListener;
-
-    public List<ProductImage> getProductImages() {
-        return mProductImages;
-    }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
@@ -105,5 +103,15 @@ public class ProductImageListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private void setHeadViewHolder(){
         mProductImages.add(new ProductImage(VIEW_TYPE_HEADER));
+    }
+
+    public List<ProductImage> getProductImages() {
+        List<ProductImage> productImages = new ArrayList<>();
+        for(ProductImage productImage : mProductImages){
+            if(productImage.getViewType() == VIEW_TYPE_NORMAL){
+                productImages.add(productImage);
+            }
+        }
+        return productImages;
     }
 }
