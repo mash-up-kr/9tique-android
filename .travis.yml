@@ -25,6 +25,7 @@ sudo: false
 
 notifications:
   email: false
+  slack: 9tique:zNWQyKYJFt5NiAkbXb3Wx14S
 
  # cache between builds
 cache:
