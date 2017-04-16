@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import kr.co.mash_up.a9tique.common.eventbus.EventNetworkStatus;
 import kr.co.mash_up.a9tique.common.eventbus.RxEventBus;
+import kr.co.mash_up.a9tique.util.SnackbarUtil;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -84,6 +86,9 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void handleEventFromBus(Object event) {
+        if (event instanceof EventNetworkStatus) {
+            SnackbarUtil.showMessage(getActivity(), getView(), "네트워크 상태가 불안정합니다", "", null);
+        }
     }
 
     protected void handleError(Throwable t) {

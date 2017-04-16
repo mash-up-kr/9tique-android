@@ -17,7 +17,6 @@ import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.common.AccountManager;
 import kr.co.mash_up.a9tique.common.Constants;
-import kr.co.mash_up.a9tique.common.eventbus.EventNetworkStatus;
 import kr.co.mash_up.a9tique.common.eventbus.Events;
 import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.data.User;
@@ -269,10 +268,10 @@ public class SubCategoryFragment extends BaseFragment implements ProductsContrac
     // EventBus subscribe
     @Override
     protected void handleEventFromBus(Object event) {
+        super.handleEventFromBus(event);
+
         if (event instanceof Events) {
             refreshProducts();
-        } else if (event instanceof EventNetworkStatus) {
-            SnackbarUtil.showMessage(getActivity(), getView(), "네트워크 상태가 불안정합니다", "", null);
         }
     }
 }

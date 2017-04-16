@@ -43,110 +43,7 @@ public class LoginActivity extends BaseActivity {
 
     public static final String TAG = LoginActivity.class.getSimpleName();
 
-    @BindView(R.id.cl_root)
-    CoordinatorLayout mClRoot;
-
-    @BindView(R.id.fb_login)
-    LoginButton mLoginButton;
-
-    private CallbackManager mCallbackManager;  // facebook
 //    private SessionCallback mSessionCallback;  // kakao
-
-    /**
-     * 로그인 버튼을 클릭 했을시 access token을 요청하도록 설정한다.
-     *
-     * @param savedInstanceState 기존 session 정보가 저장된 객체
-     */
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        //  자동 로그인, access token이 저장되 있으면 바로 메인으로 넘어간다.
-        String accessToken = PreferencesUtils.getString(LoginActivity.this, Constants.PREF_ACCESS_TOKEN, "");
-        String strUserLevel = PreferencesUtils.getString(LoginActivity.this, Constants.PREF_USER_LEVEL, "");
-
-        if (strUserLevel != null && !"".equals(strUserLevel)) {
-            AccountManager.getInstance().initAccountInformation(accessToken, strUserLevel);
-
-            // 로그인 기록이 있으면 토큰 갱신
-            startService(new Intent(getApplicationContext(), TokenRefreshService.class));
-            redirectProductListActivity();
-        } else {
-//            mSessionCallback = new SessionCallback();
-//            Session.getCurrentSession().addCallback(mSessionCallback);
-//            if (!Session.getCurrentSession().checkAndImplicitOpen()) {
-//                setContentView(R.layout.activity_login);
-//            }
-
-            // 같은 폰에서 다른 id로 로그인하면??
-            // 해당 이메일을 찾아서 회원가입 여부를 가려야한다, 이메일로 토큰을 찾자!
-            mCallbackManager = CallbackManager.Factory.create();
-            mLoginButton.setReadPermissions(Arrays.asList("email", "public_profile"));
-            mLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-                @Override
-                public void onSuccess(LoginResult loginResult) {
-                    ProgressUtil.showProgressDialog(LoginActivity.this);
-
-                    GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
-                            (object, response) -> {
-                                String email = object.optString("email");
-                                String userName = object.optString("name");
-                                RequestUser requestUser = new RequestUser(userName, email, RequestUser.OauthType.FB);
-                                BackendHelper.getInstance().login(requestUser, new ResultCallback<User>() {
-                                    @Override
-                                    public void onSuccess(@Nullable User user) {
-                                        ProgressUtil.hideProgressDialog();
-                                        AccountManager.getInstance().updateAccountInformation(LoginActivity.this, user);
-                                        redirectProductListActivity();
-                                    }
-
-                                    @Override
-                                    public void onFailure() {
-                                        ProgressUtil.hideProgressDialog();
-                                        // access token을 가지고 있으면서 api request 실패시 로그아웃
-                                        SnackbarUtil.showMessage(LoginActivity.this, mClRoot, "로그인 실패", "", null);
-                                        LoginManager.getInstance().logOut();
-                                    }
-                                });
-                            });
-                    Bundle parameters = new Bundle();
-                    parameters.putString("fields", "id,name,email");
-                    request.setParameters(parameters);
-                    request.executeAsync();
-                }
-
-                @Override
-                public void onCancel() {
-                    // Fb 로그인 실패
-                }
-
-                @Override
-                public void onError(FacebookException error) {
-                    // Fb 로그인 실패
-                }
-            });
-        }
-    }
-
-    /**
-     * Facebook oauth login
-     */
-    @OnClick(R.id.lb_fb_login)
-    public void onClickFbLogin() {
-        mLoginButton.performClick();
-    }
-
-    /**
-     * Oauth 로그인 결과 전달
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
-//            return;
-//        }
-        super.onActivityResult(requestCode, resultCode, data);
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
-    }
 
     @Override
     protected void onDestroy() {
@@ -163,12 +60,34 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        LoginFragment loginFragment =
+                (LoginFragment) getSupportFragmentManager().findFragmentByTag(LoginFragment.TAG);
+        if (loginFragment == null){
+            loginFragment = LoginFragment.newInstance();
+            initFragment(loginFragment);
+        }
 
+        // Create the presenter
     }
 
     @Override
     public void initFragment(Fragment fragment) {
-        // Do nothing
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fl_fragment_login, fragment, LoginFragment.TAG)
+                .commit();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+//            return;
+//        }
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // fb Oauth 로그인 결과 Fragment로 전달
+        LoginFragment loginFragment =
+                (LoginFragment) getSupportFragmentManager().findFragmentByTag(LoginFragment.TAG);
+        loginFragment.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
@@ -204,56 +123,4 @@ public class LoginActivity extends BaseActivity {
 //        startActivity(intent);
 //        finish();
 //    }
-
-    /**
-     * 현재 화면을 종료하고 상품 리스트 화면으로 이동
-     */
-    private void redirectProductListActivity() {
-        startActivity(new Intent(LoginActivity.this, ProductsActivity.class));
-        finish();
-    }
-
-    // Todo: 프래그먼트를 만들어서 아래코드를 지우자
-    private Subscription mBusSubscription;
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        unsubscribeBus();
-        mBusSubscription = RxEventBus.getInstance().getBusObservable()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o -> {
-                            if (o == null) {
-                                return;
-                            }
-                            handleEventFromBus(o);
-                        },
-                        this::handleError,
-                        this::handleCompleted);
-    }
-
-    @Override
-    public void onStop() {
-        unsubscribeBus();
-        super.onStop();
-    }
-
-    private void unsubscribeBus() {
-        if (mBusSubscription != null && !mBusSubscription.isUnsubscribed()) {
-            mBusSubscription.unsubscribe();
-        }
-    }
-
-    protected void handleEventFromBus(Object event) {
-        if(event instanceof EventNetworkStatus){
-            SnackbarUtil.showMessage(LoginActivity.this, mClRoot, "네트워크 상태가 불안정합니다", "" , null);
-        }
-    }
-
-    protected void handleError(Throwable t) {
-    }
-
-    protected void handleCompleted() {
-    }
 }
