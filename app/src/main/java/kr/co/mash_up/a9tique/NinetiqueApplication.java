@@ -2,9 +2,8 @@ package kr.co.mash_up.a9tique;
 
 import android.app.Application;
 import android.content.IntentFilter;
-import android.util.Log;
 
-import kr.co.mash_up.a9tique.networkstatus.NetworkChangeReceiver;
+import kr.co.mash_up.a9tique._old.networkstatus.NetworkChangeReceiver;
 
 
 public class NinetiqueApplication extends Application {

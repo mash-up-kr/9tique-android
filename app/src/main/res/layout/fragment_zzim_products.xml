@@ -14,7 +14,7 @@
         android:paddingTop="10dp"
         android:background="@color/mercury">
 
-        <kr.co.mash_up.a9tique.ui.widget.RecyclerViewEmptySupport
+        <kr.co.mash_up.a9tique._old.ui.widget.RecyclerViewEmptySupport
             android:id="@+id/rv_zzim_products"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

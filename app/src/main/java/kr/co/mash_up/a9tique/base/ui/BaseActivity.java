@@ -1,41 +1,41 @@
 package kr.co.mash_up.a9tique.base.ui;
 
-
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import kr.co.mash_up.a9tique.util.ui.FragmentUtil;
 
-public abstract class BaseActivity extends AppCompatActivity {
 
-    private Unbinder mUnbinder;
+/**
+ * Created by seokjunjeong on 2017. 5. 27..
+ */
+
+public abstract class BaseActivity<F extends Fragment> extends AppCompatActivity {
+    protected F mFragment;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-
-        mUnbinder = ButterKnife.bind(this);
-
+        mFragment = getFragment();
+        FragmentUtil.addFragment(this, getFragmentContentId(), mFragment);
         initView();
+        initToolbar();
+        initPresenter();
     }
 
-    @Override
-    protected void onDestroy() {
-        mUnbinder.unbind();
-        super.onDestroy();
-    }
+    protected abstract int getLayoutId();
 
-    @LayoutRes
-    public abstract int getLayoutId();
+    protected abstract int getFragmentContentId();
 
-    @UiThread
-    public abstract void initView();
+    protected abstract void initView();
 
-    public abstract void initFragment(Fragment fragment);
+    protected abstract void initToolbar();
+
+    protected abstract void initPresenter();
+
+    protected abstract F getFragment();
 }

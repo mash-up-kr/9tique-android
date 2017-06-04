@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context="kr.co.mash_up.a9tique.ui.products.customer.CustomerProductsActivity">
+      tools:context="._old.ui.products.customer.CustomerProductsActivity">
 
     <item
         android:id="@+id/action_zzim_products"

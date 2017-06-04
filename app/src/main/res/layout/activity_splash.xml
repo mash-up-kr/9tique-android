@@ -5,6 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_splash"
-    tools:context="kr.co.mash_up.a9tique.ui.splash.SplashActivity">
+    tools:context="._old.ui.splash.SplashActivity">
 
 </FrameLayout>
