@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:fitsSystemWindows="true"
-    tools:context="kr.co.mash_up.a9tique.ui.setting.aboutus.About9tiqueActivity">
+    tools:context="._old.ui.setting.aboutus.About9tiqueActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

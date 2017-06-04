@@ -30,7 +30,7 @@
         android:paddingRight="55dp"
         android:paddingTop="174dp">
 
-        <kr.co.mash_up.a9tique.ui.widget.LoginButton
+        <kr.co.mash_up.a9tique._old.ui.widget.LoginButton
             android:id="@+id/lb_fb_login"
             android:layout_width="250dp"
             android:layout_height="55dp"
