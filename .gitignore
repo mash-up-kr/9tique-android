@@ -166,3 +166,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+.idea/markdown-exported-files.xml
+.idea/markdown-navigator.xml
