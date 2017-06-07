@@ -13,11 +13,11 @@ import kr.co.mash_up.a9tique.databinding.DashboardItemBinding;
 public class DashboardViewHolder extends RecyclerView.ViewHolder {
     private DashboardItemBinding mBinding;
 
-    public DashboardViewHolder(View itemView, OnItemClickListener l) {
+    public DashboardViewHolder(View itemView, OnItemClickListener listener) {
         super(itemView);
         mBinding = DataBindingUtil.bind(itemView);
         itemView.setOnClickListener(v -> {
-            l.onClick(getAdapterPosition());
+            listener.onClick(getAdapterPosition());
         });
     }
 

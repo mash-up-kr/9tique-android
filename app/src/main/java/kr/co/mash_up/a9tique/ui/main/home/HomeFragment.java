@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
-import kr.co.mash_up.a9tique.databinding.HomeFragBinding;
+import kr.co.mash_up.a9tique.databinding.HomeFragmentBinding;
 import kr.co.mash_up.a9tique.ui.DashboardAdapter;
 import kr.co.mash_up.a9tique.ui.OnItemClickListener;
 
@@ -15,13 +15,13 @@ import kr.co.mash_up.a9tique.ui.OnItemClickListener;
  * Created by seokjunjeong on 2017. 6. 4..
  */
 
-public class HomeFragment extends BaseFragment<HomeFragBinding> implements HomeContract.View {
+public class HomeFragment extends BaseFragment<HomeFragmentBinding> implements HomeContract.View {
     private HomeContract.Presenter mPresenter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRvDashboard;
     private DashboardAdapter mDashboardAdapter;
 
-    private OnItemClickListener l = position -> {// Sample
+    private OnItemClickListener mListener = position -> {// Sample
         Snackbar.make(getView(), "Sample Click " + position, Snackbar.LENGTH_LONG).show();
 
     };
@@ -33,7 +33,7 @@ public class HomeFragment extends BaseFragment<HomeFragBinding> implements HomeC
 
     @Override
     protected int getLayoutId() {
-        return R.layout.home_frag;
+        return R.layout.home_fragment;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class HomeFragment extends BaseFragment<HomeFragBinding> implements HomeC
         });
 
         mRvDashboard = mBinding.rvDashboard;
-        mDashboardAdapter = new DashboardAdapter(l);
+        mDashboardAdapter = new DashboardAdapter(mListener);
         mRvDashboard.setAdapter(mDashboardAdapter);
 
         // Sample

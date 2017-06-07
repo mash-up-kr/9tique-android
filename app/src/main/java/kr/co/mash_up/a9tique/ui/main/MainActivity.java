@@ -14,7 +14,7 @@ import kr.co.mash_up.a9tique.util.ui.FragmentUtil;
 public class MainActivity extends BaseActivity<Fragment> {
     @Override
     protected int getLayoutId() {
-        return R.layout.main_act;
+        return R.layout.main_activity;
     }
 
     @Override
