@@ -20,4 +20,9 @@
     
     <string name="kakao_app_key" translatable="false">147fb0c64769cb137db3f722e36d3e9b</string>
     <string name="facebook_app_id" translatable="false">1845329159075366</string>
+    <string name="toolbar_title_home">HOME</string>
+    <string name="toolbar_title_contents">CONTENTS</string>
+    <string name="toolbar_title_shop">SHOP</string>
+
+
 </resources>
