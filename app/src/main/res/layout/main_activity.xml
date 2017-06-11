@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".ui.main.MainActivity">
+    android:gravity="top"
+    sothree:umanoDragView="@+id/dragView"
+    sothree:umanoOverlay="true"
+    sothree:umanoPanelHeight="1dp">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/main_toolbar"/>
-
-    </android.support.design.widget.AppBarLayout>
-
-    <FrameLayout
-        android:id="@+id/contentFrame"
+    <!-- MAIN CONTENT -->
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:fitsSystemWindows="true"
+        tools:context=".ui.main.MainActivity">
 
-</android.support.design.widget.CoordinatorLayout>
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/main_toolbar"/>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <FrameLayout
+            android:id="@+id/contentFrame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <!-- SLIDING LAYOUT -->
+    <include
+        android:id="@+id/dragView"
+        layout="@layout/slide_menu"/>
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
