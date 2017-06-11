@@ -39,8 +39,6 @@ public class ContentsFragment extends BaseFragment<ContentsFragmentBinding>
 
     @Override
     protected void initView() {
-        new ContentsPresenter(this);
-
         mSwipeRefreshLayout = mBinding.swipeRefreshLayout;
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
             // Sample
@@ -60,7 +58,15 @@ public class ContentsFragment extends BaseFragment<ContentsFragmentBinding>
             mDashboardAdapter.addData(String.format("Sample %d", i+5));
             mDashboardAdapter.notifyItemInserted(i);
         }
+    }
 
+    @Override
+    protected void newPresenter() {
+        new ContentsPresenter(this);
+    }
+
+    @Override
+    protected void startPresenter() {
         mPresenter.start();
     }
 
