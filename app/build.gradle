@@ -103,4 +103,7 @@ dependencies {
     // 카카오톡 sdk를 사용하기 위해 필요.
 //    compile group: 'com.kakao.sdk', name: 'kakaotalk', version: project.KAKAO_SDK_VERSION
     compile 'com.facebook.android:facebook-android-sdk:4.21.1'
+
+    // slidinguppanel
+    compile 'com.sothree.slidinguppanel:library:3.3.1'
 }
