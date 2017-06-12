@@ -1,28 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".ui.main.MainActivity">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <data>
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/main_toolbar"/>
+        <variable
+            name="activity"
+            type="kr.co.mash_up.a9tique.ui.main.MainActivity"/>
+    </data>
 
-    </android.support.design.widget.AppBarLayout>
-
-    <FrameLayout
-        android:id="@+id/contentFrame"
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        android:id="@+id/sliding_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:gravity="top"
+        sothree:umanoDragView="@+id/dragView"
+        sothree:umanoOverlay="true"
+        sothree:umanoPanelHeight="1dp">
 
-</android.support.design.widget.CoordinatorLayout>
+        <!-- MAIN CONTENT -->
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            tools:context=".ui.main.MainActivity">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <include
+                    android:id="@+id/toolbar"
+                    layout="@layout/main_toolbar"
+                    bind:activity="@{activity}"/>
+
+            </android.support.design.widget.AppBarLayout>
+
+            <FrameLayout
+                android:id="@+id/contentFrame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+        <!-- SLIDING LAYOUT -->
+        <include
+            android:id="@+id/dragView"
+            layout="@layout/slide_menu"
+            bind:activity="@{activity}"/>
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+</layout>
