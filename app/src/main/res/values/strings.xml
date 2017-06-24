@@ -25,4 +25,15 @@
     <string name="toolbar_title_shop">SHOP</string>
 
 
+    <!-- renewal -->
+    <string name="home">홈</string>
+    <string name="store_list">매장 리스트</string>
+    <string name="brand">브랜드</string>
+    <string name="wish_list">찜리스트</string>
+    <string name="search">검색</string>
+    <string name="setting">설정</string>
+    <string name="login_logout">로그인/로그아웃</string>
+    <string name="regist_seller">판매자 등록</string>
+    <string name="ask_info">문의하기</string>
+
 </resources>

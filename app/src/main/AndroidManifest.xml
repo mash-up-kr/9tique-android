@@ -19,10 +19,10 @@
         <!--<meta-data-->
         <!--android:name="com.kakao.sdk.AppKey"-->
         <!--android:value="@string/kakao_app_key"/>-->
-        <!--&lt;!&ndash; facebook app id &ndash;&gt;-->
-        <!--<meta-data-->
-        <!--android:name="com.facebook.sdk.ApplicationId"-->
-        <!--android:value="@string/facebook_app_id"/>-->
+        <!-- facebook app id -->
+        <meta-data
+        android:name="com.facebook.sdk.ApplicationId"
+        android:value="@string/facebook_app_id"/>
 
         <!--<activity-->
         <!--android:name="._old.ui.splash.SplashActivity"-->

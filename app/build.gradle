@@ -77,7 +77,7 @@ dependencies {
     compile 'com.romandanylyk:pageindicatorview:0.0.6'
     compile 'cn.lightsky.infiniteindicator:library:1.2.0'
     compile 'com.afollestad.material-dialogs:core:0.9.0.1'  // Material Dialog
-    compile project(':likebutton')
+    compile 'com.github.jd-alexander:LikeButton:0.2.1'
 
     // image loader
     compile 'com.github.bumptech.glide:glide:3.7.0'
@@ -103,4 +103,7 @@ dependencies {
     // 카카오톡 sdk를 사용하기 위해 필요.
 //    compile group: 'com.kakao.sdk', name: 'kakaotalk', version: project.KAKAO_SDK_VERSION
     compile 'com.facebook.android:facebook-android-sdk:4.21.1'
+
+    // slidinguppanel
+    compile 'com.sothree.slidinguppanel:library:3.3.1'
 }
