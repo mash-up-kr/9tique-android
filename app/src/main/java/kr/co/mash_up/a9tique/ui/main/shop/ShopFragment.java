@@ -71,6 +71,35 @@ public class ShopFragment extends BaseFragment<ShopFragmentBinding> implements S
 
     };
 
+    private View.OnClickListener mOnSortClickListener = view -> {
+        mBinding.include.tvLastest.setSelected(false);
+        mBinding.include.tvPopularity.setSelected(false);
+        mBinding.include.tvLowPrice.setSelected(false);
+        mBinding.include.tvHighPrice.setSelected(false);
+        view.setSelected(true);
+
+        // Todo 샵 상품 리스트 정렬 처리
+        switch (view.getId()){
+            case R.id.tv_lastest:{
+
+            }
+            break;
+            case R.id.tv_popularity:{
+
+            }
+            break;
+            case R.id.tv_low_price:{
+
+            }
+            break;
+            case R.id.tv_high_price:{
+
+            }
+            break;
+        }
+
+    };
+
     @Override
     public void setPresenter(ShopContract.Presenter presenter) {
         mPresenter = presenter;
@@ -134,6 +163,13 @@ public class ShopFragment extends BaseFragment<ShopFragmentBinding> implements S
         mBinding.include.tvBottom.setOnClickListener(mOnTopCategoryItemClickListener);
         mBinding.include.tvHeadwear.setOnClickListener(mOnTopCategoryItemClickListener);
         mBinding.include.tvShoes.setOnClickListener(mOnTopCategoryItemClickListener);
+
+        mBinding.include.tvLastest.setOnClickListener(mOnSortClickListener);
+        mBinding.include.tvPopularity.setOnClickListener(mOnSortClickListener);
+        mBinding.include.tvLowPrice.setOnClickListener(mOnSortClickListener);
+        mBinding.include.tvHighPrice.setOnClickListener(mOnSortClickListener);
+
+        mBinding.include.tvLastest.setSelected(true);
     }
 
     @Override
