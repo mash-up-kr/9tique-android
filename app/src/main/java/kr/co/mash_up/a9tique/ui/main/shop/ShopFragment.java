@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.data.Product;
-import kr.co.mash_up.a9tique.databinding.ProductListLayoutBinding;
 import kr.co.mash_up.a9tique.databinding.ShopFragmentBinding;
 import kr.co.mash_up.a9tique.ui.OnItemClickListener;
 import kr.co.mash_up.a9tique.ui.ProductListAdapter;
@@ -22,8 +21,8 @@ import kr.co.mash_up.a9tique.ui.ProductListAdapter;
 
 public class ShopFragment extends BaseFragment<ShopFragmentBinding> implements ShopContract.View {
     private ShopContract.Presenter mPresenter;
-    private RecyclerView mRecyclerView;
-    private ProductListAdapter mAdapter;
+    private RecyclerView mRvProductList;
+    private ProductListAdapter mProductListAdapter;
 
     private LinearLayout mLlTopCategory, mLlSubCategory;
     private TextView mTvTopCategory, mTvSubCategory;
@@ -35,35 +34,35 @@ public class ShopFragment extends BaseFragment<ShopFragmentBinding> implements S
     };
 
     private View.OnClickListener mOnTopCategoryItemClickListener = view -> {
-        mTvTopCategory.setText(((TextView)view).getText().toString());
+        mTvTopCategory.setText(((TextView) view).getText().toString());
         hideTopCategoryList();
         // Todo 하위 카테고리 어떻게 지정해야할지 고민해야함;;;;
-        switch (view.getId()){
-            case R.id.tv_all:{
+        switch (view.getId()) {
+            case R.id.tv_all: {
 
             }
             break;
-            case R.id.tv_top:{
+            case R.id.tv_top: {
 
             }
             break;
-            case R.id.tv_outer:{
+            case R.id.tv_outer: {
 
             }
             break;
-            case R.id.tv_onepiece:{
+            case R.id.tv_onepiece: {
 
             }
             break;
-            case R.id.tv_bottom:{
+            case R.id.tv_bottom: {
 
             }
             break;
-            case R.id.tv_headwear:{
+            case R.id.tv_headwear: {
 
             }
             break;
-            case R.id.tv_shoes:{
+            case R.id.tv_shoes: {
 
             }
             break;
@@ -79,20 +78,20 @@ public class ShopFragment extends BaseFragment<ShopFragmentBinding> implements S
         view.setSelected(true);
 
         // Todo 샵 상품 리스트 정렬 처리
-        switch (view.getId()){
-            case R.id.tv_lastest:{
+        switch (view.getId()) {
+            case R.id.tv_lastest: {
 
             }
             break;
-            case R.id.tv_popularity:{
+            case R.id.tv_popularity: {
 
             }
             break;
-            case R.id.tv_low_price:{
+            case R.id.tv_low_price: {
 
             }
             break;
-            case R.id.tv_high_price:{
+            case R.id.tv_high_price: {
 
             }
             break;
@@ -112,9 +111,9 @@ public class ShopFragment extends BaseFragment<ShopFragmentBinding> implements S
 
     @Override
     protected void initView() {
-        mRecyclerView = mBinding.include.rvProductList;
-        mAdapter = new ProductListAdapter(mListener);
-        mRecyclerView.setAdapter(mAdapter);
+        mRvProductList = mBinding.include.rvProductList;
+        mProductListAdapter = new ProductListAdapter(mListener);
+        mRvProductList.setAdapter(mProductListAdapter);
 
         // Sample
         ArrayList<Product> products = new ArrayList<>();
@@ -127,8 +126,8 @@ public class ShopFragment extends BaseFragment<ShopFragmentBinding> implements S
         products.add(new Product("", "brandName", 1000, "category", "size", true, 100));
         products.add(new Product("", "brandName", 1000, "category", "size", true, 100));
 
-        mAdapter.setProducts(products);
-        mAdapter.notifyDataSetChanged();
+        mProductListAdapter.setProducts(products);
+        mProductListAdapter.notifyDataSetChanged();
 
         mLlTopCategory = mBinding.include.llTopCategory;
         mLlSubCategory = mBinding.include.llSubCategory;
@@ -145,7 +144,7 @@ public class ShopFragment extends BaseFragment<ShopFragmentBinding> implements S
             }
         });
         mTvSubCategory.setOnClickListener(view -> {
-            if (mTvTopCategory.getText().toString().equals(getString(R.string.title_all))||
+            if (mTvTopCategory.getText().toString().equals(getString(R.string.title_all)) ||
                     mTvTopCategory.getText().toString().equals(getString(R.string.top_category)))
                 return;
             hideTopCategoryList();
