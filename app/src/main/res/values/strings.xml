@@ -42,5 +42,12 @@
     <string name="sort_low_price">낮은가격순</string>
     <string name="sort_high_price">높은가격순</string>
 
+    <string name="title_all">ALL</string>
+    <string name="title_top">TOP</string>
+    <string name="title_outer">OUTER</string>
+    <string name="title_onepiece">ONEPIECE</string>
+    <string name="title_bottom">BOTTOM</string>
+    <string name="title_headwear">HEADWEAR</string>
+    <string name="title_shoes">SHOES</string>
 
 </resources>

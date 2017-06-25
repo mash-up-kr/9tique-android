@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -79,9 +78,17 @@ public class MainActivity extends AppCompatActivity {
         if (mSlidingUpPanelLayout != null &&
                 (mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED)) {
             hideSlidingMenu();
-        } else {
-            super.onBackPressed();
+            return;
         }
+        if(mContentsFragment != null && mShopFragment.isShowTopCategoryList()){
+            mShopFragment.hideTopCategoryList();
+            return;
+        }
+        if(mContentsFragment != null && mShopFragment.isShowSubCategoryList()){
+            mShopFragment.hideSubCategoryList();
+            return;
+        }
+        super.onBackPressed();
     }
 
     private void hideSlidingMenu() {

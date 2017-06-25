@@ -12,6 +12,7 @@
             android:orientation="vertical">
 
             <include
+                android:id="@+id/include"
                 layout="@layout/product_list_layout"/>
 
         </LinearLayout>

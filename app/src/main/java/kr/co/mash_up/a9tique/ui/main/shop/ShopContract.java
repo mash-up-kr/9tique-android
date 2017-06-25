@@ -9,10 +9,14 @@ import kr.co.mash_up.a9tique.base.BaseView;
 
 public interface ShopContract {
     interface Presenter extends BasePresenter {
-
     }
 
     interface View extends BaseView<Presenter> {
-
+        void showTopCategoryList();
+        void showSubCategoryList();
+        void hideTopCategoryList();
+        void hideSubCategoryList();
+        boolean isShowTopCategoryList();
+        boolean isShowSubCategoryList();
     }
 }
