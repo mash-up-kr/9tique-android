@@ -20,6 +20,7 @@ public abstract class BaseFragment<B extends ViewDataBinding> extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
+        newPresenter();
         return mBinding.getRoot();
     }
 
@@ -27,10 +28,15 @@ public abstract class BaseFragment<B extends ViewDataBinding> extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
+        startPresenter();
     }
 
     protected abstract int getLayoutId();
 
     protected abstract void initView();
+
+    protected abstract void newPresenter();
+
+    protected abstract void startPresenter();
 
 }

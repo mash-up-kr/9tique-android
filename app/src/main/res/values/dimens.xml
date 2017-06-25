@@ -8,4 +8,6 @@
     <dimen name="setting_list_item_margin">1dp</dimen>
     <dimen name="sell_product_list_item_bottom_margin">7dp</dimen>
     <dimen name="zzim_product_list_item_bottom_margin">7dp</dimen>
+    <dimen name="category_list_itme_margin">10dp</dimen>
+    <dimen name="category_list_itme_margin_left">55dp</dimen>
 </resources>

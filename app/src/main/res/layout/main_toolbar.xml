@@ -75,6 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
+                    android:onClick="@{(v) -> activity.onClickToolbarItem(v)}"
                     android:text="@string/toolbar_title_shop"
                     android:textColor="@color/white"
                     tools:text="SHOP"

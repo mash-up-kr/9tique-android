@@ -38,8 +38,6 @@ public class HomeFragment extends BaseFragment<HomeFragmentBinding> implements H
 
     @Override
     protected void initView() {
-        new HomePresenter(this);
-
         mSwipeRefreshLayout = mBinding.swipeRefreshLayout;
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
             // Sample
@@ -59,7 +57,15 @@ public class HomeFragment extends BaseFragment<HomeFragmentBinding> implements H
             mDashboardAdapter.addData(String.format("Sample %d", i));
             mDashboardAdapter.notifyItemInserted(i);
         }
+    }
 
+    @Override
+    protected void newPresenter() {
+        new HomePresenter(this);
+    }
+
+    @Override
+    protected void startPresenter() {
         mPresenter.start();
     }
 
