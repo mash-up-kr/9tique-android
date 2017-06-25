@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="product"
+            type="kr.co.mash_up.a9tique.data.Product"/>
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:background="#808080"
+                android:scaleType="centerCrop"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|top"
+                android:layout_marginRight="7dp"
+                android:layout_marginTop="8.7dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="10.3dp"
+                    android:layout_height="9dp"
+                    android:layout_marginRight="2dp"
+                    android:background="#000000"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="23"
+                    android:textColor="#40000000"
+                    android:textSize="8.7sp"/>
+
+            </LinearLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14.7dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center_vertical"
+                    android:text="DISCOVERY"
+                    android:textColor="#000000"
+                    android:textSize="10.3sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:text="10,000"
+                    android:textColor="#2c61d1"
+                    android:textSize="14.7sp"/>
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8.3dp"
+                android:text="비치 팬츠"
+                android:textColor="#000000"
+                android:textSize="7.7sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10.7dp"
+                android:layout_marginTop="9dp"
+                android:text="M"
+                android:textColor="#000000"
+                android:textSize="7.7sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

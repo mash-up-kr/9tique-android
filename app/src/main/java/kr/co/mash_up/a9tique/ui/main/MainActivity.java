@@ -5,9 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -15,6 +14,7 @@ import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.databinding.MainActivityBinding;
 import kr.co.mash_up.a9tique.ui.main.contents.ContentsFragment;
 import kr.co.mash_up.a9tique.ui.main.home.HomeFragment;
+import kr.co.mash_up.a9tique.ui.main.shop.ShopFragment;
 import kr.co.mash_up.a9tique.util.ui.FragmentUtil;
 
 /**
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private int mFragmentContentId;
     private HomeFragment mHomeFragment;
     private ContentsFragment mContentsFragment;
+    private ShopFragment mShopFragment;
     private SlidingUpPanelLayout mSlidingUpPanelLayout;
 
     @Override
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         mFragmentContentId = R.id.contentFrame;
         mHomeFragment = new HomeFragment();
         mContentsFragment = new ContentsFragment();
+        mShopFragment = new ShopFragment();
 
         FragmentUtil.addFragment(this, mFragmentContentId, mHomeFragment);
 
@@ -60,11 +62,15 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(mContentsFragment);
             }
             break;
+            case R.id.tv_shop: {
+                replaceFragment(mShopFragment);
+            }
+            break;
         }
     }
 
     // call databinding
-    public void onClickShowSlidMenu(View v){
+    public void onClickShowSlidMenu(View v) {
         showSlidingMenu();
     }
 

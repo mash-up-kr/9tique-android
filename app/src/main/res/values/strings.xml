@@ -35,5 +35,12 @@
     <string name="login_logout">로그인/로그아웃</string>
     <string name="regist_seller">판매자 등록</string>
     <string name="ask_info">문의하기</string>
+    <string name="top_category">상위 카테고리</string>
+    <string name="sub_category">하위 카테고리</string>
+    <string name="sort_lastest">최신순</string>
+    <string name="sort_popularity">인기순</string>
+    <string name="sort_low_price">낮은가격순</string>
+    <string name="sort_high_price">높은가격순</string>
+
 
 </resources>
