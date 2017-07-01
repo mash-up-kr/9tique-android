@@ -1,5 +1,6 @@
 package kr.co.mash_up.a9tique.ui.main.home;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,6 +11,7 @@ import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.databinding.HomeFragmentBinding;
 import kr.co.mash_up.a9tique.ui.DashboardAdapter;
 import kr.co.mash_up.a9tique.ui.OnItemClickListener;
+import kr.co.mash_up.a9tique.ui.main.promotion_product_list.PromotionProductListActivity;
 
 /**
  * Created by seokjunjeong on 2017. 6. 4..
@@ -23,6 +25,9 @@ public class HomeFragment extends BaseFragment<HomeFragmentBinding> implements H
 
     private OnItemClickListener mListener = position -> {// Sample
         Snackbar.make(getView(), "Sample Click " + position, Snackbar.LENGTH_LONG).show();
+        if(position == 0){
+            startActivity(new Intent(getContext(), PromotionProductListActivity.class));
+        }
 
     };
 
