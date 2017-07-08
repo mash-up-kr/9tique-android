@@ -49,5 +49,6 @@
     <string name="title_bottom">BOTTOM</string>
     <string name="title_headwear">HEADWEAR</string>
     <string name="title_shoes">SHOES</string>
+    <string name="title_comment">댓글</string>
 
 </resources>
