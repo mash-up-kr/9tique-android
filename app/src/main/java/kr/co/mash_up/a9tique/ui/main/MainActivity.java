@@ -73,6 +73,22 @@ public class MainActivity extends AppCompatActivity {
         showSlidingMenu();
     }
 
+    // call dataBinding
+    public void onMenuItemClick(View v){
+        switch (v.getId()){
+            case R.id.iv_home:{
+                replaceFragment(mHomeFragment);
+            }
+            break;
+            case R.id.iv_exit:{
+            }
+            break;
+        }
+
+        hideSlidingMenu();
+
+    }
+
     @Override
     public void onBackPressed() {
         if (mSlidingUpPanelLayout != null &&
