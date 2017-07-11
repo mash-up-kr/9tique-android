@@ -9,6 +9,10 @@
         <variable
             name="activity"
             type="kr.co.mash_up.a9tique.ui.main.MainActivity"/>
+
+        <variable
+            name="toolbarTitle"
+            type="String"/>
     </data>
 
     <android.support.v7.widget.Toolbar
@@ -41,6 +45,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#fffefe"
                     android:textSize="13.3sp"
+                    android:text="@{toolbarTitle}"
                     tools:text="Depth 2 Toolbar Title"/>
 
 

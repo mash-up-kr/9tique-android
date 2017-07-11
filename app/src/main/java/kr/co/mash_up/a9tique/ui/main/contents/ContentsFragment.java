@@ -1,5 +1,6 @@
 package kr.co.mash_up.a9tique.ui.main.contents;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,6 +11,7 @@ import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.databinding.ContentsFragmentBinding;
 import kr.co.mash_up.a9tique.ui.DashboardAdapter;
 import kr.co.mash_up.a9tique.ui.OnItemClickListener;
+import kr.co.mash_up.a9tique.ui.contents_detail.ContentsDetailActivity;
 
 /**
  * Created by seokjunjeong on 2017. 6. 11..
@@ -23,6 +25,7 @@ public class ContentsFragment extends BaseFragment<ContentsFragmentBinding>
     private DashboardAdapter mDashboardAdapter;
 
     private OnItemClickListener mListener = position -> {// Sample
+        startActivity(new Intent(getContext(), ContentsDetailActivity.class));
         Snackbar.make(getView(), "Sample Click " + position, Snackbar.LENGTH_LONG).show();
 
     };
