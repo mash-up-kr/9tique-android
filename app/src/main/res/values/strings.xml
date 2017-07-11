@@ -27,7 +27,7 @@
 
     <!-- renewal -->
     <string name="home">홈</string>
-    <string name="store_list">매장 리스트</string>
+    <string name="shop_list">매장 리스트</string>
     <string name="brand">브랜드</string>
     <string name="wish_list">찜리스트</string>
     <string name="search">검색</string>

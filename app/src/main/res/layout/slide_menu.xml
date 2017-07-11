@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="activity"
             type="kr.co.mash_up.a9tique.ui.main.MainActivity"/>
@@ -12,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#80000000"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="20dp">
 
         <LinearLayout
             android:id="@+id/dragView"
@@ -21,84 +23,104 @@
             android:clickable="true"
             android:focusable="false"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="5dp">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="#ffffff"/>
+                    android:layout_width="wrap_content"
+                    android:id="@+id/iv_home"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{(view) -> activity.onMenuItemClick(view)}"
+                    android:src="@drawable/new_ic_home"/>
 
                 <android.support.v4.widget.Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
 
-                <TextView
-                    style="@style/SlideMenuTextView"
+                <ImageView
+                    android:id="@+id/iv_exit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/home"/>
+                    android:onClick="@{(view) -> activity.onMenuItemClick(view)}"
+                    android:src="@drawable/new_ic_exit"/>
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_shop_list"
                 style="@style/SlideMenuTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/store_list"/>
+                android:onClick="@{(view) -> activity.onMenuItemClick(view)}"
+                android:text="@string/shop_list"/>
 
             <TextView
+                android:id="@+id/tv_brand"
                 style="@style/SlideMenuTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:onClick="@{(view) -> activity.onMenuItemClick(view)}"
                 android:text="@string/brand"/>
 
             <TextView
+                android:id="@+id/tv_wish_list"
                 style="@style/SlideMenuTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:onClick="@{(view) -> activity.onMenuItemClick(view)}"
                 android:text="@string/wish_list"/>
 
             <TextView
+                android:id="@+id/tv_search"
                 style="@style/SlideMenuTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:onClick="@{(view) -> activity.onMenuItemClick(view)}"
                 android:text="@string/search"/>
 
             <TextView
+                android:id="@+id/tv_setting"
                 style="@style/SlideMenuTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:onClick="@{(view) -> activity.onMenuItemClick(view)}"
                 android:text="@string/setting"/>
 
             <TextView
+                android:id="@+id/tv_login_logout"
                 style="@style/SlideMenuTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:onClick="@{(view) -> activity.onMenuItemClick(view)}"
                 android:text="@string/login_logout"/>
 
             <TextView
+                android:id="@+id/tv_regist_seller"
                 style="@style/SlideMenuTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:onClick="@{(view) -> activity.onMenuItemClick(view)}"
                 android:text="@string/regist_seller"/>
 
             <TextView
+                android:id="@+id/tv_ask_info"
                 style="@style/SlideMenuTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:onClick="@{(view) -> activity.onMenuItemClick(view)}"
                 android:text="@string/ask_info"/>
 
 
