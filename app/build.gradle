@@ -12,6 +12,7 @@ android {
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary true  // ImageView에 vector drawable 사용하기 위해
+        renderscriptSupportModeEnabled true // blur
     }
     buildTypes {
 
@@ -106,4 +107,7 @@ dependencies {
 
     // slidinguppanel
     compile 'com.sothree.slidinguppanel:library:3.3.1'
+
+    // blur
+    compile 'com.github.mmin18:realtimeblurview:1.1.0'
 }
