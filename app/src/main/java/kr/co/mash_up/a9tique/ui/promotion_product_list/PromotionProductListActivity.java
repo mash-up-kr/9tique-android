@@ -1,6 +1,4 @@
-package kr.co.mash_up.a9tique.ui.main.promotion_product_list;
-
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+package kr.co.mash_up.a9tique.ui.promotion_product_list;
 
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
