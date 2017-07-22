@@ -194,6 +194,10 @@
             android:name=".ui.contents_detail.ContentsDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".ui.product_detail.ProductDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>
