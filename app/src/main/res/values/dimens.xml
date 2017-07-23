@@ -10,4 +10,6 @@
     <dimen name="zzim_product_list_item_bottom_margin">7dp</dimen>
     <dimen name="category_list_itme_margin">10dp</dimen>
     <dimen name="category_list_itme_margin_left">55dp</dimen>
+    <dimen name="product_thumbnail_width">45dp</dimen>
+    <dimen name="product_thumbnail_height">51dp</dimen>
 </resources>

@@ -16,4 +16,9 @@ public class ProductDetailPresenter implements ProductDetailContract.Presenter {
     public void start() {
 
     }
+
+    @Override
+    public void loadProduct(long productId) {
+
+    }
 }

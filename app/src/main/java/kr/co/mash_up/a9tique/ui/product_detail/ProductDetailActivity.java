@@ -27,6 +27,6 @@ public class ProductDetailActivity extends BaseActivity {
 
     @Override
     protected Fragment getFragment() {
-        return null;
+        return ProductDetailFragment.newInstance();
     }
 }
