@@ -21,7 +21,7 @@
 
                 <include
                     android:id="@+id/toolbar"
-                    layout="@layout/depth2_toolbar"/>
+                    layout="@layout/back_title_toolbar"/>
 
             </android.support.design.widget.AppBarLayout>
 

@@ -15,7 +15,7 @@ import kr.co.mash_up.a9tique.databinding.ProductDetailFragmentBinding;
 import kr.co.mash_up.a9tique.ui.CommentAdapter;
 import kr.co.mash_up.a9tique.ui.ImageViewAdapter;
 import kr.co.mash_up.a9tique.ui.OnItemClickListener;
-import kr.co.mash_up.a9tique.ui.ProductListSemiAdapter;
+import kr.co.mash_up.a9tique.ui.ProductListSummaryAdapter;
 
 /**
  * Created by seokjunjeong on 2017. 7. 22..
@@ -26,7 +26,7 @@ public class ProductDetailFragment extends BaseFragment<ProductDetailFragmentBin
 
     private RecyclerView mRvComment, mRvProductListSemi;
     private CommentAdapter mCommentAdapter;
-    private ProductListSemiAdapter mProductListSemiAdapter;
+    private ProductListSummaryAdapter mProductListSummaryAdapter;
     private ViewPager mVpProduct;
     private ImageViewAdapter mIvaProduct;
 
@@ -83,8 +83,8 @@ public class ProductDetailFragment extends BaseFragment<ProductDetailFragmentBin
         mRvComment.setAdapter(mCommentAdapter);
 
         mRvProductListSemi = mBinding.rvProductListSemi;
-        mProductListSemiAdapter = new ProductListSemiAdapter(mListener);
-        mRvProductListSemi.setAdapter(mProductListSemiAdapter);
+        mProductListSummaryAdapter = new ProductListSummaryAdapter(mListener);
+        mRvProductListSemi.setAdapter(mProductListSummaryAdapter);
     }
 
     @Override

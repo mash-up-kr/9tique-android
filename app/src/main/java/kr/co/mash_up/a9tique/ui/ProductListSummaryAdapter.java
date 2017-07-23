@@ -15,11 +15,11 @@ import kr.co.mash_up.a9tique.data.Product;
  * Created by seokjunjeong on 2017. 6. 24..
  */
 
-public class ProductListSemiAdapter extends RecyclerView.Adapter<ProductListViewHolder> {
+public class ProductListSummaryAdapter extends RecyclerView.Adapter<ProductListViewHolder> {
     private OnItemClickListener mOnItemClickListener;
     private ArrayList<Product> mProducts;
 
-    public ProductListSemiAdapter(@NonNull OnItemClickListener onItemClickListener) {
+    public ProductListSummaryAdapter(@NonNull OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
         mProducts = new ArrayList<>();
     }
