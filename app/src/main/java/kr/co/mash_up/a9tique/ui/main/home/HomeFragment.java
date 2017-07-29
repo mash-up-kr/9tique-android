@@ -11,7 +11,7 @@ import kr.co.mash_up.a9tique.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique.databinding.HomeFragmentBinding;
 import kr.co.mash_up.a9tique.ui.DashboardAdapter;
 import kr.co.mash_up.a9tique.ui.OnItemClickListener;
-import kr.co.mash_up.a9tique.ui.main.promotion_product_list.PromotionProductListActivity;
+import kr.co.mash_up.a9tique.ui.promotion_product_list.PromotionProductListActivity;
 
 /**
  * Created by seokjunjeong on 2017. 6. 4..

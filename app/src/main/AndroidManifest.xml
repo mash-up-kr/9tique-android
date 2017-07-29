@@ -188,7 +188,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.promotion_product_list.PromotionProductListActivity"
+            android:name=".ui.promotion_product_list.PromotionProductListActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.contents_detail.ContentsDetailActivity"
@@ -196,6 +196,11 @@
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".ui.brand_list.BrandListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+
+        <activity
+            android:name=".ui.product_detail.ProductDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
     </application>

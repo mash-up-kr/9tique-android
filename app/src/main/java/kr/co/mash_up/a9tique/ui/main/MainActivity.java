@@ -101,11 +101,11 @@ public class MainActivity extends AppCompatActivity {
             hideSlidingMenu();
             return;
         }
-        if(mContentsFragment != null && mShopFragment.isShowTopCategoryList()){
+        if(mShopFragment != null && mShopFragment.isShowTopCategoryList()){
             mShopFragment.hideTopCategoryList();
             return;
         }
-        if(mContentsFragment != null && mShopFragment.isShowSubCategoryList()){
+        if(mShopFragment != null && mShopFragment.isShowSubCategoryList()){
             mShopFragment.hideSubCategoryList();
             return;
         }

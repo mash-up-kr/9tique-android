@@ -30,7 +30,7 @@
 
             <include
                 android:id="@+id/toolbar"
-                layout="@layout/depth2_toolbar"
+                layout="@layout/back_title_toolbar"
                 bind:toolbarTitle="@{toolbarTitle}"/>
 
         </android.support.design.widget.AppBarLayout>
