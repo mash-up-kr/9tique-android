@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique.ui.main.promotion_product_list;
+package kr.co.mash_up.a9tique.ui.promotion_product_list;
 
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;

@@ -11,10 +11,10 @@ import kr.co.mash_up.a9tique.databinding.ProductListItemBinding;
  * Created by seokjunjeong on 2017. 6. 24..
  */
 
-public class ProductListViewSemiHolder extends RecyclerView.ViewHolder {
+public class ProductListSummaryViewHolder extends RecyclerView.ViewHolder {
     private ProductListItemBinding mBinding;
 
-    public ProductListViewSemiHolder(View itemView, OnItemClickListener listener) {
+    public ProductListSummaryViewHolder(View itemView, OnItemClickListener listener) {
         super(itemView);
         mBinding = DataBindingUtil.bind(itemView);
         itemView.setOnClickListener(v -> {

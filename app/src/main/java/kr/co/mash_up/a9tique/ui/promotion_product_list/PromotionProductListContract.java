@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique.ui.main.promotion_product_list;
+package kr.co.mash_up.a9tique.ui.promotion_product_list;
 
 import kr.co.mash_up.a9tique.base.BasePresenter;
 import kr.co.mash_up.a9tique.base.BaseView;

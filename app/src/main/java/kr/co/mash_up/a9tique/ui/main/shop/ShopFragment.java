@@ -1,5 +1,6 @@
 package kr.co.mash_up.a9tique.ui.main.shop;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,6 +15,7 @@ import kr.co.mash_up.a9tique.data.Product;
 import kr.co.mash_up.a9tique.databinding.ShopFragmentBinding;
 import kr.co.mash_up.a9tique.ui.OnItemClickListener;
 import kr.co.mash_up.a9tique.ui.ProductListAdapter;
+import kr.co.mash_up.a9tique.ui.product_detail.ProductDetailActivity;
 
 /**
  * Created by seokjunjeong on 2017. 6. 22..
@@ -31,6 +33,7 @@ public class ShopFragment extends BaseFragment<ShopFragmentBinding> implements S
     private OnItemClickListener mListener = position -> {
         // Sample
         Snackbar.make(getView(), "Sample Click " + position, Snackbar.LENGTH_LONG).show();
+        startActivity(new Intent(getContext(), ProductDetailActivity.class));
     };
 
     private View.OnClickListener mOnTopCategoryItemClickListener = view -> {
