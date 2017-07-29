@@ -37,11 +37,10 @@ public class MainActivity extends AppCompatActivity {
         mBinding.setActivity(this);
 
         mFragmentContentId = R.id.contentFrame;
-        mHomeFragment = new HomeFragment();
-        mContentsFragment = new ContentsFragment();
-        mShopFragment = new ShopFragment();
 
-        FragmentUtil.addFragment(this, mFragmentContentId, mHomeFragment);
+        mHomeFragment = new HomeFragment();
+        replaceFragment(mHomeFragment);
+//        FragmentUtil.addFragment(this, mFragmentContentId, mHomeFragment);
 
         mSlidingUpPanelLayout = mBinding.slidingLayout;
         hideSlidingMenu();
@@ -60,10 +59,14 @@ public class MainActivity extends AppCompatActivity {
             }
             break;
             case R.id.tv_contents: {
+                if(mContentsFragment == null)
+                    mContentsFragment = new ContentsFragment();
                 replaceFragment(mContentsFragment);
             }
             break;
             case R.id.tv_shop: {
+                if(mShopFragment == null)
+                    mShopFragment = new ShopFragment();
                 replaceFragment(mShopFragment);
             }
             break;
