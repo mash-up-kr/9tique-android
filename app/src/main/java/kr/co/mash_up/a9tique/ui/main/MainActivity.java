@@ -1,5 +1,6 @@
 package kr.co.mash_up.a9tique.ui.main;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.databinding.MainActivityBinding;
+import kr.co.mash_up.a9tique.ui.brand_list.BrandListActivity;
 import kr.co.mash_up.a9tique.ui.main.contents.ContentsFragment;
 import kr.co.mash_up.a9tique.ui.main.home.HomeFragment;
 import kr.co.mash_up.a9tique.ui.main.shop.ShopFragment;
@@ -83,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.iv_exit:{
             }
             break;
+            case R.id.tv_brand:{
+                startActivity(new Intent(getApplicationContext(), BrandListActivity.class));
+            }
         }
 
         hideSlidingMenu();
