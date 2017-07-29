@@ -195,6 +195,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
         <activity
+            android:name=".ui.brand_list.BrandListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+
+        <activity
             android:name=".ui.product_detail.ProductDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
