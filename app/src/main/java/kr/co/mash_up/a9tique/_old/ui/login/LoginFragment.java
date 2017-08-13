@@ -23,7 +23,7 @@ import kr.co.mash_up.a9tique._old.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique._old.common.AccountManager;
 import kr.co.mash_up.a9tique._old.common.Constants;
 import kr.co.mash_up.a9tique._old.data.User;
-import kr.co.mash_up.a9tique._old.data.remote.BackendHelper;
+import kr.co.mash_up.a9tique.data.source.remote.BackendHelper;
 import kr.co.mash_up.a9tique._old.data.remote.RequestUser;
 import kr.co.mash_up.a9tique._old.data.remote.ResultCallback;
 import kr.co.mash_up.a9tique._old.service.TokenRefreshService;

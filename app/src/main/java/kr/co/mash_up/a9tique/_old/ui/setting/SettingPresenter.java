@@ -3,7 +3,7 @@ package kr.co.mash_up.a9tique._old.ui.setting;
 import android.support.annotation.NonNull;
 
 import kr.co.mash_up.a9tique._old.data.User;
-import kr.co.mash_up.a9tique._old.data.remote.BackendHelper;
+import kr.co.mash_up.a9tique.data.source.remote.BackendHelper;
 import kr.co.mash_up.a9tique._old.data.remote.ResultCallback;
 import kr.co.mash_up.a9tique._old.util.CheckNonNullUtil;
 

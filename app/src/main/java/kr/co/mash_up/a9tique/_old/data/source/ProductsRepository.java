@@ -3,8 +3,9 @@ package kr.co.mash_up.a9tique._old.data.source;
 import android.support.annotation.NonNull;
 
 import kr.co.mash_up.a9tique._old.data.Product;
-import kr.co.mash_up.a9tique._old.data.remote.BackendHelper;
+import kr.co.mash_up.a9tique.data.source.remote.BackendHelper;
 import kr.co.mash_up.a9tique._old.util.CheckNonNullUtil;
+import kr.co.mash_up.a9tique.data.source.ProductsDataSource;
 
 /**
  * Created by Dong on 2017-01-20.

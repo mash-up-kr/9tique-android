@@ -25,7 +25,7 @@ import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique._old.base.ui.BaseActivity;
 import kr.co.mash_up.a9tique._old.common.Constants;
 import kr.co.mash_up.a9tique._old.data.Product;
-import kr.co.mash_up.a9tique._old.data.remote.BackendHelper;
+import kr.co.mash_up.a9tique.data.source.remote.BackendHelper;
 import kr.co.mash_up.a9tique._old.data.remote.ResultCallback;
 import kr.co.mash_up.a9tique._old.util.SnackbarUtil;
 

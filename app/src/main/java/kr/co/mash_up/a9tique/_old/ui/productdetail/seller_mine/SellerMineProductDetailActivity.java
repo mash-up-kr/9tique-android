@@ -28,7 +28,7 @@ import kr.co.mash_up.a9tique._old.common.Constants;
 import kr.co.mash_up.a9tique._old.common.eventbus.EventRefreshProduct;
 import kr.co.mash_up.a9tique._old.common.eventbus.RxEventBus;
 import kr.co.mash_up.a9tique._old.data.Product;
-import kr.co.mash_up.a9tique._old.data.remote.BackendHelper;
+import kr.co.mash_up.a9tique.data.source.remote.BackendHelper;
 import kr.co.mash_up.a9tique._old.data.remote.ResultCallback;
 import kr.co.mash_up.a9tique._old.ui.addeditproduct.AddEditProductActivity;
 import kr.co.mash_up.a9tique._old.util.SnackbarUtil;

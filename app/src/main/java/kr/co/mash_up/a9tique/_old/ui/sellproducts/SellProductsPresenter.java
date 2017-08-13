@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import java.util.List;
 
 import kr.co.mash_up.a9tique._old.data.Product;
-import kr.co.mash_up.a9tique._old.data.remote.BackendHelper;
+import kr.co.mash_up.a9tique.data.source.remote.BackendHelper;
 import kr.co.mash_up.a9tique._old.data.remote.RequestProduct;
 import kr.co.mash_up.a9tique._old.data.remote.ResponseProduct;
 import kr.co.mash_up.a9tique._old.data.remote.ResultCallback;
