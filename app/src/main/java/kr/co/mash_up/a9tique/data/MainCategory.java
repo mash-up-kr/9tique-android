@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique._old.data;
+package kr.co.mash_up.a9tique.data;
 
 import com.bignerdranch.expandablerecyclerview.model.Parent;
 
@@ -33,6 +33,7 @@ public class MainCategory implements Parent<SubCategory> {
         return mSubCategories.get(position);
     }
 
+    // Todo: DB에서 find
     public enum List {
         NEW,  // 신상품
         OUTER,  // 아우터

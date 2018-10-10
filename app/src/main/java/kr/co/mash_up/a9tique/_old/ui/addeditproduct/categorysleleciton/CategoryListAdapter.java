@@ -10,8 +10,8 @@ import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter;
 
 import java.util.List;
 
-import kr.co.mash_up.a9tique._old.data.MainCategory;
-import kr.co.mash_up.a9tique._old.data.SubCategory;
+import kr.co.mash_up.a9tique.data.MainCategory;
+import kr.co.mash_up.a9tique.data.SubCategory;
 import kr.co.mash_up.a9tique._old.ui.OnItemClickListener;
 
 

@@ -30,7 +30,7 @@
 
                     <include
                         android:id="@+id/include"
-                        layout="@layout/promotion_product_list_toolbar"
+                        layout="@layout/promotion_products_toolbar"
                         app:layout_collapseMode="pin"/>
 
                     <ImageView

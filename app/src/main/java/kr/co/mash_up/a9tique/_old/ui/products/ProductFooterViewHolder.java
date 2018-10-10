@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
-import kr.co.mash_up.a9tique._old.base.ui.BaseViewHolder;
+import kr.co.mash_up.a9tique.base.ui.BaseViewHolder;
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class ProductFooterViewHolder extends BaseViewHolder {

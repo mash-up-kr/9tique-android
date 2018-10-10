@@ -1,9 +1,14 @@
 package kr.co.mash_up.a9tique.base;
 
 /**
- * Created by seokjunjeong on 2017. 5. 27..
+ * View와 Model의 연결체
+ * Data binding
+ * Data displaying
+ *
+ * network call, db 작업
+ *
+ * Created by ethankim on 2016. 11. 22..
  */
-
 public interface BasePresenter {
     void start();
 }

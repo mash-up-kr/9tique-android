@@ -1,5 +1,7 @@
-package kr.co.mash_up.a9tique.ui.promotion_product_list;
+package kr.co.mash_up.a9tique.ui.promotions.products;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,28 +11,59 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import kr.co.mash_up.a9tique.R;
-import kr.co.mash_up.a9tique.base.ui.BaseFragment;
+import kr.co.mash_up.a9tique._old.base.ui.BaseFragment;
+import kr.co.mash_up.a9tique._old.util.CheckNonNullUtil;
 import kr.co.mash_up.a9tique.data.Product;
-import kr.co.mash_up.a9tique.databinding.PromotionProductListFragmentBinding;
 import kr.co.mash_up.a9tique.ui.OnItemClickListener;
 import kr.co.mash_up.a9tique.ui.ProductListAdapter;
+import kr.co.mash_up.a9tique.ui.promotions.PromotionProductsContract;
 
 /**
- * Created by seokjunjeong on 2017. 6. 25..
+ * Created by ethankim on 2017. 8. 22..
  */
+public class PromotionProductsFragment extends BaseFragment implements PromotionProductsContract.View {
 
-public class PromotionProductListFragment
-        extends BaseFragment<PromotionProductListFragmentBinding>
-        implements PromotionProductListContract.View {
-    private PromotionProductListContract.Presenter mPresenter;
+    private PromotionProductsContract.Presenter mPresenter;
+
     private RecyclerView mRvProductList;
+
     private ProductListAdapter mProductListAdapter;
+
     private LinearLayout mLlTopCategory, mLlSubCategory;
+
     private TextView mTvTopCategory, mTvSubCategory;
+
+
+    public PromotionProductsFragment() {
+    }
+
+    public static PromotionProductsFragment newInstance() {
+        PromotionProductsFragment fragment = new PromotionProductsFragment();
+//        Bundle args = new Bundle();
+//        fragment.setArguments(args);
+        return fragment;
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+//        if (getArguments() != null) {
+//        }
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.promotion_products_fragment;
+    }
+
     private OnItemClickListener mListener = position -> {
         // Sample
         Snackbar.make(getView(), "Sample Click " + position, Snackbar.LENGTH_LONG).show();
     };
+
+    // Todo: 카테고리 클릭 리스너
     private View.OnClickListener mOnTopCategoryItemClickListener = view -> {
         mTvTopCategory.setText(((TextView) view).getText().toString());
         hideTopCategoryList();
@@ -67,6 +100,8 @@ public class PromotionProductListFragment
         }
 
     };
+
+    // Todo: 상품 리스트 정렬 리스너
     private View.OnClickListener mOnSortClickListener = view -> {
         mBinding.include.tvLastest.setSelected(false);
         mBinding.include.tvPopularity.setSelected(false);
@@ -93,22 +128,11 @@ public class PromotionProductListFragment
             }
             break;
         }
-
     };
 
-    public static PromotionProductListFragment newInstance() {
-        PromotionProductListFragment fragment = new PromotionProductListFragment();
-        return fragment;
-
-    }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.promotion_product_list_fragment;
-    }
-
-    @Override
-    protected void initView() {
+    public void initView(View rootView) {
         mRvProductList = mBinding.include.rvProductList;
         mProductListAdapter = new ProductListAdapter(mListener);
         mRvProductList.setAdapter(mProductListAdapter);
@@ -170,18 +194,14 @@ public class PromotionProductListFragment
     }
 
     @Override
-    protected void newPresenter() {
-        new PromotionProductListPresenter(this);
-    }
-
-    @Override
-    protected void startPresenter() {
+    public void onResume() {
+        super.onResume();
         mPresenter.start();
     }
 
     @Override
-    public void setPresenter(PromotionProductListContract.Presenter presenter) {
-        mPresenter = presenter;
+    public void setPresenter(PromotionProductsContract.Presenter presenter) {
+        mPresenter = CheckNonNullUtil.checkNotNull(presenter);
     }
 
     @Override

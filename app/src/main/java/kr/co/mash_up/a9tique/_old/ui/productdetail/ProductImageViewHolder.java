@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
-import kr.co.mash_up.a9tique._old.base.ui.BaseViewHolder;
+import kr.co.mash_up.a9tique.base.ui.BaseViewHolder;
 import kr.co.mash_up.a9tique._old.data.ProductImage;
 
 

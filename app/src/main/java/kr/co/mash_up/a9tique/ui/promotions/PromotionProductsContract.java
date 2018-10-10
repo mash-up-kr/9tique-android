@@ -1,23 +1,31 @@
-package kr.co.mash_up.a9tique.ui.promotion_product_list;
+package kr.co.mash_up.a9tique.ui.promotions;
 
 import kr.co.mash_up.a9tique.base.BasePresenter;
 import kr.co.mash_up.a9tique.base.BaseView;
 
 /**
- * Created by seokjunjeong on 2017. 6. 25..
+ * Created by ethankim on 2017. 8. 22..
  */
 
-public interface PromotionProductListContract {
+public interface PromotionProductsContract {
 
-    interface Presenter extends BasePresenter{
+    interface Presenter extends BasePresenter {
+        // Todo: 정의
 
     }
-    interface View extends BaseView<Presenter>{
+
+    interface View extends BaseView<Presenter> {
+
         void showTopCategoryList();
+
         void showSubCategoryList();
+
         void hideTopCategoryList();
+
         void hideSubCategoryList();
+
         boolean isShowTopCategoryList();
+
         boolean isShowSubCategoryList();
     }
 }

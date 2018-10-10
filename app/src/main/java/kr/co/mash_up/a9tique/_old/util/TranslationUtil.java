@@ -2,8 +2,8 @@ package kr.co.mash_up.a9tique._old.util;
 
 import java.util.HashMap;
 
-import kr.co.mash_up.a9tique._old.data.MainCategory;
-import kr.co.mash_up.a9tique._old.data.SubCategory;
+import kr.co.mash_up.a9tique.data.MainCategory;
+import kr.co.mash_up.a9tique.data.SubCategory;
 
 /**
  * 한글로된 카테고리를 영어로 변환해주는 유틸 클래스

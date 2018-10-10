@@ -14,7 +14,7 @@ import android.view.ViewGroup;
  */
 
 public abstract class BaseFragment<B extends ViewDataBinding> extends Fragment {
-    protected B mBinding;
+    protected B mBinding;  // Todo: remove databinding
 
     @Nullable
     @Override

@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique._old.base.ui;
+package kr.co.mash_up.a9tique.base.ui;
 
 
 import android.support.annotation.UiThread;

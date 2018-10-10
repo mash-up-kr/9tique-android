@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import kr.co.mash_up.a9tique._old.base.ui.BaseViewHolder;
+import kr.co.mash_up.a9tique.base.ui.BaseViewHolder;
 import kr.co.mash_up.a9tique._old.data.Menu;
 import kr.co.mash_up.a9tique._old.ui.OnItemClickListener;
 

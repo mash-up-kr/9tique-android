@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique.ui.promotion_product_list;
+package kr.co.mash_up.a9tique.ui.promotions.products;
 
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique.base.ui.BaseActivity;
@@ -7,10 +7,10 @@ import kr.co.mash_up.a9tique.base.ui.BaseActivity;
  * Created by seokjunjeong on 2017. 6. 25..
  */
 
-public class PromotionProductListActivity extends BaseActivity<PromotionProductListFragment> {
+public class PromotionProductListActivity extends BaseActivity<PromotionProductsFragment> {
     @Override
     protected int getLayoutId() {
-        return R.layout.promotion_product_list_activity;
+        return R.layout.promotion_products_activity;
     }
 
     @Override
@@ -24,8 +24,8 @@ public class PromotionProductListActivity extends BaseActivity<PromotionProductL
     }
 
     @Override
-    protected PromotionProductListFragment getFragment() {
-        return PromotionProductListFragment.newInstance();
+    protected PromotionProductsFragment getFragment() {
+        return PromotionProductsFragment.newInstance();
     }
     @Override
     public void onBackPressed() {

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.co.mash_up.a9tique.R;
-import kr.co.mash_up.a9tique._old.data.MainCategory;
+import kr.co.mash_up.a9tique.data.MainCategory;
 
 /**
  * Created by Dong on 2016-11-20.

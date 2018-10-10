@@ -26,7 +26,7 @@ import kr.co.mash_up.a9tique._old.base.ui.BaseActivity;
 import kr.co.mash_up.a9tique._old.common.AccountManager;
 import kr.co.mash_up.a9tique._old.common.eventbus.Events;
 import kr.co.mash_up.a9tique._old.common.eventbus.RxEventBus;
-import kr.co.mash_up.a9tique._old.data.MainCategory;
+import kr.co.mash_up.a9tique.data.MainCategory;
 import kr.co.mash_up.a9tique._old.data.User;
 import kr.co.mash_up.a9tique._old.ui.addeditproduct.AddEditProductActivity;
 import kr.co.mash_up.a9tique._old.ui.sellproducts.SellProductsActivity;

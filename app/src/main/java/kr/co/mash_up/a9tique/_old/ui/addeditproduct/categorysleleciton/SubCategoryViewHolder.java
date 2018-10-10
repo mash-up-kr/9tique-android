@@ -11,7 +11,7 @@ import com.bignerdranch.expandablerecyclerview.ChildViewHolder;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.co.mash_up.a9tique.R;
-import kr.co.mash_up.a9tique._old.data.SubCategory;
+import kr.co.mash_up.a9tique.data.SubCategory;
 import kr.co.mash_up.a9tique._old.ui.OnItemClickListener;
 
 public class SubCategoryViewHolder extends ChildViewHolder<SubCategory> {

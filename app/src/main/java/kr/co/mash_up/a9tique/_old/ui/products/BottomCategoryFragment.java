@@ -8,7 +8,7 @@ import android.view.View;
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique._old.base.ui.BaseFragment;
-import kr.co.mash_up.a9tique._old.data.SubCategory;
+import kr.co.mash_up.a9tique.data.SubCategory;
 
 /**
  * Created by Dong on 2016-11-16.

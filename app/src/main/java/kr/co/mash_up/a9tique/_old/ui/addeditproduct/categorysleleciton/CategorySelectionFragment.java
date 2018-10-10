@@ -16,8 +16,8 @@ import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
 import kr.co.mash_up.a9tique._old.base.ui.BaseFragment;
 import kr.co.mash_up.a9tique._old.common.eventbus.EventNetworkStatus;
-import kr.co.mash_up.a9tique._old.data.MainCategory;
-import kr.co.mash_up.a9tique._old.data.SubCategory;
+import kr.co.mash_up.a9tique.data.MainCategory;
+import kr.co.mash_up.a9tique.data.SubCategory;
 import kr.co.mash_up.a9tique._old.ui.OnItemClickListener;
 import kr.co.mash_up.a9tique._old.util.SnackbarUtil;
 

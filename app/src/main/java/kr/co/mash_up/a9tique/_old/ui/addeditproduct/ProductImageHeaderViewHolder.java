@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import kr.co.mash_up.a9tique.R;
-import kr.co.mash_up.a9tique._old.base.ui.BaseViewHolder;
+import kr.co.mash_up.a9tique.base.ui.BaseViewHolder;
 import  kr.co.mash_up.a9tique._old.ui.addeditproduct.ProductImageListAdapter.OnItemClickListener;
 
 public class ProductImageHeaderViewHolder extends BaseViewHolder {

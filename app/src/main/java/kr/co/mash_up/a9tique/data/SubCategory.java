@@ -1,4 +1,4 @@
-package kr.co.mash_up.a9tique._old.data;
+package kr.co.mash_up.a9tique.data;
 
 public class SubCategory {
 
@@ -16,6 +16,7 @@ public class SubCategory {
         mName = name;
     }
 
+    // Todo: DB에서 find
     public enum List {
         ALL,
         JACKET,  // 자켓

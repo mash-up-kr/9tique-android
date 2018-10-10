@@ -13,7 +13,7 @@ import com.bumptech.glide.RequestManager;
 
 import butterknife.BindView;
 import kr.co.mash_up.a9tique.R;
-import kr.co.mash_up.a9tique._old.base.ui.BaseViewHolder;
+import kr.co.mash_up.a9tique.base.ui.BaseViewHolder;
 import kr.co.mash_up.a9tique._old.common.Constants;
 import kr.co.mash_up.a9tique._old.data.ProductImage;
 import kr.co.mash_up.a9tique._old.ui.addeditproduct.ProductImageListAdapter.OnItemClickListener;

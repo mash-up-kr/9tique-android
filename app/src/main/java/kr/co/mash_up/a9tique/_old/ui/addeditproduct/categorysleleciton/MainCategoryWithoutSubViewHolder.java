@@ -12,8 +12,8 @@ import com.bignerdranch.expandablerecyclerview.ParentViewHolder;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.co.mash_up.a9tique.R;
-import kr.co.mash_up.a9tique._old.data.MainCategory;
-import kr.co.mash_up.a9tique._old.data.SubCategory;
+import kr.co.mash_up.a9tique.data.MainCategory;
+import kr.co.mash_up.a9tique.data.SubCategory;
 import kr.co.mash_up.a9tique._old.ui.OnItemClickListener;
 
 /**
